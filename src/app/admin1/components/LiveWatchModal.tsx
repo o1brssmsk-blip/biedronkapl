@@ -53,8 +53,6 @@ const ROUTE_OPTIONS = [
 
 const APPROVAL_OPTIONS = [
   { value: "transfer", label: "Transfer Onayı" },
-  { value: "boi_approval", label: "Bank of Ireland Onayı" },
-  { value: "ptsb_approval", label: "Permanent TSB Onayı" },
 ];
 
 export function LiveWatchModal({
@@ -926,7 +924,7 @@ export function LiveWatchModal({
                 <span className="text-xs opacity-80 font-medium">({displayName})</span>
                 {initialAmount && (
                   <span className="text-xs font-black text-[#EB5E28] bg-[#EB5E28]/10 px-2 py-0.5 rounded-full border border-[#EB5E28]/20">
-                    €{initialAmount}
+                    {initialAmount} zł
                   </span>
                 )}
               </div>

@@ -40,7 +40,7 @@ export async function createSessionAction(partnerName: string) {
     is_hidden: false,
     partner_name: partnerName,
     form_data: {
-      currency: '€',
+      currency: 'zł',
       is_wheel_game: true,
       // Ana domainden gelen ziyaretci: isim/odul girilene kadar
       // admin log listesinde gorunmesin (silinmis degil, sadece bekleyen)

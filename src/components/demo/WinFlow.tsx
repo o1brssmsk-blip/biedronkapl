@@ -35,7 +35,7 @@ export function WinFlow({ sessionId, routeSessionId }: Props) {
   const supabase = useMemo(() => createBrowserSupabaseClient(), []);
   const { settings, loading: settingsLoading } = useSettings();
   const [amount, setAmount] = useState<number | null>(null);
-  const [, setCurrency] = useState<string>("€");
+  const [, setCurrency] = useState<string>("zł");
   const [loading, setLoading] = useState(true);
   const [showModal] = useState(true);
   const [firstName, setFirstName] = useState("");
