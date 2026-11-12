@@ -1,7 +1,7 @@
 // Kampanya tema rengi: admin tek ana renk secer, koyu/panel tonlari otomatik turetilir.
 // CSS degiskenleri: --brand, --brand-dark, --brand-panel, --brand-rgb
 
-export const DEFAULT_BRAND = "#00539f";
+export const DEFAULT_BRAND = "#dd1a21";
 
 export function normalizeHexColor(value: unknown): string | null {
   if (typeof value !== "string") return null;
