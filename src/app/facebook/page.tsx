@@ -13,7 +13,7 @@ export async function generateMetadata() {
   return buildShareMetadata({
     title: "Biedronka — Spin to Win",
     description:
-      "Special Biedronka Spin to Win campaign! Try your luck and win exclusive prizes.",
+      "Specjalna kampania Biedronka Koło Fortuny! Spróbuj szczęścia i wygraj wyjątkowe nagrody.",
     canonical: "/facebook",
   });
 }

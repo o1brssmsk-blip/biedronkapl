@@ -136,8 +136,10 @@ export const AlbertHeijnWheel = forwardRef<HTMLDivElement, Props>(function Alber
   // Gorsel tutarlar wheel.png icine GOMULU — SVG overlay kapali.
   // Tekrar HTML overlay'a donmek icin false yap.
   const BAKED_PRIZE_ART = true;
-  // Disk, rim ile ayni canvas boyutunda -> birebir ust uste biner (wheel box = rim box)
-  const wheelScale = 1.0;
+  // Disk PNG'si rim ile ayni canvas'ta ama dis kenari r~617; rim'in ampul
+  // halkasi r~430-560 arasi opak. Wheel'in rim halkasinin USTUNE tasmasini
+  // onlemek icin diski ic acikligin altina kucult (617*0.72 ~ 444).
+  const wheelScale = 0.72;
   // wheel.png icindeki gercek cark merkezi (viewBox 100 birimi) — PNG olcumunden
   const wheelCx = 50;
   const wheelCy = 50;
@@ -334,7 +336,7 @@ export const AlbertHeijnWheel = forwardRef<HTMLDivElement, Props>(function Alber
             type="button"
             onClick={onSpin}
             disabled={disabled}
-            aria-label="Spin the Biedronka Wheel of Fortune"
+            aria-label="Zakręć Kołem Fortuny Biedronka"
             className="absolute z-[6] bg-transparent focus:outline-none focus-visible:ring-4 focus-visible:ring-white/80 disabled:cursor-not-allowed"
             style={{
               left: assets.buttonLeft,
@@ -345,7 +347,7 @@ export const AlbertHeijnWheel = forwardRef<HTMLDivElement, Props>(function Alber
               borderRadius: "100px",
             }}
           >
-            <span className="sr-only">{spinning ? "A girar" : "Girar agora"}</span>
+            <span className="sr-only">{spinning ? "Kręcenie..." : "Zakręć teraz"}</span>
           </button>
         </div>
       </div>

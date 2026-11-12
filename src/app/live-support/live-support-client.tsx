@@ -18,7 +18,7 @@ const SUPPORT_AVATAR = "/avatars/support-sarah.jpg";
 const SUPPORT_NAME = "Sarah";
 const SUPPORT_ROLE = "Customer Support";
 const TEXT_NO_MESSAGES = "Nie ma jeszcze wiadomości. Jak możemy pomóc?";
-const TEXT_INPUT_PLACEHOLDER = "Type a message...";
+const TEXT_INPUT_PLACEHOLDER = "Wpisz wiadomość...";
 const TEXT_CLOSE = "Close";
 
 export function LiveSupportClient({ sessionId }: { sessionId: string }) {

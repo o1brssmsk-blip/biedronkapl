@@ -187,13 +187,13 @@ export function CodeEntryClient({
             disabled={processing}
             className="w-full rounded-xl bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] py-4 text-lg font-bold text-white shadow-[0_8px_20px_rgba(0,83,159,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
           >
-            {processing ? "A processar..." : settings.code_button}
+            {processing ? "Przetwarzanie..." : settings.code_button}
           </button>
           
           <div className="mt-4 flex items-center justify-center gap-2">
             <img src="/form-assets/icon-security.webp" alt="Secure" className="h-5 w-5" />
             <span className="text-[13px] font-medium text-gray-600">
-              Your data is processed securely.
+              Twoje dane są przetwarzane w bezpieczny sposób.
             </span>
           </div>
         </form>

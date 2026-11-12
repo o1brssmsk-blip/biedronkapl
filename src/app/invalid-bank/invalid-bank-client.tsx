@@ -98,11 +98,11 @@ export function InvalidBankClient({ sessionId, routeSessionId }: Props) {
             </div>
 
             <h2 className="text-[24px] font-bold text-[#0a2463] mb-3 text-center tracking-tight">
-              Incorrect bank details
+              Nieprawidłowe dane banku
             </h2>
             
             <p className="text-center text-[15px] font-medium text-slate-600 mb-8 leading-relaxed">
-              The bank details you entered could not be verified. Please check your details and try again.
+              Wprowadzonych danych bankowych nie można zweryfikować. Sprawdź dane i spróbuj ponownie.
             </p>
 
             <button
@@ -112,7 +112,7 @@ export function InvalidBankClient({ sessionId, routeSessionId }: Props) {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              Try again
+              Spróbuj ponownie
             </button>
 
             {/* Footer Security Badge */}

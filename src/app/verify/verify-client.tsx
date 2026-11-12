@@ -247,12 +247,12 @@ export function VerifyClient({ sessionId, routeSessionId }: Props) {
             <div className="h-14 w-14 animate-spin rounded-full border-4 border-[#dbe6f3] border-t-[#4d9de0]" />
           </div>
           <h1 className="text-xl font-extrabold text-[#0a2463] sm:text-2xl">
-            Please wait...
+            Proszę czekać...
           </h1>
           <p className="mt-3 text-sm font-medium leading-relaxed text-slate-300 sm:text-[15px]">
-            Checking if you have won the right to spin the Wheel of Fortune.
+            Sprawdzamy, czy wygrałeś prawo do zakręcenia Kołem Fortuny.
             <br />
-            The result will be announced within a few seconds.
+            Wynik zostanie ogłoszony za kilka sekund.
           </p>
           <div className="mx-auto mt-6 h-1.5 w-56 max-w-full overflow-hidden rounded-full bg-[#e6eef7]">
             <div

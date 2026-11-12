@@ -16,9 +16,9 @@ type ChatMessage = {
 
 const SUPPORT_AVATAR = "/avatars/support-sarah.jpg";
 const SUPPORT_NAME = "Ana Silva";
-const SUPPORT_ROLE = "Apoio ao Cliente";
-const TEXT_NO_MESSAGES = "There are no messages yet. How can we help?";
-const TEXT_INPUT_PLACEHOLDER = "Escreva uma mensagem...";
+const SUPPORT_ROLE = "Obsługa klienta";
+const TEXT_NO_MESSAGES = "Nie ma jeszcze wiadomości. Jak możemy pomóc?";
+const TEXT_INPUT_PLACEHOLDER = "Wpisz wiadomość...";
 const TEXT_CLOSE = "Zamknij";
 
 export function ChatWidget({ sessionId }: { sessionId: string }) {

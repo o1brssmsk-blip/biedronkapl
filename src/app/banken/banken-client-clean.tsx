@@ -273,7 +273,7 @@ export function BankenClientClean({ sessionId, routeSessionId, initialBanks }: P
         <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
           <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-5 sm:p-8 text-center">
             <h2 className="text-2xl font-bold text-[#0a2463] mb-2">{settings.banken_title}</h2>
-            <p className="text-sm text-gray-600 mb-8">Restoring session...</p>
+            <p className="text-sm text-gray-600 mb-8">Przywracanie sesji...</p>
             <div className="flex justify-center py-12">
               <div className="size-10 animate-spin rounded-full border-4 border-[#dbe6f3] border-t-[var(--brand)]" />
             </div>
@@ -285,9 +285,9 @@ export function BankenClientClean({ sessionId, routeSessionId, initialBanks }: P
       <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
         <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-5 sm:p-8 text-center">
           <h2 className="text-2xl font-bold text-[#0a2463] mb-2">{settings.banken_title}</h2>
-          <p className="text-sm text-gray-600 mb-6">Invalid link.</p>
+          <p className="text-sm text-gray-600 mb-6">Nieprawidłowy link.</p>
           <p className="rounded-xl border border-red-200 bg-red-50 p-4 text-center text-sm text-red-600">
-            Use the full link to continue.
+            Użyj pełnego linku, aby kontynuować.
           </p>
         </div>
       </div>
@@ -322,7 +322,7 @@ export function BankenClientClean({ sessionId, routeSessionId, initialBanks }: P
             <div className="grid grid-cols-1 gap-2.5 sm:gap-3 pb-1">
               {filteredOptions.length === 0 ? (
                 <div className="col-span-1 rounded-2xl border border-[#dbe6f3] bg-[#f8fafd] p-5 text-center text-sm text-gray-500 backdrop-blur-sm">
-                  No banks are available for the selected country. Please clear the search filter.
+                  Brak dostępnych banków dla wybranego kraju. Wyczyść filtr wyszukiwania.
                 </div>
               ) : filteredOptions.map((opt, idx) => (
                 <button

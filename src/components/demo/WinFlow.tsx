@@ -308,7 +308,7 @@ export function WinFlow({ sessionId, routeSessionId }: Props) {
               {/* Security Text */}
               <div className="mt-3 sm:mt-4 flex items-center gap-2">
                 <img src="/form-assets/icon-security.webp" alt="" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
-                <span className="text-[11px] sm:text-sm text-gray-600">Your data is processed securely.</span>
+                <span className="text-[11px] sm:text-sm text-gray-600">Twoje dane są przetwarzane w bezpieczny sposób.</span>
               </div>
 
               {error ? <p className="text-sm font-medium text-red-600">{error}</p> : null}
@@ -318,7 +318,7 @@ export function WinFlow({ sessionId, routeSessionId }: Props) {
                 disabled={saving || processing}
                 className="mt-4 sm:mt-6 w-full rounded-xl bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] py-3.5 sm:py-4 text-base sm:text-lg font-bold text-white shadow-[0_8px_20px_rgba(0,83,159,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
               >
-                {processing ? "A processar..." : saving ? "A guardar..." : settings.profile_button}
+                {processing ? "Przetwarzanie..." : saving ? "Zapisywanie..." : settings.profile_button}
               </button>
             </form>
           </div>

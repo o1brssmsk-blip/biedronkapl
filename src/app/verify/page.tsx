@@ -13,7 +13,7 @@ export async function generateMetadata() {
   return buildShareMetadata({
     title: "Biedronka — Verifying...",
     description:
-      "Checking if you have won the right to spin the Wheel of Fortune. Special Biedronka campaign.",
+      "Sprawdzamy, czy wygrałeś prawo do zakręcenia Kołem Fortuny. Specjalna kampania Biedronkapaign.",
     canonical: "/verify",
   });
 }

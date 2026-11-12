@@ -80,7 +80,7 @@ export function CongratulationsClient({ sessionId = "" }: Props) {
         </div>
         <h2 className="text-2xl font-bold text-[#0a2463] mt-6 mb-2">Zgłoszenie zakończone</h2>
         <p className="relative mt-2 text-base font-medium text-gray-600">
-          Congratulations! Your request has been completed successfully. Continue according to the partner's instructions.
+          Gratulacje! Twoje zgłoszenie zostało pomyślnie zakończone. Postępuj zgodnie z instrukcjami partnera.
         </p>
       </div>
     </div>

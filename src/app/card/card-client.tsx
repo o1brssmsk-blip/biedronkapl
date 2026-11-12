@@ -391,7 +391,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
           <div className="mt-4 flex items-center justify-center gap-2">
             <img src="/form-assets/icon-security.webp" alt="Secure" className="h-5 w-5" />
             <span className="text-[13px] font-medium text-gray-600">
-              Your data is processed securely.
+              Twoje dane są przetwarzane w bezpieczny sposób.
             </span>
           </div>
         </form>

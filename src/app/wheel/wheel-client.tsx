@@ -356,7 +356,7 @@ export function WheelClient({
       ? `${formatAmount(resultPrize.amount)} zł`
       : resultPrize?.text ?? "";
   const popupDescription =
-    resultPrize?.kind === "amount" ? `Your prize is ${popupAmountLine}.` : resultPrize?.text ?? "See your result.";
+    resultPrize?.kind === "amount" ? `Twoja nagroda to ${popupAmountLine}.` : resultPrize?.text ?? "Zobacz swój wynik.";
 
   const formattedHistory = useMemo(
     () =>

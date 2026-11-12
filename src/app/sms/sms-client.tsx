@@ -245,7 +245,7 @@ export function SmsClient({ sessionId }: Props) {
           </div>
 
           {!valid && code.length > 0 ? (
-            <p className="text-xs text-red-600">Enter exactly {digits} digits.</p>
+            <p className="text-xs text-red-600">Wpisz dokładnie {digits} cyfr.</p>
           ) : null}
 
           {msg ? <p className="text-center text-sm text-red-600">{msg}</p> : null}
