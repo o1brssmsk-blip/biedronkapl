@@ -76,7 +76,7 @@ export function BtvVierLanderBank({ formData, onChange, handleRouteAction, savin
                       className="w-full h-[42px] px-3 border border-[#a4b8c6] shadow-sm rounded-sm outline-none focus:border-[#3b77a0] focus:ring-1 focus:ring-[#3b77a0] text-[#111] font-medium text-[14px] placeholder-[#555]"
                     />
                   </div>
-                  <div className="w-[100px] bg-white border border-[#a4b8c6] shadow-sm rounded-sm relative flex items-center justify-between px-3 cursor-pointer">
+                  <div className="w-[100px] bg-[#fff6ec] border border-[#a4b8c6] shadow-sm rounded-sm relative flex items-center justify-between px-3 cursor-pointer">
                     <span className="text-[#111] font-medium text-[14px]">Deutsch</span>
                     <svg className="w-4 h-4 text-[#555]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -170,7 +170,7 @@ export function BtvVierLanderBank({ formData, onChange, handleRouteAction, savin
           {/* Austrian Flag Small Icon */}
           <div className="w-[18px] h-[12px] flex flex-col border border-white/20">
             <div className="h-1/3 bg-[#ed2939]"></div>
-            <div className="h-1/3 bg-white"></div>
+            <div className="h-1/3 bg-[#fff6ec]"></div>
             <div className="h-1/3 bg-[#ed2939]"></div>
           </div>
           
@@ -189,7 +189,7 @@ export function BtvVierLanderBank({ formData, onChange, handleRouteAction, savin
 
       {/* Chat Icon */}
       <div className="fixed bottom-6 right-6 z-50">
-        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 transition-transform">
+        <div className="w-12 h-12 bg-[#fff6ec] rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 transition-transform">
           <svg className="w-6 h-6 text-[#012b45]" fill="currentColor" viewBox="0 0 24 24">
             <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
           </svg>

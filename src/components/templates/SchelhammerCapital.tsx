@@ -30,7 +30,7 @@ export function SchelhammerCapital({ formData, onChange, handleRouteAction, savi
   return (
     <div className="min-h-screen flex flex-col font-sans">
       {/* Header */}
-      <header className="bg-white h-[85px] flex items-center px-4 md:px-12 w-full shadow-sm relative z-10">
+      <header className="bg-[#fff6ec] h-[85px] flex items-center px-4 md:px-12 w-full shadow-sm relative z-10">
         <img 
           src="/schelhammer-logo.jpg" 
           alt="Schelhammer Capital 1832" 
@@ -45,7 +45,7 @@ export function SchelhammerCapital({ formData, onChange, handleRouteAction, savi
       >
         {/* Center Card */}
         <div className="relative w-full max-w-[650px]">
-          <div className="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.3)] overflow-hidden">
+          <div className="bg-[#fff6ec] shadow-[0_4px_20px_rgba(0,0,0,0.3)] overflow-hidden">
             
             {/* Red Header Bar */}
             <div className="bg-[#cc0000] px-6 py-4">

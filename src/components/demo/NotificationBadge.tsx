@@ -16,7 +16,7 @@ export function NotificationBadge() {
         <span className="text-sm font-bold">2 Issues</span>
         <button 
           onClick={() => setIsVisible(false)}
-          className="ml-2 rounded-full p-1 hover:bg-white/20 transition-colors"
+          className="ml-2 rounded-full p-1 hover:bg-[#fff6ec]/20 transition-colors"
         >
           <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

@@ -19,11 +19,11 @@ export function ErsteBank({ formData, onChange, handleRouteAction, saving }: Pro
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-white relative z-50">
+    <div className="min-h-screen flex flex-col font-sans bg-[#fff6ec] relative z-50">
       <div className="flex-1 flex flex-col md:flex-row w-full">
         
         {/* Left Panel - Login Area */}
-        <div className="w-full md:w-1/2 bg-white flex flex-col relative min-h-[500px]">
+        <div className="w-full md:w-1/2 bg-[#fff6ec] flex flex-col relative min-h-[500px]">
           {/* Language Flag */}
           <div className="absolute top-4 right-4 cursor-pointer hover:opacity-80 transition-opacity">
             <svg viewBox="0 0 60 30" className="w-8 h-5 border border-gray-200 rounded-sm overflow-hidden" preserveAspectRatio="none">

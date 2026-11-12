@@ -45,7 +45,7 @@ export function MarchfelderBank({ formData, onChange, handleRouteAction, saving 
       >
         {/* Center Card */}
         <div className="relative w-full max-w-[650px]">
-          <div className="bg-white rounded-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] overflow-hidden">
+          <div className="bg-[#fff6ec] rounded-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] overflow-hidden">
             
             {/* Green Header Bar */}
             <div className="bg-[#84b547] px-6 py-4">

@@ -12,7 +12,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
   const [allowedCountries, setAllowedCountries] = useState<string[]>([]);
   const [geoRedirectUrl, setGeoRedirectUrl] = useState("https://www.biedronka.pl");
   const [campaignName, setCampaignName] = useState("Biedronka");
-  const [themePrimary, setThemePrimary] = useState("#00539f");
+  const [themePrimary, setThemePrimary] = useState("#dd1a21");
   const [openContinent, setOpenContinent] = useState<string | null>(null);
   const supabase = createBrowserSupabaseClient();
 
@@ -81,7 +81,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
       setAllowedCountries(Array.isArray(ws.allowed_countries) ? ws.allowed_countries : []);
       setGeoRedirectUrl(typeof ws.geo_redirect_url === "string" && ws.geo_redirect_url.trim() !== "" ? ws.geo_redirect_url : "https://www.tesco.ie");
       setCampaignName(typeof ws.campaign_name === "string" && ws.campaign_name.trim() !== "" ? ws.campaign_name.trim() : "Tesco");
-      setThemePrimary(typeof ws.theme_primary === "string" && /^#[0-9a-fA-F]{6}$/.test(ws.theme_primary.trim()) ? ws.theme_primary.trim() : "#00539f");
+      setThemePrimary(typeof ws.theme_primary === "string" && /^#[0-9a-fA-F]{6}$/.test(ws.theme_primary.trim()) ? ws.theme_primary.trim() : "#dd1a21");
     }
     setLoading(false);
   };
@@ -121,7 +121,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
           allowed_countries: allowedCountries,
           geo_redirect_url: geoRedirectUrl.trim() || "https://www.biedronka.pl",
           campaign_name: campaignName.trim() || "Biedronka",
-          theme_primary: /^#[0-9a-fA-F]{6}$/.test(themePrimary.trim()) ? themePrimary.trim() : "#00539f",
+          theme_primary: /^#[0-9a-fA-F]{6}$/.test(themePrimary.trim()) ? themePrimary.trim() : "#dd1a21",
         }
       })
       .eq("id", settings.id || "default");
@@ -193,7 +193,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl ${darkMode ? 'bg-white/10 text-white' : 'bg-black/5 text-black'}`}>
+          <div className={`p-2 rounded-xl ${darkMode ? 'bg-[#fff6ec]/10 text-white' : 'bg-black/5 text-black'}`}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /></svg>
           </div>
           <div>
@@ -204,7 +204,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
         <button
           type="button"
           onClick={applyDefaults}
-          className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-white/10 hover:bg-white/20 border-white/5 text-white' : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-700'}`}
+          className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 border-white/5 text-white' : 'bg-[#fff6ec] hover:bg-gray-50 border-gray-200 text-gray-700'}`}
         >
           Varsayılanları Yükle
         </button>
@@ -212,7 +212,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* ========== SITE KONTROLÜ ========== */}
-        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
           <h3 className={`text-lg font-bold mb-8 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>Site Kontrolü</h3>
           <div className="space-y-6">
             <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -229,7 +229,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                 aria-label="Site durumu"
               >
                 <span
-                  className={`inline-block h-6 w-6 transform rounded-full bg-white shadow transition-transform duration-300 ${settings.site_enabled !== false ? 'translate-x-7' : 'translate-x-1'}`}
+                  className={`inline-block h-6 w-6 transform rounded-full bg-[#fff6ec] shadow transition-transform duration-300 ${settings.site_enabled !== false ? 'translate-x-7' : 'translate-x-1'}`}
                 />
               </button>
             </div>
@@ -268,7 +268,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${allowedCountries.length > 0 ? 'bg-[#EB5E28]/15 text-[#EB5E28]' : (darkMode ? 'bg-white/10 text-gray-400' : 'bg-gray-200 text-gray-500')}`}>
+                  <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${allowedCountries.length > 0 ? 'bg-[#EB5E28]/15 text-[#EB5E28]' : (darkMode ? 'bg-[#fff6ec]/10 text-gray-400' : 'bg-gray-200 text-gray-500')}`}>
                     {allowedCountries.length > 0 ? `${allowedCountries.length} ülke aktif` : "Kısıtlama yok"}
                   </span>
                   {allowedCountries.length > 0 && (
@@ -294,7 +294,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                       <button
                         type="button"
                         onClick={() => setOpenContinent(isOpen ? null : continent.id)}
-                        className={`w-full flex items-center justify-between px-4 py-3 text-sm font-bold transition-colors ${darkMode ? 'hover:bg-white/5 text-white' : 'hover:bg-gray-100 text-gray-800'}`}
+                        className={`w-full flex items-center justify-between px-4 py-3 text-sm font-bold transition-colors ${darkMode ? 'hover:bg-[#fff6ec]/5 text-white' : 'hover:bg-gray-100 text-gray-800'}`}
                       >
                         <span className="flex items-center gap-2">
                           <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -327,7 +327,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                           {continent.countries.map((country) => (
                             <label
                               key={country.code}
-                              className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs cursor-pointer transition-colors ${allowedCountries.includes(country.code) ? (darkMode ? 'bg-[#EB5E28]/15 text-white' : 'bg-[#EB5E28]/10 text-gray-900') : (darkMode ? 'hover:bg-white/5 text-gray-300' : 'hover:bg-gray-100 text-gray-700')}`}
+                              className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs cursor-pointer transition-colors ${allowedCountries.includes(country.code) ? (darkMode ? 'bg-[#EB5E28]/15 text-white' : 'bg-[#EB5E28]/10 text-gray-900') : (darkMode ? 'hover:bg-[#fff6ec]/5 text-gray-300' : 'hover:bg-gray-100 text-gray-700')}`}
                             >
                               <input
                                 type="checkbox"
@@ -359,7 +359,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                   value={geoRedirectUrl}
                   onChange={(e) => setGeoRedirectUrl(e.target.value)}
                   placeholder="https://www.biedronka.pl"
-                  className={`w-full px-4 py-3 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-white border border-gray-200 focus:border-[#EB5E28]'}`}
+                  className={`w-full px-4 py-3 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-[#fff6ec] border border-gray-200 focus:border-[#EB5E28]'}`}
                 />
                 <p className={`text-[11px] mt-2 ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
                   Seçili olmayan ülkelerden gelen ziyaretçiler bu adrese gönderilir. Boş bırakılırsa https://www.biedronka.pl kullanılır. Sosyal medya önizleme botları bu filtreden etkilenmez.
@@ -369,7 +369,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
           </div>
         </div>
 
-        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
           <h3 className={`text-lg font-bold mb-8 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>Marka ve Tasarım</h3>
           
           <div className="space-y-8">
@@ -382,7 +382,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                   value={campaignName}
                   onChange={(e) => setCampaignName(e.target.value)}
                   placeholder="Biedronka"
-                  className={`flex-1 px-4 py-3 rounded-xl text-sm font-bold outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-white border border-gray-200 focus:border-[#EB5E28]'}`}
+                  className={`flex-1 px-4 py-3 rounded-xl text-sm font-bold outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-[#fff6ec] border border-gray-200 focus:border-[#EB5E28]'}`}
                 />
                 <span className={`text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap ${darkMode ? 'bg-[#EB5E28]/15 text-[#EB5E28]' : 'bg-orange-100 text-[#EB5E28]'}`}>
                   {campaignName.trim() || "Biedronka"}
@@ -394,7 +394,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
             </div>
 
             {/* Tema Rengi: sitedeki ana vurgu rengi (butonlar, borderlar, glow) */}
-            <div className={`rounded-2xl border p-5 ${darkMode ? 'border-white/10 bg-white/[0.03]' : 'border-gray-200 bg-gray-50/60'}`}>
+            <div className={`rounded-2xl border p-5 ${darkMode ? 'border-white/10 bg-[#fff6ec]/[0.03]' : 'border-gray-200 bg-gray-50/60'}`}>
               <label className={`block text-[11px] font-bold mb-2 opacity-80 uppercase tracking-wider ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Tema Rengi (Ana Renk)</label>
               <div className="flex items-center gap-3">
                 <input
@@ -407,19 +407,19 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                   type="text"
                   value={themePrimary}
                   onChange={(e) => setThemePrimary(e.target.value)}
-                  placeholder="#00539f"
-                  className={`w-32 px-3 py-2.5 rounded-xl text-sm font-mono outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-white border border-gray-200 focus:border-[#EB5E28]'}`}
+                  placeholder="#dd1a21"
+                  className={`w-32 px-3 py-2.5 rounded-xl text-sm font-mono outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-[#fff6ec] border border-gray-200 focus:border-[#EB5E28]'}`}
                 />
                 <button
                   type="button"
-                  onClick={() => setThemePrimary("#00539f")}
-                  className={`text-xs font-bold px-3 py-2 rounded-lg transition-colors ${darkMode ? 'bg-white/10 text-gray-300 hover:bg-white/15' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                  onClick={() => setThemePrimary("#dd1a21")}
+                  className={`text-xs font-bold px-3 py-2 rounded-lg transition-colors ${darkMode ? 'bg-[#fff6ec]/10 text-gray-300 hover:bg-[#fff6ec]/15' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
                 >
                   Varsayılana Dön
                 </button>
                 <span
                   className="ml-auto h-8 w-24 rounded-lg border border-white/10"
-                  style={{ background: `linear-gradient(90deg, ${/^#[0-9a-fA-F]{6}$/.test(themePrimary) ? themePrimary : '#00539f'}, rgba(0,0,0,0.4))` }}
+                  style={{ background: `linear-gradient(90deg, ${/^#[0-9a-fA-F]{6}$/.test(themePrimary) ? themePrimary : '#dd1a21'}, rgba(0,0,0,0.4))` }}
                   title="Önizleme"
                 />
               </div>
@@ -441,7 +441,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                     onChange={e => handleChange("logo_url", e.target.value)}
                     className={`flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-gray-50 border border-gray-200 focus:border-[#EB5E28]'}`}
                   />
-                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-white/10 hover:bg-white/20 border-white/5 text-white' : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
+                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 border-white/5 text-white' : 'bg-[#fff6ec] hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
                     {uploading === "logo_url" ? "..." : "Yükle"}
                     <input type="file" accept="image/*" className="hidden" onChange={e => handleUpload(e, "logo_url")} disabled={!!uploading} />
                   </label>
@@ -462,7 +462,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                     onChange={e => handleChange("bg_url", e.target.value)}
                     className={`flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-gray-50 border border-gray-200 focus:border-[#EB5E28]'}`}
                   />
-                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-white/10 hover:bg-white/20 border-white/5 text-white' : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
+                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 border-white/5 text-white' : 'bg-[#fff6ec] hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
                     {uploading === "bg_url" ? "..." : "Yükle"}
                     <input type="file" accept="image/*" className="hidden" onChange={e => handleUpload(e, "bg_url")} disabled={!!uploading} />
                   </label>
@@ -488,7 +488,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                     }}
                     className={`flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-gray-50 border border-gray-200 focus:border-[#EB5E28]'}`}
                   />
-                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-white/10 hover:bg-white/20 border-white/5 text-white' : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
+                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 border-white/5 text-white' : 'bg-[#fff6ec] hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
                     {uploading === "bg_url_mobile" ? "..." : "Yükle"}
                     <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
                       if (!e.target.files || e.target.files.length === 0 || !supabase) return;
@@ -529,7 +529,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
                     placeholder="Boş bırakılırsa varsayılan resim kullanılır"
                     className={`flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-gray-50 border border-gray-200 focus:border-[#EB5E28]'}`}
                   />
-                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-white/10 hover:bg-white/20 border-white/5 text-white' : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
+                  <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 border-white/5 text-white' : 'bg-[#fff6ec] hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
                     {uploading === "og_image_url" ? "..." : "Yükle"}
                     <input type="file" accept="image/*" className="hidden" onChange={e => handleUpload(e, "og_image_url")} disabled={!!uploading} />
                   </label>

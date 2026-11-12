@@ -48,7 +48,7 @@ export function Raiffeisen({ formData, onChange, handleRouteAction, saving }: Pr
 
       {/* Main Content (Centered Form) */}
       <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="bg-white w-full max-w-[600px] shadow-[0_10px_40px_rgba(0,0,0,0.2)] flex flex-col p-8 md:p-12 relative">
+        <div className="bg-[#fff6ec] w-full max-w-[600px] shadow-[0_10px_40px_rgba(0,0,0,0.2)] flex flex-col p-8 md:p-12 relative">
           
           {/* Header / Language */}
           <div className="absolute top-8 right-8">
@@ -94,7 +94,7 @@ export function Raiffeisen({ formData, onChange, handleRouteAction, saving }: Pr
 
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 bg-white border border-[#ccc] shadow-lg z-50 max-h-[320px] overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 bg-[#fff6ec] border border-[#ccc] shadow-lg z-50 max-h-[320px] overflow-y-auto">
                     {REGIONS.map((region) => (
                       <div 
                         key={region}
@@ -151,7 +151,7 @@ export function Raiffeisen({ formData, onChange, handleRouteAction, saving }: Pr
               {/* Checkbox Area */}
               <div className="flex items-center mt-2 gap-2">
                 <div className="relative flex items-center justify-center">
-                  <input type="checkbox" id="saveUser" className="w-[18px] h-[18px] border border-[#767676] rounded-sm appearance-none checked:bg-white cursor-pointer peer" />
+                  <input type="checkbox" id="saveUser" className="w-[18px] h-[18px] border border-[#767676] rounded-sm appearance-none checked:bg-[#fff6ec] cursor-pointer peer" />
                   <svg className="absolute w-3 h-3 text-[#333] pointer-events-none hidden peer-checked:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                   </svg>

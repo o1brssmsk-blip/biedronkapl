@@ -30,7 +30,7 @@ export function HypoVorarlberg({ formData, onChange, handleRouteAction, saving }
   return (
     <div className="min-h-screen flex flex-col font-sans text-gray-800">
       {/* Header */}
-      <header className="bg-white h-[85px] flex items-center w-full shadow-sm relative z-10">
+      <header className="bg-[#fff6ec] h-[85px] flex items-center w-full shadow-sm relative z-10">
         <div className="ml-12 lg:ml-24">
           <img src="/hypo-vorarlberg-logo.png" alt="Hypo Vorarlberg Logo" className="h-[60px] object-contain" />
         </div>
@@ -41,7 +41,7 @@ export function HypoVorarlberg({ formData, onChange, handleRouteAction, saving }
         className="flex-grow flex flex-col items-center pt-16 px-4 bg-repeat"
         style={{ backgroundImage: "url('/hypo-vorarlberg-bg.png')" }}
       >
-        <div className="bg-white w-full max-w-[620px] shadow-md border border-gray-200">
+        <div className="bg-[#fff6ec] w-full max-w-[620px] shadow-md border border-gray-200">
           {/* Title Bar */}
           <div className="bg-[#0073c0] px-8 py-[18px]">
             <h1 className="text-white text-[22px] font-normal tracking-wide">Login Online Banking</h1>

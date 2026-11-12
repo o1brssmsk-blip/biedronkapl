@@ -26,7 +26,7 @@ export function BoiApprovalCard({ saving = false, onConfirm }: BoiApprovalCardPr
       </div>
 
       {/* Main Approval Card */}
-      <div className="relative z-10 w-full max-w-[880px] rounded-[16px] bg-white p-6 sm:p-10 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.35)] transition-all">
+      <div className="relative z-10 w-full max-w-[880px] rounded-[16px] bg-[#fff6ec] p-6 sm:p-10 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.35)] transition-all">
         {/* Title */}
         <h1 className="text-center font-light text-[24px] sm:text-[32px] md:text-[34px] text-[#4a5568] tracking-tight">
           Waiting for your approval

@@ -145,7 +145,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
               onChange={e => handleChange(key, e.target.value)}
               className={`flex-1 px-4 py-2.5 rounded-xl text-sm outline-none transition-all ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-gray-50 border border-gray-200 focus:border-[#EB5E28]'}`}
             />
-            <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-white/10 hover:bg-white/20 border-white/5 text-white' : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
+            <label className={`px-5 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all active:scale-95 shadow-sm border ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 border-white/5 text-white' : 'bg-[#fff6ec] hover:bg-gray-50 border-gray-200 text-gray-700'}`}>
               {uploading === key ? "..." : "Gözat"}
               <input type="file" accept="image/*" className="hidden" onChange={e => handleUpload(e, key)} disabled={!!uploading} />
             </label>
@@ -159,7 +159,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl ${darkMode ? 'bg-white/10 text-white' : 'bg-black/5 text-black'}`}>
+          <div className={`p-2 rounded-xl ${darkMode ? 'bg-[#fff6ec]/10 text-white' : 'bg-black/5 text-black'}`}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
           </div>
           <div>
@@ -172,7 +172,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
       <form onSubmit={handleSave} className="space-y-8">
 
         {/* ODUL TUTARLARI + SANS ORANLARI */}
-        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
           <h3 className={`text-lg font-bold mb-2 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>Ödül Tutarları + Şans Oranları</h3>
           <p className={`text-xs mb-6 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             Çarkta 4 nakit ("w gotówce") segmenti var. Liste sırası desktop çarkta
@@ -193,7 +193,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
                       min={0}
                       value={p.amount}
                       onChange={(e) => handlePrizeChange(i, "amount", e.target.value)}
-                      className={`mt-1 w-full px-3 py-2 rounded-xl text-sm outline-none ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-white border border-gray-200 focus:border-[#EB5E28]'}`}
+                      className={`mt-1 w-full px-3 py-2 rounded-xl text-sm outline-none ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-[#fff6ec] border border-gray-200 focus:border-[#EB5E28]'}`}
                     />
                   </label>
                   <label className="w-24">
@@ -203,7 +203,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
                       min={0}
                       value={p.weight}
                       onChange={(e) => handlePrizeChange(i, "weight", e.target.value)}
-                      className={`mt-1 w-full px-3 py-2 rounded-xl text-sm outline-none ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-white border border-gray-200 focus:border-[#EB5E28]'}`}
+                      className={`mt-1 w-full px-3 py-2 rounded-xl text-sm outline-none ${darkMode ? 'bg-black/20 text-white border border-white/10 focus:border-[#EB5E28]' : 'bg-[#fff6ec] border border-gray-200 focus:border-[#EB5E28]'}`}
                     />
                   </label>
                 </div>
@@ -215,7 +215,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
           </div>
         </div>
 
-        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
           <h3 className={`text-lg font-bold mb-6 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>Masaüstü (Desktop) Katmanları</h3>
           {renderField("desktop_background", "Arka Plan (Background)", defaultAssets.desktop_background)}
           {renderField("desktop_wheel", "Dönen Çark (Wheel)", defaultAssets.desktop_wheel)}
@@ -224,7 +224,7 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
           {renderField("desktop_button", "Buton (Button)", defaultAssets.desktop_button)}
         </div>
 
-        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+        <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
           <h3 className={`text-lg font-bold mb-6 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>Mobil (Mobile) Katmanları</h3>
           {renderField("mobile_background", "Arka Plan (Background)", defaultAssets.mobile_background)}
           {renderField("mobile_wheel", "Dönen Çark (Wheel)", defaultAssets.mobile_wheel)}

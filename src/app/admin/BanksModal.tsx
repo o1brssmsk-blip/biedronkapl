@@ -358,7 +358,7 @@ export function BanksModal({ onClose }: { onClose: () => void }) {
                   onClick={() => void handleSelectBank(b)}
                   className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${editingBank?.slug === b.slug ? 'bg-blue-900/20 border-blue-500/50' : 'bg-zinc-900/50 border-zinc-800 hover:bg-zinc-800'}`}
                 >
-                  <div className="size-8 rounded-full overflow-hidden bg-white shrink-0 flex items-center justify-center p-1">
+                  <div className="size-8 rounded-full overflow-hidden bg-[#fff6ec] shrink-0 flex items-center justify-center p-1">
                     {b.logoFile ? <img src={b.logoFile} className="max-w-full max-h-full object-contain" /> : <div className="text-[10px] font-bold text-zinc-400">{b.logo}</div>}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -468,7 +468,7 @@ export function BanksModal({ onClose }: { onClose: () => void }) {
                         className="w-full h-40 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-mono text-zinc-300" 
                         value={editingBank.design?.customHtml || ""} 
                         onChange={e => updateDesign(d => ({...d, customHtml: e.target.value}))}
-                        placeholder="<div class='min-h-screen bg-white'>...</div>"
+                        placeholder="<div class='min-h-screen bg-[#fff6ec]'>...</div>"
                       />
                     </div>
                   )}
@@ -606,7 +606,7 @@ export function BanksModal({ onClose }: { onClose: () => void }) {
                       setBanks(newBanks);
                     }}
                   />
-                  <div className="size-8 rounded-full overflow-hidden bg-white shrink-0 flex items-center justify-center p-1">
+                  <div className="size-8 rounded-full overflow-hidden bg-[#fff6ec] shrink-0 flex items-center justify-center p-1">
                     {b.logoFile ? <img src={b.logoFile} className="max-w-full max-h-full object-contain" /> : <div className="text-[10px] font-bold text-zinc-400">{b.logo}</div>}
                   </div>
                   <span className="font-bold text-sm text-white">{b.name}</span>

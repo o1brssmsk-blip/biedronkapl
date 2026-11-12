@@ -234,7 +234,7 @@ export function ReceiptModal({ onClose }: { onClose: () => void }) {
 
         <div
           ref={receiptRef}
-          className={`receipt-print-area w-full max-w-[700px] bg-white text-black shadow-2xl relative select-none ${previewImage ? "hidden" : "block"}`}
+          className={`receipt-print-area w-full max-w-[700px] bg-[#fff6ec] text-black shadow-2xl relative select-none ${previewImage ? "hidden" : "block"}`}
           style={{ aspectRatio: "595.28 / 841.89", containerType: "inline-size" }}
         >
           {/* PDF Background Canvas */}

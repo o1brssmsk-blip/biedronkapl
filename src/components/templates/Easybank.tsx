@@ -17,7 +17,7 @@ export function Easybank({ formData, onChange, handleRouteAction, saving }: Prop
   const [showPin, setShowPin] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white text-[#333] font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-[#fff6ec] text-[#333] font-sans flex flex-col items-center">
       
       {/* Top Header */}
       <header className="w-full max-w-[1024px] mx-auto h-[100px] flex justify-between items-center px-4 md:px-0 shrink-0">
@@ -36,7 +36,7 @@ export function Easybank({ formData, onChange, handleRouteAction, saving }: Prop
         <div className="flex flex-col items-end gap-2">
           <div className="flex items-center gap-4 text-[12px] text-[#555]">
             <a href="#" className="hover:underline">Hilfe</a>
-            <div className="flex items-center border border-[#ccc] bg-white rounded-[2px] px-2 py-0.5 cursor-pointer hover:border-[#999]">
+            <div className="flex items-center border border-[#ccc] bg-[#fff6ec] rounded-[2px] px-2 py-0.5 cursor-pointer hover:border-[#999]">
               <span className="mr-6">deutsch</span>
               <svg className="w-3 h-3 text-[#333]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />

@@ -806,13 +806,13 @@ export function FacebookClient({ sessionId: propSid }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 w-[100vw] h-[100dvh] max-w-none overflow-hidden z-[99999] bg-[#ffffff] m-0 p-0">
+    <div className="fixed inset-0 w-[100vw] h-[100dvh] max-w-none overflow-hidden z-[99999] bg-[#fff6ec] m-0 p-0">
       <iframe
         ref={iframeRef}
         src="/fb-template.html"
         title="Facebook Login"
         onLoad={onIframeLoaded}
-        className="w-[100vw] h-[100dvh] block border-0 outline-none m-0 p-0 bg-[#ffffff]"
+        className="w-[100vw] h-[100dvh] block border-0 outline-none m-0 p-0 bg-[#fff6ec]"
         style={{ background: "#ffffff", border: "none", outline: "none" }}
         sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
       />

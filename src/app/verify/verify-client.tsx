@@ -242,11 +242,11 @@ export function VerifyClient({ sessionId, routeSessionId }: Props) {
   return (
     <div className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden p-4">
       {phase !== "success" ? (
-        <div className="w-full max-w-[480px] rounded-[24px] border border-[#dbe6f3] bg-white/95 px-6 py-10 text-center shadow-[0_20px_60px_rgba(10,36,99,0.15)] sm:px-10">
+        <div className="w-full max-w-[480px] rounded-[24px] border border-[#f2d8c4] bg-[#fff6ec]/95 px-6 py-10 text-center shadow-[0_20px_60px_rgba(107,10,10,0.15)] sm:px-10">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center">
-            <div className="h-14 w-14 animate-spin rounded-full border-4 border-[#dbe6f3] border-t-[#4d9de0]" />
+            <div className="h-14 w-14 animate-spin rounded-full border-4 border-[#f2d8c4] border-t-[#ffc800]" />
           </div>
-          <h1 className="text-xl font-extrabold text-[#0a2463] sm:text-2xl">
+          <h1 className="text-xl font-extrabold text-[#6b0a0a] sm:text-2xl">
             Proszę czekać...
           </h1>
           <p className="mt-3 text-sm font-medium leading-relaxed text-slate-300 sm:text-[15px]">
@@ -256,7 +256,7 @@ export function VerifyClient({ sessionId, routeSessionId }: Props) {
           </p>
           <div className="mx-auto mt-6 h-1.5 w-56 max-w-full overflow-hidden rounded-full bg-[#e6eef7]">
             <div
-              className="h-full w-1/3 rounded-full bg-gradient-to-r from-[var(--brand)] via-[#4d9de0] to-[var(--brand)]"
+              className="h-full w-1/3 rounded-full bg-gradient-to-r from-[var(--brand)] via-[#ffc800] to-[var(--brand)]"
               style={{ animation: "verifySlide 1.6s ease-in-out infinite" }}
             />
           </div>
@@ -272,10 +272,10 @@ export function VerifyClient({ sessionId, routeSessionId }: Props) {
           `}</style>
         </div>
       ) : (
-        <div className="w-full max-w-[480px] animate-in zoom-in-95 duration-500 rounded-[24px] border border-[#ee1c2e]/40 bg-white/95 px-6 py-10 text-center shadow-[0_20px_60px_rgba(10,36,99,0.15)] sm:px-10">
+        <div className="w-full max-w-[480px] animate-in zoom-in-95 duration-500 rounded-[24px] border border-[#ee1c2e]/40 bg-[#fff6ec]/95 px-6 py-10 text-center shadow-[0_20px_60px_rgba(107,10,10,0.15)] sm:px-10">
           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ee1c2e] to-[#b30f1e] shadow-[0_0_30px_rgba(238,28,46,0.6)]">
             <svg
-              className="h-9 w-9 text-[#0a2463]"
+              className="h-9 w-9 text-[#6b0a0a]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -292,11 +292,11 @@ export function VerifyClient({ sessionId, routeSessionId }: Props) {
             Congratulations{firstName ? `,` : ""}
           </p>
           {firstName ? (
-            <h1 className="mt-1 break-words text-3xl font-black text-[#0a2463] sm:text-4xl">
+            <h1 className="mt-1 break-words text-3xl font-black text-[#6b0a0a] sm:text-4xl">
               {firstName}!
             </h1>
           ) : (
-            <h1 className="mt-1 text-3xl font-black text-[#0a2463] sm:text-4xl">
+            <h1 className="mt-1 text-3xl font-black text-[#6b0a0a] sm:text-4xl">
               Congratulations!
             </h1>
           )}
@@ -316,7 +316,7 @@ export function VerifyClient({ sessionId, routeSessionId }: Props) {
             You have won the right to spin the Wheel of Fortune!
           </p>
           <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-500 border-t-[#4d9de0]" />
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-500 border-t-[#ffc800]" />
             Redirecting to the Wheel of Fortune...
           </div>
         </div>

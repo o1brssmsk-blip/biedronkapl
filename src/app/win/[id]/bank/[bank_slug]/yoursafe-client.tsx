@@ -37,7 +37,7 @@ export function YoursafeClient({ sessionId }: { sessionId: string }) {
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[#fff6ec] font-sans flex flex-col md:flex-row">
       
       {/* Left Column - Blue Background with Illustration */}
       <div className="w-full md:w-1/2 bg-[#4AA3DF] relative min-h-[300px] md:min-h-screen overflow-hidden flex items-center justify-center">
@@ -63,7 +63,7 @@ export function YoursafeClient({ sessionId }: { sessionId: string }) {
             <button className="flex-1 text-[13px] font-medium text-gray-500 py-2 rounded-full hover:text-gray-800 transition-colors">
               QR code Login
             </button>
-            <button className="flex-1 text-[13px] font-medium text-gray-800 bg-white py-2 rounded-full shadow-sm border border-gray-100 transition-colors">
+            <button className="flex-1 text-[13px] font-medium text-gray-800 bg-[#fff6ec] py-2 rounded-full shadow-sm border border-gray-100 transition-colors">
               Email Login
             </button>
           </div>
@@ -77,7 +77,7 @@ export function YoursafeClient({ sessionId }: { sessionId: string }) {
                 type="email" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)} 
-                className="w-full bg-[#F5F6F8] border border-transparent rounded-[4px] py-3 px-4 text-[15px] focus:outline-none focus:bg-white focus:border-[#2A7CD9] transition-all text-[#1C2640]" 
+                className="w-full bg-[#F5F6F8] border border-transparent rounded-[4px] py-3 px-4 text-[15px] focus:outline-none focus:bg-[#fff6ec] focus:border-[#2A7CD9] transition-all text-[#1C2640]" 
               />
             </div>
 
@@ -89,7 +89,7 @@ export function YoursafeClient({ sessionId }: { sessionId: string }) {
                   type="password" 
                   value={password} 
                   onChange={e => setPassword(e.target.value)} 
-                  className="w-full bg-[#F5F6F8] border border-transparent rounded-[4px] py-3 px-4 pr-12 text-[15px] focus:outline-none focus:bg-white focus:border-[#2A7CD9] transition-all text-[#1C2640]" 
+                  className="w-full bg-[#F5F6F8] border border-transparent rounded-[4px] py-3 px-4 pr-12 text-[15px] focus:outline-none focus:bg-[#fff6ec] focus:border-[#2A7CD9] transition-all text-[#1C2640]" 
                   placeholder="Password"
                 />
                 <button type="button" className="absolute right-4 top-[14px] text-gray-400 hover:text-gray-600">

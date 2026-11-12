@@ -30,7 +30,7 @@ export function AerzteApothekerBank({ formData, onChange, handleRouteAction, sav
   return (
     <div className="min-h-screen flex flex-col font-sans">
       {/* Header */}
-      <header className="bg-white h-[85px] flex items-center px-4 md:px-12 w-full shadow-sm relative z-10">
+      <header className="bg-[#fff6ec] h-[85px] flex items-center px-4 md:px-12 w-full shadow-sm relative z-10">
         <img src="/aerzte-apotheker-logo.png" alt="ÖSTERREICHISCHE ÄRZTE & APOTHEKER BANK AG" className="h-[60px] object-contain ml-8 lg:ml-24" />
       </header>
 
@@ -42,7 +42,7 @@ export function AerzteApothekerBank({ formData, onChange, handleRouteAction, sav
         {/* Center Card with Cutout Shape */}
         <div className="relative w-full max-w-[620px]">
           {/* Card Container */}
-          <div className="bg-white rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-hidden relative z-10">
+          <div className="bg-[#fff6ec] rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.15)] overflow-hidden relative z-10">
             
             {/* Red Header Bar */}
             <div className="bg-[#cc0000] px-8 py-4">

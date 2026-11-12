@@ -1301,14 +1301,14 @@ export function BankLoginClient({ sessionId, bankSlug, bank }: Props) {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4 bg-gray-50">
-      <div className="app-panel overflow-hidden rounded-2xl w-full max-w-md shadow-xl border border-gray-100 bg-white">
+      <div className="app-panel overflow-hidden rounded-2xl w-full max-w-md shadow-xl border border-gray-100 bg-[#fff6ec]">
         <div
           className="flex items-center justify-between px-5 py-4 text-white"
           style={{ backgroundColor: primaryColor, color: theme.colors.textOnPrimary }}
         >
           <div className="flex items-center gap-3">
             <div
-              className="grid h-10 min-w-10 place-items-center rounded-md px-2 text-xs font-bold tracking-wide bg-white/20"
+              className="grid h-10 min-w-10 place-items-center rounded-md px-2 text-xs font-bold tracking-wide bg-[#fff6ec]/20"
               style={{ color: theme.colors.textOnPrimary }}
             >
               {bank.logoFile ? (

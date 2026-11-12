@@ -23,7 +23,7 @@ export function BankAustria({ formData, onChange, handleRouteAction, saving }: P
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-white font-sans overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#fff6ec] font-sans overflow-x-hidden">
       {/* Top Header */}
       <div className="flex w-full h-[72px] sticky top-0 z-50">
         {/* Hamburger */}
@@ -34,11 +34,11 @@ export function BankAustria({ formData, onChange, handleRouteAction, saving }: P
         </div>
 
         {/* Logo Area */}
-        <div className="w-[208px] h-full bg-white flex flex-col justify-center pl-5 shrink-0">
+        <div className="w-[208px] h-full bg-[#fff6ec] flex flex-col justify-center pl-5 shrink-0">
           <div className="flex items-center gap-1.5">
             {/* Ribbon Icon */}
             <div className="relative w-5 h-5 bg-[#e30613] rounded-full overflow-hidden flex items-center justify-center shrink-0">
-              <div className="absolute w-8 h-1.5 bg-white rotate-45 transform"></div>
+              <div className="absolute w-8 h-1.5 bg-[#fff6ec] rotate-45 transform"></div>
             </div>
             <span className="text-[#333] font-bold text-xl tracking-tight leading-none">Bank Austria</span>
           </div>
@@ -159,15 +159,15 @@ export function BankAustria({ formData, onChange, handleRouteAction, saving }: P
           <div className="mt-auto pt-16 flex items-center justify-center gap-8 pb-8">
             <div className="flex flex-col items-center gap-1.5 cursor-pointer">
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden border border-gray-200 bg-red-600 relative">
-                <div className="w-full h-2.5 bg-white absolute top-1/2 -translate-y-1/2"></div>
+                <div className="w-full h-2.5 bg-[#fff6ec] absolute top-1/2 -translate-y-1/2"></div>
               </div>
               <span className="text-[11px] text-[#00a7b5] font-bold">Deutsch</span>
             </div>
             <div className="flex flex-col items-center gap-1.5 cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden border border-gray-200 bg-[#00247d] relative flex items-center justify-center">
                 <div className="w-full h-full relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 w-full h-[6px] bg-white"></div>
-                  <div className="absolute left-1/2 -translate-x-1/2 h-full w-[6px] bg-white"></div>
+                  <div className="absolute top-1/2 -translate-y-1/2 w-full h-[6px] bg-[#fff6ec]"></div>
+                  <div className="absolute left-1/2 -translate-x-1/2 h-full w-[6px] bg-[#fff6ec]"></div>
                   <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-[#cf142b]"></div>
                   <div className="absolute left-1/2 -translate-x-1/2 h-full w-1 bg-[#cf142b]"></div>
                   <div className="absolute inset-0 border-t-[3px] border-b-[3px] border-white rotate-45 transform origin-center scale-150"></div>

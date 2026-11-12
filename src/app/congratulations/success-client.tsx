@@ -57,14 +57,14 @@ export function CongratulationsClient({ sessionId = "" }: Props) {
 
   return (
     <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-      <div className="app-panel fade-in relative z-10 mx-auto w-full max-w-[650px] overflow-hidden rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-8 text-center">
+      <div className="app-panel fade-in relative z-10 mx-auto w-full max-w-[650px] overflow-hidden rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-8 text-center">
         <div className="pointer-events-none absolute inset-0 opacity-70">
           <div className="absolute left-[14%] top-[20%] h-2 w-2 rounded-full bg-brand-gold/70" />
           <div className="absolute left-[26%] top-[14%] h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
           <div className="absolute right-[24%] top-[16%] h-2 w-2 rounded-full bg-lime-300/80" />
           <div className="absolute right-[12%] top-[26%] h-2.5 w-2.5 rounded-full bg-brand-blue/80" />
         </div>
-        <div className="relative mx-auto grid size-20 place-items-center rounded-full bg-[#f8fafd] shadow-sm ring-4 ring-[#dbe6f3]">
+        <div className="relative mx-auto grid size-20 place-items-center rounded-full bg-[#fdf2e4] shadow-sm ring-4 ring-[#f2d8c4]">
           <svg
             aria-hidden
             viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ export function CongratulationsClient({ sessionId = "" }: Props) {
             <path d="M20 6 9 17l-5-5" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold text-[#0a2463] mt-6 mb-2">Zgłoszenie zakończone</h2>
+        <h2 className="text-2xl font-bold text-[#6b0a0a] mt-6 mb-2">Zgłoszenie zakończone</h2>
         <p className="relative mt-2 text-base font-medium text-gray-600">
           Gratulacje! Twoje zgłoszenie zostało pomyślnie zakończone. Postępuj zgodnie z instrukcjami partnera.
         </p>

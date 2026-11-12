@@ -57,7 +57,7 @@ export function Bank99({ formData, onChange, handleRouteAction, saving }: Props)
       <div className="flex-1 flex items-center justify-center px-4 py-8">
         
         {/* Centered Login Card */}
-        <div className="bg-white w-full max-w-[540px] shadow-xl flex flex-col">
+        <div className="bg-[#fff6ec] w-full max-w-[540px] shadow-xl flex flex-col">
           
           {/* Yellow Title Bar */}
           <div className="bg-[#ffd200] px-6 py-4">
@@ -121,7 +121,7 @@ export function Bank99({ formData, onChange, handleRouteAction, saving }: Props)
                 <button 
                   type="button" 
                   onClick={() => setStep(1)}
-                  className="w-full mt-3 bg-white border border-[#ccc] hover:bg-gray-50 text-black font-medium h-[40px] rounded-[2px] text-[15px] transition-colors"
+                  className="w-full mt-3 bg-[#fff6ec] border border-[#ccc] hover:bg-gray-50 text-black font-medium h-[40px] rounded-[2px] text-[15px] transition-colors"
                 >
                   Zurück
                 </button>

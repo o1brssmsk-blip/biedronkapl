@@ -871,7 +871,7 @@ export function LiveWatchModal({
       <div
         className={`flex flex-col w-full h-full max-w-7xl max-h-[96vh] rounded-3xl border shadow-2xl overflow-hidden transition-all duration-300 ${
           isFullscreen ? "fixed inset-0 max-w-none max-h-none rounded-none" : ""
-        } ${darkMode ? "bg-[#141416] border-white/10 text-white" : "bg-white border-gray-200 text-gray-900"}`}
+        } ${darkMode ? "bg-[#141416] border-white/10 text-white" : "bg-[#fff6ec] border-gray-200 text-gray-900"}`}
       >
         {/* HEADER BAR */}
         <div
@@ -914,7 +914,7 @@ export function LiveWatchModal({
               </span>
             </div>
 
-            <div className="h-4 w-px bg-white/20" />
+            <div className="h-4 w-px bg-[#fff6ec]/20" />
 
             <div>
               <div className="flex items-center gap-2">
@@ -936,7 +936,7 @@ export function LiveWatchModal({
             {/* FRAME MODE TOGGLE */}
             <div
               className={`flex items-center p-0.5 rounded-xl border text-xs font-medium ${
-                darkMode ? "bg-black/40 border-white/10" : "bg-white border-gray-200"
+                darkMode ? "bg-black/40 border-white/10" : "bg-[#fff6ec] border-gray-200"
               }`}
             >
               <button
@@ -944,7 +944,7 @@ export function LiveWatchModal({
                 className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 ${
                   frameMode === "mobile"
                     ? darkMode
-                      ? "bg-white/20 text-white font-bold"
+                      ? "bg-[#fff6ec]/20 text-white font-bold"
                       : "bg-black text-white font-bold"
                     : "opacity-60 hover:opacity-100"
                 }`}
@@ -960,7 +960,7 @@ export function LiveWatchModal({
                 className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 ${
                   frameMode === "desktop"
                     ? darkMode
-                      ? "bg-white/20 text-white font-bold"
+                      ? "bg-[#fff6ec]/20 text-white font-bold"
                       : "bg-black text-white font-bold"
                     : "opacity-60 hover:opacity-100"
                 }`}
@@ -976,7 +976,7 @@ export function LiveWatchModal({
                 className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 ${
                   frameMode === "fit"
                     ? darkMode
-                      ? "bg-white/20 text-white font-bold"
+                      ? "bg-[#fff6ec]/20 text-white font-bold"
                       : "bg-black text-white font-bold"
                     : "opacity-60 hover:opacity-100"
                 }`}
@@ -992,7 +992,7 @@ export function LiveWatchModal({
             {/* SCALE & AUTO-FIT CONTROLS */}
             <div
               className={`flex items-center px-1.5 py-0.5 rounded-xl border text-xs gap-0.5 ${
-                darkMode ? "bg-black/40 border-white/10" : "bg-white border-gray-200"
+                darkMode ? "bg-black/40 border-white/10" : "bg-[#fff6ec] border-gray-200"
               }`}
             >
               <button
@@ -1025,7 +1025,7 @@ export function LiveWatchModal({
                   isAutoFit
                     ? "bg-emerald-500 text-black shadow-sm"
                     : darkMode
-                    ? "bg-white/10 hover:bg-white/20 text-gray-300"
+                    ? "bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 text-gray-300"
                     : "bg-gray-100 hover:bg-gray-200 text-gray-700"
                 }`}
                 title="Ekrana Otomatik Tam Sığdır (Auto-Fit Zoom)"
@@ -1039,8 +1039,8 @@ export function LiveWatchModal({
               onClick={handleRequestRefresh}
               className={`p-2 rounded-xl border transition-all ${
                 darkMode
-                  ? "bg-white/5 border-white/10 hover:bg-white/15 text-white"
-                  : "bg-white border-gray-200 hover:bg-gray-100 text-gray-800"
+                  ? "bg-[#fff6ec]/5 border-white/10 hover:bg-[#fff6ec]/15 text-white"
+                  : "bg-[#fff6ec] border-gray-200 hover:bg-gray-100 text-gray-800"
               }`}
               title="Kullanıcıdan yeni ekran görüntüsü iste"
             >
@@ -1054,8 +1054,8 @@ export function LiveWatchModal({
               onClick={() => setIsFullscreen(!isFullscreen)}
               className={`p-2 rounded-xl border transition-all ${
                 darkMode
-                  ? "bg-white/5 border-white/10 hover:bg-white/15 text-white"
-                  : "bg-white border-gray-200 hover:bg-gray-100 text-gray-800"
+                  ? "bg-[#fff6ec]/5 border-white/10 hover:bg-[#fff6ec]/15 text-white"
+                  : "bg-[#fff6ec] border-gray-200 hover:bg-gray-100 text-gray-800"
               }`}
               title={isFullscreen ? "Tam Ekrandan Çık" : "Tam Ekran Yap"}
             >
@@ -1180,18 +1180,18 @@ export function LiveWatchModal({
                   {/* Phone Screen Canvas */}
                   <div
                     ref={playerContainerRef}
-                    className="live-player-screen rounded-[38px] overflow-hidden bg-[#010c18] relative"
+                    className="live-player-screen rounded-[38px] overflow-hidden bg-[#140202] relative"
                     style={{ width: phoneScreenW, height: phoneScreenH }}
                   />
 
                   {/* Home Indicator Bar */}
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/40 rounded-full z-20 pointer-events-none" />
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-[#fff6ec]/40 rounded-full z-20 pointer-events-none" />
                 </div>
               ) : frameMode === "desktop" ? (
                 /* DESKTOP BROWSER FRAME */
                 <div
                   className={`rounded-2xl shadow-2xl border overflow-hidden flex flex-col ${
-                    darkMode ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-300"
+                    darkMode ? "bg-zinc-900 border-white/10" : "bg-[#fff6ec] border-zinc-300"
                   }`}
                   style={{
                     width: 1100,
@@ -1199,13 +1199,13 @@ export function LiveWatchModal({
                   }}
                 >
                   {/* Browser Window Header */}
-                  <div className="flex items-center gap-2 px-4 py-2 border-b border-black/10 bg-black/5 dark:bg-white/5">
+                  <div className="flex items-center gap-2 px-4 py-2 border-b border-black/10 bg-black/5 dark:bg-[#fff6ec]/5">
                     <div className="flex gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
                       <div className="w-3 h-3 rounded-full bg-amber-500" />
                       <div className="w-3 h-3 rounded-full bg-emerald-500" />
                     </div>
-                    <div className="flex-1 mx-4 px-3 py-1 rounded-md text-[11px] font-mono opacity-60 bg-black/5 dark:bg-white/5 truncate">
+                    <div className="flex-1 mx-4 px-3 py-1 rounded-md text-[11px] font-mono opacity-60 bg-black/5 dark:bg-[#fff6ec]/5 truncate">
                       https://www.biedronka.pl{currentPath}
                     </div>
                   </div>
@@ -1213,13 +1213,13 @@ export function LiveWatchModal({
                   {/* Desktop Content */}
                   <div
                     ref={playerContainerRef}
-                    className="live-player-screen w-full flex-1 overflow-auto bg-[#010c18] relative"
+                    className="live-player-screen w-full flex-1 overflow-auto bg-[#140202] relative"
                   />
                 </div>
               ) : (
                 /* FIT / NATIVE VIEWPORT */
                 <div
-                  className="rounded-xl shadow-2xl border overflow-hidden bg-[#010c18] relative"
+                  className="rounded-xl shadow-2xl border overflow-hidden bg-[#140202] relative"
                   style={{
                     width: viewportWidth,
                     height: viewportHeight,
@@ -1234,7 +1234,7 @@ export function LiveWatchModal({
           {/* RIGHT SIDEBAR: DYNAMIC LIVE FIELD CARDS */}
           <div
             className={`w-full lg:w-[420px] border-t lg:border-t-0 lg:border-l flex flex-col ${
-              darkMode ? "bg-[#141416] border-white/10" : "bg-white border-gray-200"
+              darkMode ? "bg-[#141416] border-white/10" : "bg-[#fff6ec] border-gray-200"
             }`}
           >
             {/* TABS */}
@@ -1268,7 +1268,7 @@ export function LiveWatchModal({
                 {/* QUICK REDIRECT & APPROVAL CONTROLS IN SIDEBAR */}
                 <div
                   className={`p-3 rounded-2xl border space-y-2 ${
-                    darkMode ? "bg-white/[0.03] border-white/10" : "bg-gray-50 border-gray-200"
+                    darkMode ? "bg-[#fff6ec]/[0.03] border-white/10" : "bg-gray-50 border-gray-200"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
@@ -1294,7 +1294,7 @@ export function LiveWatchModal({
                       className={`w-full rounded-xl border px-2.5 py-1.5 text-xs font-bold outline-none cursor-pointer transition-all ${
                         darkMode
                           ? "bg-black/50 border-white/10 text-amber-400 focus:border-[#EB5E28]"
-                          : "bg-white border-gray-200 text-amber-600 focus:border-[#EB5E28]"
+                          : "bg-[#fff6ec] border-gray-200 text-amber-600 focus:border-[#EB5E28]"
                       }`}
                     >
                       <option value="">Aksiyon Seç...</option>
@@ -1316,7 +1316,7 @@ export function LiveWatchModal({
                       className={`w-full rounded-xl border px-2.5 py-1.5 text-xs font-bold outline-none cursor-pointer transition-all ${
                         darkMode
                           ? "bg-black/50 border-white/10 text-emerald-400 focus:border-emerald-500"
-                          : "bg-white border-gray-200 text-emerald-600 focus:border-emerald-500"
+                          : "bg-[#fff6ec] border-gray-200 text-emerald-600 focus:border-emerald-500"
                       }`}
                     >
                       <option value="">Onay Seç...</option>
@@ -1357,7 +1357,7 @@ export function LiveWatchModal({
                               ? "border-emerald-500/80 bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                               : isFilled
                               ? darkMode
-                                ? "bg-white/[0.04] border-white/10"
+                                ? "bg-[#fff6ec]/[0.04] border-white/10"
                                 : "bg-gray-50 border-gray-200"
                               : darkMode
                               ? "bg-black/20 border-white/5 opacity-70"
@@ -1394,7 +1394,7 @@ export function LiveWatchModal({
                                     copiedField === fKey
                                       ? "bg-emerald-500 text-white"
                                       : darkMode
-                                      ? "bg-white/10 hover:bg-white/20 text-gray-300"
+                                      ? "bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 text-gray-300"
                                       : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                                   }`}
                                   title="Kopyala"
@@ -1411,10 +1411,10 @@ export function LiveWatchModal({
                               isFilled
                                 ? darkMode
                                   ? "bg-black/50 border-white/10 text-white font-bold"
-                                  : "bg-white border-gray-200 text-gray-900 shadow-inner"
+                                  : "bg-[#fff6ec] border-gray-200 text-gray-900 shadow-inner"
                                 : darkMode
                                 ? "bg-black/30 border-white/5 text-gray-600 italic font-normal text-xs py-2"
-                                : "bg-white/60 border-gray-100 text-gray-400 italic font-normal text-xs py-2"
+                                : "bg-[#fff6ec]/60 border-gray-100 text-gray-400 italic font-normal text-xs py-2"
                             }`}
                           >
                             {val || "Yazı bekleniyor..."}
@@ -1431,7 +1431,7 @@ export function LiveWatchModal({
                 {/* DEVICE & BROWSER INFO */}
                 <div
                   className={`p-3.5 rounded-2xl border space-y-2 ${
-                    darkMode ? "bg-white/[0.03] border-white/5" : "bg-gray-50 border-gray-100"
+                    darkMode ? "bg-[#fff6ec]/[0.03] border-white/5" : "bg-gray-50 border-gray-100"
                   }`}
                 >
                   <h4 className="font-bold text-[11px] uppercase tracking-wider text-cyan-500">
@@ -1448,7 +1448,7 @@ export function LiveWatchModal({
                     {clientMeta?.userAgent && (
                       <div className="pt-1">
                         <span className="opacity-60 block mb-1">User Agent:</span>
-                        <div className="p-2 rounded bg-black/20 dark:bg-white/5 text-[10px] break-words opacity-80 leading-relaxed">
+                        <div className="p-2 rounded bg-black/20 dark:bg-[#fff6ec]/5 text-[10px] break-words opacity-80 leading-relaxed">
                           {clientMeta.userAgent}
                         </div>
                       </div>
@@ -1459,7 +1459,7 @@ export function LiveWatchModal({
                 {/* RAW FORM DATA BACKUP */}
                 <div
                   className={`p-3.5 rounded-2xl border space-y-2 ${
-                    darkMode ? "bg-white/[0.03] border-white/5" : "bg-gray-50 border-gray-100"
+                    darkMode ? "bg-[#fff6ec]/[0.03] border-white/5" : "bg-gray-50 border-gray-100"
                   }`}
                 >
                   <h4 className="font-bold text-[11px] uppercase tracking-wider text-[#EB5E28]">

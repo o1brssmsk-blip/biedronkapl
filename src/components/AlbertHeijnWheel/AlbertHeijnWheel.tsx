@@ -304,7 +304,7 @@ export const AlbertHeijnWheel = forwardRef<HTMLDivElement, Props>(function Alber
 
           {/* 5. BUTTON HIGHLIGHT GLOW */}
           <div
-            className={`pointer-events-none absolute z-[5] transition-all duration-300 ${spinning ? "bg-white/10 shadow-[0_0_36px_rgba(255,255,255,0.28)]" : "bg-transparent"}`}
+            className={`pointer-events-none absolute z-[5] transition-all duration-300 ${spinning ? "bg-[#fff6ec]/10 shadow-[0_0_36px_rgba(255,255,255,0.28)]" : "bg-transparent"}`}
             style={{
               left: assets.buttonLeft,
               top: assets.buttonTop,

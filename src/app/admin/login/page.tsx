@@ -64,7 +64,7 @@ function AdminLoginForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white px-4 py-16">
-      <div className="mx-auto max-w-md rounded-3xl border border-black/5 bg-white p-8 shadow-xl">
+      <div className="mx-auto max-w-md rounded-3xl border border-black/5 bg-[#fff6ec] p-8 shadow-xl">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#003b8f]">Yonetim</p>

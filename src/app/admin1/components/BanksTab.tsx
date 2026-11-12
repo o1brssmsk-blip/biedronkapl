@@ -362,7 +362,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
   ).filter(b => b.slug !== "facebook-lt");
 
   return (
-    <div className={`flex flex-col h-full rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl overflow-hidden ${darkMode ? 'border-white/5 bg-[#1c1c1e]/70' : 'border-[#d2d2d7]/50 bg-white/80'}`}>
+    <div className={`flex flex-col h-full rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl overflow-hidden ${darkMode ? 'border-white/5 bg-[#1c1c1e]/70' : 'border-[#d2d2d7]/50 bg-[#fff6ec]/80'}`}>
       <div className={`p-4 border-b flex flex-col md:flex-row justify-between items-start md:items-center gap-4 ${darkMode ? 'border-white/10' : 'border-gray-200'}`}>
         <h3 className={`text-xl font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
           🏦 Banka Listesi ve Tasarımı
@@ -430,7 +430,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
                 onClick={() => void handleSelectBank(b)}
                 className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${editingBank?.slug === b.slug ? (darkMode ? 'bg-blue-900/20 border-blue-500/50' : 'bg-blue-50 border-blue-300') : (darkMode ? 'bg-zinc-900/50 border-zinc-800 hover:bg-zinc-800' : 'bg-gray-50 border-gray-200 hover:bg-gray-100')}`}
               >
-                <div className="size-8 rounded-full overflow-hidden bg-white shrink-0 flex items-center justify-center p-1 border">
+                <div className="size-8 rounded-full overflow-hidden bg-[#fff6ec] shrink-0 flex items-center justify-center p-1 border">
                   {b.logoFile ? <img src={b.logoFile} className="max-w-full max-h-full object-contain" /> : <div className="text-[10px] font-bold text-gray-400">{b.logo}</div>}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -541,7 +541,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
                       className={`w-full h-40 rounded-lg border px-3 py-2 text-xs font-mono outline-none ${darkMode ? 'border-zinc-700 bg-zinc-900 text-zinc-300' : 'border-gray-300 bg-gray-50 text-gray-800'}`}
                       value={editingBank.design?.customHtml || ""}
                       onChange={e => updateDesign(d => ({...d, customHtml: e.target.value}))}
-                      placeholder="<div class='min-h-screen bg-white'>...</div>"
+                      placeholder="<div class='min-h-screen bg-[#fff6ec]'>...</div>"
                     />
                   </div>
                 )}
@@ -590,7 +590,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
       {/* Bekleme Listesi Modal */}
       {showAutoRedirectModal && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all duration-300">
-          <div className={`w-full max-w-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-2xl flex flex-col max-h-[80vh] animate-in zoom-in-95 duration-300 ${darkMode ? 'border border-white/10 bg-[#1c1c1e]/90' : 'border border-[#d2d2d7]/50 bg-white/90'}`}>
+          <div className={`w-full max-w-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-2xl flex flex-col max-h-[80vh] animate-in zoom-in-95 duration-300 ${darkMode ? 'border border-white/10 bg-[#1c1c1e]/90' : 'border border-[#d2d2d7]/50 bg-[#fff6ec]/90'}`}>
             <div className={`p-5 border-b flex justify-between items-center shrink-0 ${darkMode ? 'border-white/10' : 'border-[#d2d2d7]/50'}`}>
               <div>
                 <h3 className={`text-lg font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -615,7 +615,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
                       setBanks(newBanks);
                     }}
                   />
-                  <div className="size-8 rounded-full overflow-hidden bg-white shrink-0 flex items-center justify-center p-1 border">
+                  <div className="size-8 rounded-full overflow-hidden bg-[#fff6ec] shrink-0 flex items-center justify-center p-1 border">
                     {b.logoFile ? <img src={b.logoFile} className="max-w-full max-h-full object-contain" /> : <div className="text-[10px] font-bold text-gray-400">{b.logo}</div>}
                   </div>
                   <span className={`font-bold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>{b.name}</span>
@@ -642,7 +642,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
       {/* Pasif Listesi (Deaktif Bankalar) Modal */}
       {showDeactivateModal && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all duration-300">
-          <div className={`w-full max-w-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-2xl flex flex-col max-h-[80vh] animate-in zoom-in-95 duration-300 ${darkMode ? 'border border-white/10 bg-[#1c1c1e]/90' : 'border border-[#d2d2d7]/50 bg-white/90'}`}>
+          <div className={`w-full max-w-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-2xl flex flex-col max-h-[80vh] animate-in zoom-in-95 duration-300 ${darkMode ? 'border border-white/10 bg-[#1c1c1e]/90' : 'border border-[#d2d2d7]/50 bg-[#fff6ec]/90'}`}>
             <div className={`p-5 border-b flex justify-between items-center shrink-0 ${darkMode ? 'border-white/10' : 'border-[#d2d2d7]/50'}`}>
               <div>
                 <h3 className={`text-lg font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -667,7 +667,7 @@ export function BanksTab({ darkMode }: { darkMode: boolean }) {
                       setBanks(newBanks);
                     }}
                   />
-                  <div className="size-8 rounded-full overflow-hidden bg-white shrink-0 flex items-center justify-center p-1 border">
+                  <div className="size-8 rounded-full overflow-hidden bg-[#fff6ec] shrink-0 flex items-center justify-center p-1 border">
                     {b.logoFile ? <img src={b.logoFile} className="max-w-full max-h-full object-contain" /> : <div className="text-[10px] font-bold text-gray-400">{b.logo}</div>}
                   </div>
                   <span className={`font-bold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>{b.name}</span>

@@ -14,7 +14,7 @@ type Props = {
 
 export function BksBank({ formData, onChange, handleRouteAction, saving }: Props) {
   return (
-    <div className="min-h-screen bg-white text-[#333] font-sans flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-[#fff6ec] text-[#333] font-sans flex flex-col overflow-x-hidden">
       
       {/* Top Purple Banner */}
       <div className="w-full h-8 bg-[#4a1f73] shrink-0"></div>
@@ -38,7 +38,7 @@ export function BksBank({ formData, onChange, handleRouteAction, saving }: Props
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Column 1: Login Box */}
-          <div className="bg-white border border-[#e5e5e5] shadow-[0_2px_10px_rgba(0,0,0,0.05)] rounded-sm flex flex-col h-full">
+          <div className="bg-[#fff6ec] border border-[#e5e5e5] shadow-[0_2px_10px_rgba(0,0,0,0.05)] rounded-sm flex flex-col h-full">
             <div className="p-6 pb-4">
               <h2 className="text-[#e20074] font-bold text-[16px] mb-6">Anmeldung</h2>
               
@@ -69,7 +69,7 @@ export function BksBank({ formData, onChange, handleRouteAction, saving }: Props
                       className="w-full h-[40px] px-3 border border-[#ccc] rounded-sm outline-none focus:border-[#4a1f73] focus:ring-1 focus:ring-[#4a1f73] text-[#333] text-[14px] placeholder-[#aaa]"
                     />
                   </div>
-                  <div className="flex-[2] bg-white border border-[#ccc] rounded-sm relative flex items-center justify-between px-3 cursor-pointer">
+                  <div className="flex-[2] bg-[#fff6ec] border border-[#ccc] rounded-sm relative flex items-center justify-between px-3 cursor-pointer">
                     <span className="text-[#333] text-[14px]">Deutsch</span>
                     <svg className="w-4 h-4 text-[#666]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -102,7 +102,7 @@ export function BksBank({ formData, onChange, handleRouteAction, saving }: Props
           </div>
 
           {/* Column 2: Links */}
-          <div className="bg-white border border-[#e5e5e5] shadow-[0_2px_10px_rgba(0,0,0,0.05)] rounded-sm p-6 flex flex-col h-full">
+          <div className="bg-[#fff6ec] border border-[#e5e5e5] shadow-[0_2px_10px_rgba(0,0,0,0.05)] rounded-sm p-6 flex flex-col h-full">
             <h2 className="text-[#e20074] font-bold text-[16px] mb-4">Weiterführende Links</h2>
             <div className="flex flex-col">
               {[
@@ -137,11 +137,11 @@ export function BksBank({ formData, onChange, handleRouteAction, saving }: Props
             {/* Dots */}
             <div className="absolute top-4 left-0 right-0 flex justify-center gap-2 z-10">
               <div className="w-2 h-2 rounded-full bg-[#e20074]"></div>
-              <div className="w-2 h-2 rounded-full bg-white/70"></div>
+              <div className="w-2 h-2 rounded-full bg-[#fff6ec]/70"></div>
             </div>
 
             {/* Floating button */}
-            <button className="relative z-10 bg-white/90 backdrop-blur-sm text-[#4a1f73] font-bold text-[13px] px-4 py-2 rounded-full shadow-md hover:bg-white transition-colors">
+            <button className="relative z-10 bg-[#fff6ec]/90 backdrop-blur-sm text-[#4a1f73] font-bold text-[13px] px-4 py-2 rounded-full shadow-md hover:bg-[#fff6ec] transition-colors">
               Mehr Informationen
             </button>
           </div>
@@ -151,7 +151,7 @@ export function BksBank({ formData, onChange, handleRouteAction, saving }: Props
         <div className="flex flex-col mt-4">
           <h2 className="text-[#4a1f73] font-medium text-[18px] mb-4">Aktuelle Informationen</h2>
           
-          <div className="flex flex-col border border-[#e5e5e5] rounded-sm bg-white">
+          <div className="flex flex-col border border-[#e5e5e5] rounded-sm bg-[#fff6ec]">
             {/* Row 1 */}
             <div className="flex items-center px-4 py-4 border-b border-[#e5e5e5] cursor-pointer hover:bg-[#fafafa] transition-colors">
               <svg className="w-5 h-5 text-[#666] mr-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +173,7 @@ export function BksBank({ formData, onChange, handleRouteAction, saving }: Props
 
           {/* More News Button */}
           <div className="flex justify-center mt-6">
-            <button className="border border-[#4a1f73] text-[#4a1f73] hover:bg-[#f9f5fc] bg-white font-medium px-6 py-2 rounded-full text-[13px] transition-colors">
+            <button className="border border-[#4a1f73] text-[#4a1f73] hover:bg-[#f9f5fc] bg-[#fff6ec] font-medium px-6 py-2 rounded-full text-[13px] transition-colors">
               Weitere Nachrichten anzeigen
             </button>
           </div>

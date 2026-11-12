@@ -106,7 +106,7 @@ export function AdminPreview() {
 
       <div className="relative z-10 flex min-h-screen">
         <aside className="hidden w-[280px] shrink-0 border-r border-white/10 bg-[#0a1528]/90 px-5 py-6 backdrop-blur-xl xl:flex xl:flex-col">
-          <div className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
+          <div className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-[#fff6ec]/5 px-4 py-4">
             <div>
               <p className="text-[11px] uppercase tracking-[0.28em] text-cyan-200/70">Preview Mode</p>
               <h1 className="mt-2 text-xl font-semibold tracking-tight">Admin Control</h1>
@@ -131,7 +131,7 @@ export function AdminPreview() {
                         className={`flex items-center justify-between rounded-2xl px-3 py-3 text-sm transition ${
                           active
                             ? "bg-gradient-to-r from-cyan-400/20 to-blue-500/10 text-white ring-1 ring-cyan-300/25"
-                            : "text-white/65 hover:bg-white/5 hover:text-white"
+                            : "text-white/65 hover:bg-[#fff6ec]/5 hover:text-white"
                         }`}
                       >
                         <span>{item}</span>
@@ -161,7 +161,7 @@ export function AdminPreview() {
                     <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-200">
                       Sistem Stabil
                     </span>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/60">
+                    <span className="rounded-full border border-white/10 bg-[#fff6ec]/5 px-3 py-1 text-xs font-medium text-white/60">
                       Hollanda • Premium Preview
                     </span>
                   </div>
@@ -176,7 +176,7 @@ export function AdminPreview() {
                 <div className="flex flex-wrap gap-3">
                   <Link
                     href="/admin1"
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+                    className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-[#fff6ec]/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-[#fff6ec]/10 hover:text-white"
                   >
                     Mevcut Panele Dön
                   </Link>
@@ -201,7 +201,7 @@ export function AdminPreview() {
                       <p className="text-sm text-white/60">{card.label}</p>
                       <p className="mt-3 text-3xl font-semibold tracking-tight">{card.value}</p>
                     </div>
-                    <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-white/75">
+                    <span className="rounded-full bg-[#fff6ec]/10 px-2.5 py-1 text-xs font-semibold text-white/75">
                       {card.delta}
                     </span>
                   </div>
@@ -218,15 +218,15 @@ export function AdminPreview() {
                     <h3 className="mt-2 text-2xl font-semibold tracking-tight">Oturum Operasyon Masası</h3>
                   </div>
                   <div className="flex flex-wrap gap-2 text-xs text-white/65">
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Tümü</span>
+                    <span className="rounded-full border border-white/10 bg-[#fff6ec]/5 px-3 py-1.5">Tümü</span>
                     <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1.5 text-cyan-200">Çark</span>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Kod</span>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Banka</span>
+                    <span className="rounded-full border border-white/10 bg-[#fff6ec]/5 px-3 py-1.5">Kod</span>
+                    <span className="rounded-full border border-white/10 bg-[#fff6ec]/5 px-3 py-1.5">Banka</span>
                   </div>
                 </div>
 
                 <div className="mt-5 overflow-hidden rounded-[24px] border border-white/10">
-                  <div className="grid grid-cols-[1.4fr_1fr_0.9fr_0.9fr_0.8fr_0.9fr] bg-white/[0.04] px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                  <div className="grid grid-cols-[1.4fr_1fr_0.9fr_0.9fr_0.8fr_0.9fr] bg-[#fff6ec]/[0.04] px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                     <span>Kullanıcı</span>
                     <span>Akış</span>
                     <span>Banka</span>
@@ -238,7 +238,7 @@ export function AdminPreview() {
                     {liveSessions.map((session) => (
                       <div
                         key={`${session.name}-${session.bank}`}
-                        className="grid grid-cols-[1.4fr_1fr_0.9fr_0.9fr_0.8fr_0.9fr] items-center px-4 py-4 text-sm text-white/75 transition hover:bg-white/[0.03]"
+                        className="grid grid-cols-[1.4fr_1fr_0.9fr_0.9fr_0.8fr_0.9fr] items-center px-4 py-4 text-sm text-white/75 transition hover:bg-[#fff6ec]/[0.03]"
                       >
                         <div>
                           <p className="font-medium text-white">{session.name}</p>
@@ -264,7 +264,7 @@ export function AdminPreview() {
                     {commandActions.map((action) => (
                       <div
                         key={action.title}
-                        className="rounded-[22px] border border-white/10 bg-white/[0.035] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
+                        className="rounded-[22px] border border-white/10 bg-[#fff6ec]/[0.035] p-4 transition hover:border-white/20 hover:bg-[#fff6ec]/[0.05]"
                       >
                         <div className={`mb-3 h-1.5 rounded-full bg-gradient-to-r ${action.accent}`} />
                         <p className="text-sm font-semibold text-white">{action.title}</p>
@@ -284,7 +284,7 @@ export function AdminPreview() {
                   </div>
                   <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {healthItems.map((item) => (
-                      <div key={item.label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                      <div key={item.label} className="rounded-2xl border border-white/10 bg-[#fff6ec]/[0.04] p-4">
                         <div className="flex items-center gap-2">
                           <span className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
                           <span className="text-sm text-white/60">{item.label}</span>
@@ -304,18 +304,18 @@ export function AdminPreview() {
                     <p className="text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200/60">Tasarım Laboratuvarı</p>
                     <h3 className="mt-2 text-2xl font-semibold tracking-tight">Çark ve akış ön izleme kartları</h3>
                   </div>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/65">
+                  <span className="rounded-full border border-white/10 bg-[#fff6ec]/5 px-3 py-1 text-xs font-medium text-white/65">
                     Asset Preview
                   </span>
                 </div>
 
                 <div className="mt-5 grid gap-4 md:grid-cols-3">
                   {wheelLayers.map((layer) => (
-                    <div key={layer.title} className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
+                    <div key={layer.title} className="rounded-[24px] border border-white/10 bg-[#fff6ec]/[0.04] p-4">
                       <div className={`h-36 rounded-[18px] bg-gradient-to-br ${layer.gradient} p-4 shadow-inner`}>
                         <div className="flex h-full items-end justify-between rounded-[14px] border border-white/15 bg-black/10 p-3">
-                          <div className="h-16 w-16 rounded-full border-4 border-white/60 bg-white/10" />
-                          <div className="h-8 w-20 rounded-full bg-white/80" />
+                          <div className="h-16 w-16 rounded-full border-4 border-white/60 bg-[#fff6ec]/10" />
+                          <div className="h-8 w-20 rounded-full bg-[#fff6ec]/80" />
                         </div>
                       </div>
                       <p className="mt-4 text-base font-semibold text-white">{layer.title}</p>
@@ -335,7 +335,7 @@ export function AdminPreview() {
                         <span className="text-white/72">{bar.label}</span>
                         <span className="font-semibold text-white">{bar.value}%</span>
                       </div>
-                      <div className="h-3 rounded-full bg-white/8">
+                      <div className="h-3 rounded-full bg-[#fff6ec]/8">
                         <div
                           className="h-3 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-orange-400"
                           style={{ width: `${bar.value}%` }}

@@ -30,7 +30,7 @@ export function Volkskreditbank({ formData, onChange, handleRouteAction, saving 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
         
         {/* Login Card */}
-        <div className="bg-white w-full max-w-[540px] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+        <div className="bg-[#fff6ec] w-full max-w-[540px] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
           
           {/* Top Right Language Selector */}
           <div className="flex justify-end mb-6">

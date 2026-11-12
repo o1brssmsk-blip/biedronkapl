@@ -37,7 +37,7 @@ export function PosojilnicaBank({ formData, onChange, handleRouteAction, saving 
 
       {/* Main Content (Centered Form) */}
       <div className="flex-1 flex items-center justify-center px-4 py-12 relative z-10">
-        <div className="bg-white w-full max-w-[600px] shadow-[0_10px_40px_rgba(0,0,0,0.15)] flex flex-col p-8 md:p-12 relative">
+        <div className="bg-[#fff6ec] w-full max-w-[600px] shadow-[0_10px_40px_rgba(0,0,0,0.15)] flex flex-col p-8 md:p-12 relative">
           
           {/* Header / Language */}
           <div className="absolute top-8 right-8">
@@ -83,7 +83,7 @@ export function PosojilnicaBank({ formData, onChange, handleRouteAction, saving 
 
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 bg-white border border-[#ccc] shadow-lg z-50 max-h-[320px] overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 bg-[#fff6ec] border border-[#ccc] shadow-lg z-50 max-h-[320px] overflow-y-auto">
                     {REGIONS.map((region) => (
                       <div 
                         key={region}
@@ -172,7 +172,7 @@ export function PosojilnicaBank({ formData, onChange, handleRouteAction, saving 
       </div>
 
       {/* Footer */}
-      <footer className="w-full py-6 flex flex-wrap justify-center items-center gap-4 text-[12px] text-[#555] z-10 px-4 bg-white/40 backdrop-blur-sm">
+      <footer className="w-full py-6 flex flex-wrap justify-center items-center gap-4 text-[12px] text-[#555] z-10 px-4 bg-[#fff6ec]/40 backdrop-blur-sm">
         <a href="#" className="hover:text-black flex items-center gap-1">
           Impressum 
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>

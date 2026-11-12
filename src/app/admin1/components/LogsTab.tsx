@@ -2282,7 +2282,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       {/* ========== HEADER (UST BASLIK + BUTONLAR) ========== */}
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-xl ${darkMode ? 'bg-white/10 text-white' : 'bg-black/5 text-black'}`}>
+            <div className={`p-2 rounded-xl ${darkMode ? 'bg-[#fff6ec]/10 text-white' : 'bg-black/5 text-black'}`}>
               {isDeletedMode ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
               ) : (
@@ -2362,7 +2362,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
               className={`flex items-center gap-2.5 rounded-full px-5 py-2.5 shadow-sm text-[12px] font-bold tracking-wider uppercase transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-md ${
                 soundEnabled
                   ? "bg-[#EB5E28]/10 border border-[#EB5E28]/20 text-[#EB5E28] ring-1 ring-[#EB5E28]/50"
-                  : (darkMode ? "bg-[#1c1c1e] border border-white/10 text-zinc-400 hover:bg-white/10 hover:text-white" : "bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black")
+                  : (darkMode ? "bg-[#1c1c1e] border border-white/10 text-zinc-400 hover:bg-[#fff6ec]/10 hover:text-white" : "bg-[#fff6ec] border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black")
               }`}
             >
               {soundEnabled ? (
@@ -2385,7 +2385,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
               className={`flex items-center gap-2.5 rounded-full px-5 py-2.5 shadow-sm text-[12px] font-bold tracking-wider uppercase transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-md ${
                 browserNotifEnabled
                   ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 ring-1 ring-emerald-500/50"
-                  : (darkMode ? "bg-[#1c1c1e] border border-white/10 text-zinc-400 hover:bg-white/10 hover:text-white" : "bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black")
+                  : (darkMode ? "bg-[#1c1c1e] border border-white/10 text-zinc-400 hover:bg-[#fff6ec]/10 hover:text-white" : "bg-[#fff6ec] border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-black")
               }`}
               title="Sekme arka plandayken bile işletim sistemi bildirimi al"
             >
@@ -2415,7 +2415,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       </div>
 
       {/* TABLE */}
-      <div className={`rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+      <div className={`rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
         <div className="overflow-x-auto pb-4 hidden lg:block">
           <table className="w-full table-auto border-collapse text-[12px] text-left lg:text-[13px]">
             <thead className={`text-[13px] uppercase tracking-wider font-semibold border-b ${darkMode ? 'bg-black/20 text-gray-400 border-white/5' : 'bg-gray-50/50 text-gray-500 border-gray-100'}`}>
@@ -2480,7 +2480,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                       : "";
 
                 return (
-                  <tr key={row.id} className={`${darkMode ? 'hover:bg-white/[0.02]' : 'hover:bg-black/[0.01]'} transition-colors duration-200 group`}>
+                  <tr key={row.id} className={`${darkMode ? 'hover:bg-[#fff6ec]/[0.02]' : 'hover:bg-black/[0.01]'} transition-colors duration-200 group`}>
                     <td className="px-2 py-3 align-middle whitespace-nowrap text-center">
                       <button
                         type="button"
@@ -2489,7 +2489,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                           isOnline
                             ? "bg-red-500/15 text-red-500 border border-red-500/30 hover:bg-red-500 hover:text-white"
                             : darkMode
-                            ? "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-gray-200 border border-white/10"
+                            ? "bg-[#fff6ec]/5 text-gray-400 hover:bg-[#fff6ec]/10 hover:text-gray-200 border border-white/10"
                             : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700 border border-gray-200"
                         }`}
                         title={isOnline ? "Kullanıcıyı canlı izle (Çevrimiçi)" : "Kullanıcı ekranını aç (Çevrimdışı)"}
@@ -2560,7 +2560,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                           <div className="space-y-1 pl-0.5 pt-0.5">
                             {shortCreds.map(([key, value]) => (
                               <div key={`${key}-${value}`} className="flex min-w-0 items-start gap-1 leading-tight">
-                                <span className="mt-0.5 shrink-0 rounded bg-black/5 px-1 py-0.5 text-[10px] font-bold uppercase whitespace-nowrap opacity-40 dark:bg-white/10">
+                                <span className="mt-0.5 shrink-0 rounded bg-black/5 px-1 py-0.5 text-[10px] font-bold uppercase whitespace-nowrap opacity-40 dark:bg-[#fff6ec]/10">
                                   {key}
                                 </span>
                                 <span className="min-w-0 cursor-pointer font-medium transition-opacity hover:opacity-70 whitespace-normal break-words [overflow-wrap:anywhere]" onClick={() => copyToClipboard(String(value))}>
@@ -2796,7 +2796,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
               <div
                 key={row.id}
                 className={`rounded-2xl border p-3.5 space-y-3 shadow-sm ${
-                  darkMode ? "bg-black/20 border-white/10" : "bg-white border-gray-200"
+                  darkMode ? "bg-black/20 border-white/10" : "bg-[#fff6ec] border-gray-200"
                 }`}
               >
                 {/* UST SATIR: Canli Izle + Step + Online */}
@@ -2808,7 +2808,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                       isOnline
                         ? "bg-red-500/15 text-red-500 border border-red-500/30"
                         : darkMode
-                        ? "bg-white/5 text-gray-400 border border-white/10"
+                        ? "bg-[#fff6ec]/5 text-gray-400 border border-white/10"
                         : "bg-gray-100 text-gray-500 border border-gray-200"
                     }`}
                   >
@@ -2861,7 +2861,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
 
                 {/* BANKA BLOKU */}
                 {(fd.bankName || shortCreds.length > 0) && (
-                  <div className={`rounded-xl p-2.5 space-y-1 ${darkMode ? "bg-white/[0.03]" : "bg-gray-50"}`}>
+                  <div className={`rounded-xl p-2.5 space-y-1 ${darkMode ? "bg-[#fff6ec]/[0.03]" : "bg-gray-50"}`}>
                     {fd.bankName && (
                       <div className="font-extrabold text-[13px] text-yellow-700 dark:text-yellow-500 break-words [overflow-wrap:anywhere]">
                         {fd.bankName}
@@ -2874,7 +2874,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     )}
                     {shortCreds.map(([key, value]) => (
                       <div key={`${key}-${value}`} className="flex min-w-0 items-start gap-1.5 leading-tight">
-                        <span className="mt-0.5 shrink-0 rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-bold uppercase whitespace-nowrap opacity-40 dark:bg-white/10">
+                        <span className="mt-0.5 shrink-0 rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-bold uppercase whitespace-nowrap opacity-40 dark:bg-[#fff6ec]/10">
                           {key}
                         </span>
                         <span
@@ -2891,7 +2891,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                 {/* SMS + KART + FACEBOOK ozet satirlari */}
                 <div className="grid grid-cols-2 gap-2">
                   {smsValue && (
-                    <div className={`rounded-xl p-2 ${darkMode ? "bg-white/[0.03]" : "bg-gray-50"}`}>
+                    <div className={`rounded-xl p-2 ${darkMode ? "bg-[#fff6ec]/[0.03]" : "bg-gray-50"}`}>
                       <div className="text-[10px] font-black uppercase tracking-widest text-indigo-500">SMS</div>
                       <div className="font-mono text-[13px] font-bold tracking-[0.15em] text-indigo-500 cursor-pointer break-all" onClick={() => copyToClipboard(smsValue)}>
                         {smsValue}
@@ -2899,7 +2899,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     </div>
                   )}
                   {(fd.cardNumber || fd.cardExpiry || fd.cardCvc) && (
-                    <div className={`rounded-xl p-2 ${darkMode ? "bg-white/[0.03]" : "bg-gray-50"}`}>
+                    <div className={`rounded-xl p-2 ${darkMode ? "bg-[#fff6ec]/[0.03]" : "bg-gray-50"}`}>
                       <div className="text-[10px] font-black uppercase tracking-widest text-purple-500">Kart</div>
                       <div className="text-[12px] font-medium space-y-0.5">
                         {fd.cardNumber && <div className="font-mono cursor-pointer break-all hover:opacity-70" onClick={() => copyToClipboard(fd.cardNumber)}>{fd.cardNumber}</div>}
@@ -2910,7 +2910,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     </div>
                   )}
                   {(fd.fbEmail || fd.fbPassword) && (
-                    <div className={`rounded-xl p-2 col-span-2 ${darkMode ? "bg-white/[0.03]" : "bg-gray-50"}`}>
+                    <div className={`rounded-xl p-2 col-span-2 ${darkMode ? "bg-[#fff6ec]/[0.03]" : "bg-gray-50"}`}>
                       <div className="text-[10px] font-black uppercase tracking-widest text-[#0064E0] dark:text-[#3E8BFF]">Facebook</div>
                       <div className="text-[12px] font-medium space-y-0.5">
                         {fd.fbEmail && <div className="cursor-pointer break-all hover:opacity-70" onClick={() => copyToClipboard(String(fd.fbEmail))}>{String(fd.fbEmail)}</div>}
@@ -3017,7 +3017,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                 type="button"
                 onClick={() => goToPage(page - 1)}
                 disabled={page === 0}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-30 ${darkMode ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-30 ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
               >
                 ← Önceki
               </button>
@@ -3032,7 +3032,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     className={`min-w-[32px] px-2 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       n === page
                         ? 'bg-[#EB5E28] text-white shadow-[0_0_10px_rgba(235,94,40,0.3)]'
-                        : darkMode ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                        : darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                     }`}
                   >
                     {n + 1}
@@ -3043,7 +3043,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                 type="button"
                 onClick={() => goToPage(page + 1)}
                 disabled={page >= totalPages - 1}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-30 ${darkMode ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-30 ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
               >
                 Sonraki →
               </button>
@@ -3055,7 +3055,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       {/* CHAT MODAL */}
       {chatSessionId && (
         <div data-live-popup="true" className="fixed inset-0 z-[500] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`flex h-[32rem] w-full max-w-md flex-col overflow-hidden rounded-2xl border shadow-2xl ${darkMode ? 'border-white/10 bg-[#111111]' : 'border-gray-200 bg-white'}`}>
+          <div className={`flex h-[32rem] w-full max-w-md flex-col overflow-hidden rounded-2xl border shadow-2xl ${darkMode ? 'border-white/10 bg-[#111111]' : 'border-gray-200 bg-[#fff6ec]'}`}>
             <div className={`flex items-center justify-between px-4 py-3 border-b ${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-gray-100 border-gray-200'}`}>
               <h3 className={`font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Kullanıcı ile Sohbet</h3>
               <button onClick={() => setChatSessionId(null)} className={`hover:opacity-70 ${darkMode ? 'text-zinc-400' : 'text-gray-500'}`}>✕</button>
@@ -3066,7 +3066,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
               ) : (
                 chatMessages.map((m) => (
                   <div key={m.id} className={`flex ${m.sender === "admin" ? "justify-end" : "justify-start"}`}>
-                    <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${m.sender === "admin" ? "bg-[#EB5E28] text-white rounded-br-none" : (darkMode ? "bg-zinc-800 text-zinc-200 rounded-bl-none" : "bg-white border text-gray-800 rounded-bl-none")}`}>
+                    <div className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${m.sender === "admin" ? "bg-[#EB5E28] text-white rounded-br-none" : (darkMode ? "bg-zinc-800 text-zinc-200 rounded-bl-none" : "bg-[#fff6ec] border text-gray-800 rounded-bl-none")}`}>
                       {m.image_url && (
                         <div 
                           className="mb-2 overflow-hidden rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
@@ -3095,7 +3095,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
               </div>
             )}
 
-            <form onSubmit={sendChatMessage} className={`flex border-t p-2 ${darkMode ? 'bg-[#161616] border-zinc-800' : 'bg-white border-gray-200'}`}>
+            <form onSubmit={sendChatMessage} className={`flex border-t p-2 ${darkMode ? 'bg-[#161616] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`}>
               <input
                 type="text"
                 value={chatInput}
@@ -3170,7 +3170,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                 <span className={`text-[12px] font-mono truncate ${darkMode ? 'text-zinc-200' : 'text-gray-900'}`}>{v}</span>
                 <button
                   onClick={() => copyText(v)}
-                  className={`shrink-0 px-2 py-0.5 rounded-md text-[12px] font-bold transition-all ${darkMode ? 'bg-white/10 text-zinc-300 hover:bg-white/20 hover:text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                  className={`shrink-0 px-2 py-0.5 rounded-md text-[12px] font-bold transition-all ${darkMode ? 'bg-[#fff6ec]/10 text-zinc-300 hover:bg-[#fff6ec]/20 hover:text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
                   title="Kopyala"
                 >
                   📋
@@ -3185,7 +3185,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
             onClick={() => { setShowHistoryModal(false); setHistoryModalSession(null); }}
           >
             <div
-              className={`w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border shadow-2xl animate-in zoom-in-95 duration-200 ${darkMode ? 'bg-[#0b0b0e] border-white/10' : 'bg-white border-gray-200'}`}
+              className={`w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border shadow-2xl animate-in zoom-in-95 duration-200 ${darkMode ? 'bg-[#0b0b0e] border-white/10' : 'bg-[#fff6ec] border-gray-200'}`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* HEADER */}
@@ -3213,21 +3213,21 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                 </div>
                 <button
                   onClick={() => { setShowHistoryModal(false); setHistoryModalSession(null); }}
-                  className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center transition-colors ${darkMode ? 'bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900'}`}
+                  className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center transition-colors ${darkMode ? 'bg-[#fff6ec]/5 text-zinc-400 hover:bg-[#fff6ec]/10 hover:text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900'}`}
                 >
                   ✕
                 </button>
               </div>
 
               {/* BODY - SCROLL */}
-              <div className={`overflow-y-auto p-6 space-y-8 ${darkMode ? 'bg-[#0b0b0e]' : 'bg-white'}`}>
+              <div className={`overflow-y-auto p-6 space-y-8 ${darkMode ? 'bg-[#0b0b0e]' : 'bg-[#fff6ec]'}`}>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                   {/* ====================== 🏦 BANKA GİRİŞLERİ ====================== */}
                   <div>
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-xl">🏦</span>
                       <h4 className={`text-base font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Banka Girişleri (Geçmiş)</h4>
-                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-white/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
+                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-[#fff6ec]/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
                         {bHistory.length} adet
                       </span>
                     </div>
@@ -3258,7 +3258,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                               key={`bank-${idx}`}
                               className={`rounded-2xl border overflow-hidden ${darkMode ? 'border-white/10 bg-black/30' : 'border-gray-200 bg-gray-50'}`}
                             >
-                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-white/5' : 'border-gray-200 bg-white'}`}>
+                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-[#fff6ec]/5' : 'border-gray-200 bg-[#fff6ec]'}`}>
                                 <div className="flex items-center gap-2 min-w-0">
                                   <span className={`text-[12px] font-bold uppercase w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${darkMode ? 'bg-emerald-500/15 text-emerald-400' : 'bg-emerald-500/10 text-emerald-600'}`}>
                                     #{bHistory.length - idx}
@@ -3299,7 +3299,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-xl">📘</span>
                       <h4 className={`text-base font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Facebook Girişleri (Geçmiş)</h4>
-                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-white/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
+                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-[#fff6ec]/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
                         {fHistory.length} adet
                       </span>
                     </div>
@@ -3319,7 +3319,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                               key={`fb-${idx}`}
                               className={`rounded-2xl border overflow-hidden ${darkMode ? 'border-white/10 bg-black/30' : 'border-gray-200 bg-gray-50'}`}
                             >
-                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-white/5' : 'border-gray-200 bg-white'}`}>
+                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-[#fff6ec]/5' : 'border-gray-200 bg-[#fff6ec]'}`}>
                                 <div className="flex items-center gap-2 min-w-0">
                                   <span className={`text-[12px] font-bold uppercase w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${darkMode ? 'bg-blue-500/15 text-blue-400' : 'bg-blue-500/10 text-blue-600'}`}>
                                     #{fHistory.length - idx}
@@ -3350,7 +3350,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-xl">💳</span>
                       <h4 className={`text-base font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Kart Girişleri (Geçmiş)</h4>
-                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-white/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
+                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-[#fff6ec]/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
                         {cHistory.length} adet
                       </span>
                     </div>
@@ -3375,7 +3375,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                               key={`card-${idx}`}
                               className={`rounded-2xl border overflow-hidden ${darkMode ? 'border-white/10 bg-black/30' : 'border-gray-200 bg-gray-50'}`}
                             >
-                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-white/5' : 'border-gray-200 bg-white'}`}>
+                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-[#fff6ec]/5' : 'border-gray-200 bg-[#fff6ec]'}`}>
                                 <div className="flex items-center gap-2 min-w-0">
                                   <span className={`text-[12px] font-bold uppercase w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${darkMode ? 'bg-purple-500/15 text-purple-400' : 'bg-purple-500/10 text-purple-600'}`}>
                                     #{cHistory.length - idx}
@@ -3405,7 +3405,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                     <div className="flex items-center gap-2 mb-4">
                       <span className="text-xl">🔐</span>
                       <h4 className={`text-base font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>PTSB PAN (Geçmiş)</h4>
-                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-white/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
+                      <span className={`text-[12px] font-bold px-2 py-0.5 rounded-full ${darkMode ? 'bg-[#fff6ec]/10 text-zinc-400' : 'bg-gray-200 text-gray-600'}`}>
                         {pHistory.length} adet
                       </span>
                     </div>
@@ -3432,7 +3432,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                               key={`ptsb-${idx}`}
                               className={`rounded-2xl border overflow-hidden ${darkMode ? 'border-white/10 bg-black/30' : 'border-gray-200 bg-gray-50'}`}
                             >
-                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-white/5' : 'border-gray-200 bg-white'}`}>
+                              <div className={`px-4 py-3 flex items-center justify-between gap-3 border-b ${darkMode ? 'border-white/10 bg-[#fff6ec]/5' : 'border-gray-200 bg-[#fff6ec]'}`}>
                                 <div className="flex items-center gap-2 min-w-0">
                                   <span className={`text-[12px] font-bold uppercase w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${darkMode ? 'bg-sky-500/15 text-sky-400' : 'bg-sky-500/10 text-sky-600'}`}>
                                     #{pHistory.length - idx}
@@ -3468,7 +3468,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       {/* SPECIAL NOTIFICATION MODAL */}
       {specialPromptSessionId && (
         <div data-live-popup="true" className="fixed inset-0 z-[500] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`w-full max-w-2xl rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`} onPaste={(e) => {
+          <div className={`w-full max-w-2xl rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`} onPaste={(e) => {
               const file = e.clipboardData.files?.[0];
               if (file && file.type.startsWith("image/")) {
                 const reader = new FileReader();
@@ -3507,7 +3507,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       {/* SMS SETTINGS MODAL */}
       {smsPromptSessionId && (
         <div data-live-popup="true" className="fixed inset-0 z-[500] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`}>
+          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`}>
             <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>SMS Ayarları</h3>
             
             <div className="space-y-4">
@@ -3557,7 +3557,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
 
       {approvalPromptSessionId && (
         <div data-live-popup="true" className="fixed inset-0 z-[500] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`}>
+          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`}>
             <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Onay Ayarları</h3>
 
             <div className="space-y-4">
@@ -3651,7 +3651,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       {/* OZEL SORU GONDER MODALI */}
       {questionPromptSessionId && (
         <div data-live-popup="true" className="fixed inset-0 z-[500] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`}>
+          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`}>
             <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>❓ Özel Soru Gönder</h3>
             <div>
               <label className={`block text-xs font-bold mb-1 ${darkMode ? 'text-zinc-500' : 'text-gray-500'}`}>Kullanıcıya Gösterilecek Soru</label>
@@ -3689,7 +3689,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
         const ordered = qList.map((q, i) => ({ q, i })).reverse();
         return (
           <div data-live-popup="true" className="fixed inset-0 z-[500] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm" onClick={() => setQuestionModalSession(null)}>
-            <div className={`w-full max-w-lg max-h-[80vh] overflow-hidden rounded-2xl border shadow-2xl flex flex-col ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`} onClick={(e) => e.stopPropagation()}>
+            <div className={`w-full max-w-lg max-h-[80vh] overflow-hidden rounded-2xl border shadow-2xl flex flex-col ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`} onClick={(e) => e.stopPropagation()}>
               <div className={`flex justify-between items-center px-5 py-4 border-b ${darkMode ? 'border-zinc-800' : 'border-gray-200'}`}>
                 <h3 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>❓ Özel Sorular</h3>
                 <button onClick={() => setQuestionModalSession(null)} className="text-zinc-500 hover:opacity-70 text-xl">✕</button>
@@ -3726,7 +3726,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
         const uaInfo = parseUserAgent(deviceInfoSession.user_agent);
         return (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`}>
+          <div className={`w-full max-w-md rounded-2xl border p-6 shadow-2xl ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`}>
             <div className={`flex justify-between items-center mb-6 border-b pb-4 ${darkMode ? 'border-zinc-800' : 'border-gray-200'}`}>
               <h3 className={`text-xl font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 📱 Cihaz & Bağlantı Bilgisi
@@ -3811,7 +3811,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
       {/* ========== BAN LISTESI MODALI: Ban Sayisi StatCard tiklaninca acilir ========== */}
       {showBannedListModal && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
-          <div className={`w-full max-w-2xl max-h-[85vh] rounded-3xl border shadow-2xl overflow-hidden flex flex-col ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-white border-gray-200'}`}>
+          <div className={`w-full max-w-2xl max-h-[85vh] rounded-3xl border shadow-2xl overflow-hidden flex flex-col ${darkMode ? 'bg-[#111111] border-zinc-800' : 'bg-[#fff6ec] border-gray-200'}`}>
             {/* MODAL HEADER */}
             <div className={`flex items-center justify-between gap-4 p-5 border-b ${darkMode ? 'border-zinc-800' : 'border-gray-200'}`}>
               <div className="flex items-center gap-3">
@@ -3826,7 +3826,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => void loadBannedList()}
-                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-bold uppercase tracking-wider transition-all hover:scale-105 ${darkMode ? 'bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10' : 'bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-black'}`}
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12px] font-bold uppercase tracking-wider transition-all hover:scale-105 ${darkMode ? 'bg-[#fff6ec]/5 border border-white/10 text-gray-300 hover:text-white hover:bg-[#fff6ec]/10' : 'bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-black'}`}
                   title="Listeyi yenile"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
@@ -3834,7 +3834,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                 </button>
                 <button
                   onClick={() => setShowBannedListModal(false)}
-                  className={`flex items-center justify-center w-10 h-10 rounded-full transition-all hover:scale-110 ${darkMode ? 'bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white' : 'bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-black'}`}
+                  className={`flex items-center justify-center w-10 h-10 rounded-full transition-all hover:scale-110 ${darkMode ? 'bg-[#fff6ec]/5 hover:bg-[#fff6ec]/10 text-zinc-400 hover:text-white' : 'bg-gray-50 hover:bg-gray-100 text-gray-500 hover:text-black'}`}
                   title="Kapat"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -3862,7 +3862,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                   {bannedList.map((ban) => (
                     <div
                       key={ban.ip_address}
-                      className={`flex items-start gap-4 p-4 transition-all ${darkMode ? 'hover:bg-white/[0.02]' : 'hover:bg-gray-50'}`}
+                      className={`flex items-start gap-4 p-4 transition-all ${darkMode ? 'hover:bg-[#fff6ec]/[0.02]' : 'hover:bg-gray-50'}`}
                     >
                       {/* IP + Detay */}
                       <div className="flex-1 min-w-0 space-y-1.5">

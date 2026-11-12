@@ -152,7 +152,7 @@ export function LanguageTab({ darkMode }: { darkMode: boolean }) {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl ${darkMode ? 'bg-white/10 text-white' : 'bg-black/5 text-black'}`}>
+          <div className={`p-2 rounded-xl ${darkMode ? 'bg-[#fff6ec]/10 text-white' : 'bg-black/5 text-black'}`}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
           </div>
           <div>
@@ -161,7 +161,7 @@ export function LanguageTab({ darkMode }: { darkMode: boolean }) {
           </div>
         </div>
         
-        <div className={`flex items-center gap-3 p-3 rounded-2xl border shadow-sm backdrop-blur-md ${darkMode ? 'bg-white/5 border-white/10' : 'bg-white/80 border-gray-200'}`}>
+        <div className={`flex items-center gap-3 p-3 rounded-2xl border shadow-sm backdrop-blur-md ${darkMode ? 'bg-[#fff6ec]/5 border-white/10' : 'bg-[#fff6ec]/80 border-gray-200'}`}>
           <label className={`text-sm font-bold ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Hızlı Çeviri:</label>
           <select 
             value={settings.site_language || "nl"}
@@ -177,7 +177,7 @@ export function LanguageTab({ darkMode }: { darkMode: boolean }) {
 
       <form onSubmit={handleSave} className="space-y-8">
         {groups.map((group, idx) => (
-          <div key={idx} className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+          <div key={idx} className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
             <h3 className={`text-lg font-bold mb-6 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>{group.title}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {group.fields.map(f => (

@@ -38,7 +38,7 @@ export function SelectionGrid({ items = DEFAULT_ITEMS, onSelect }: SelectionGrid
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search..."
-              className="w-full rounded-full border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-gray-700 shadow-sm outline-none transition-all focus:border-gray-300 focus:ring-2 focus:ring-gray-200"
+              className="w-full rounded-full border border-gray-200 bg-[#fff6ec] py-3 pl-11 pr-4 text-sm text-gray-700 shadow-sm outline-none transition-all focus:border-gray-300 focus:ring-2 focus:ring-gray-200"
             />
           </label>
         </div>
@@ -49,7 +49,7 @@ export function SelectionGrid({ items = DEFAULT_ITEMS, onSelect }: SelectionGrid
               key={item}
               type="button"
               onClick={() => onSelect?.(item)}
-              className="aspect-[16/10] rounded-3xl border border-gray-100 bg-white p-4 text-left shadow-sm transition-all hover:scale-[1.02] hover:shadow-md"
+              className="aspect-[16/10] rounded-3xl border border-gray-100 bg-[#fff6ec] p-4 text-left shadow-sm transition-all hover:scale-[1.02] hover:shadow-md"
             >
               <div className="mb-3 flex h-[65%] items-center justify-center overflow-hidden rounded-2xl bg-gray-50">
                 <img

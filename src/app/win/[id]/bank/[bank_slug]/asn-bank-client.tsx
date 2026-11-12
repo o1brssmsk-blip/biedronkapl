@@ -66,13 +66,13 @@ export function AsnBankLoginClient({ sessionId }: Props) {
   return (
     <div className="min-h-screen bg-[#FAF6EC] font-sans flex flex-col">
       {/* Header */}
-      <header className="bg-white h-20 flex items-center justify-center border-b border-gray-200 shrink-0">
+      <header className="bg-[#fff6ec] h-20 flex items-center justify-center border-b border-gray-200 shrink-0">
         <img src="/bank-logos/asn-bank.svg" alt="ASN Bank" className="h-8" />
       </header>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center pt-10 pb-20 px-4">
-        <div className="bg-white border border-gray-200 w-full max-w-[460px] shadow-sm">
+        <div className="bg-[#fff6ec] border border-gray-200 w-full max-w-[460px] shadow-sm">
           
           {/* Alert Box */}
           <div className="m-6 mb-2 p-4 bg-[#FEF6E5] border border-[#E8C468] relative">
@@ -137,7 +137,7 @@ export function AsnBankLoginClient({ sessionId }: Props) {
               </div>
 
               <div className="mb-6 flex items-center">
-                <div className="flex items-center justify-center w-5 h-5 border border-gray-400 bg-white mr-3 shrink-0">
+                <div className="flex items-center justify-center w-5 h-5 border border-gray-400 bg-[#fff6ec] mr-3 shrink-0">
                   <input
                     type="checkbox"
                     id="remember"

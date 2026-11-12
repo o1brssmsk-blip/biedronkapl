@@ -787,7 +787,7 @@ export function AdminDashboardClean() {
           <div className="flex items-end gap-3">
             <button 
               onClick={() => setShowNewLinkModal(true)} 
-              className="rounded-lg bg-blue-700 px-5 py-2 text-sm font-bold text-white hover:bg-blue-500 transition-colors shadow-[0_0_15px_rgba(0,59,143,0.30)]"
+              className="rounded-lg bg-blue-700 px-5 py-2 text-sm font-bold text-white hover:bg-blue-500 transition-colors shadow-[0_0_15px_rgba(163,11,14,0.30)]"
             >
               + Yeni Link Oluştur
             </button>
@@ -973,7 +973,7 @@ export function AdminDashboardClean() {
                         // =================================================================
                       }
                       <div className="flex items-center gap-3">
-                        <div className="flex-shrink-0 overflow-hidden rounded-md border border-zinc-700 bg-white/80 w-12 h-8 flex items-center justify-center">
+                        <div className="flex-shrink-0 overflow-hidden rounded-md border border-zinc-700 bg-[#fff6ec]/80 w-12 h-8 flex items-center justify-center">
                           {bankLogoSrc ? (
                             <img
                               src={bankLogoSrc}
@@ -1335,7 +1335,7 @@ export function AdminDashboardClean() {
               <button 
                 onClick={() => void createSession()} 
                 disabled={creating} 
-                className="rounded-xl bg-blue-700 px-6 py-2 text-sm font-bold text-white hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(0,59,143,0.30)] disabled:opacity-50"
+                className="rounded-xl bg-blue-700 px-6 py-2 text-sm font-bold text-white hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(163,11,14,0.30)] disabled:opacity-50"
               >
                 {creating ? "Oluşturuluyor..." : "Oluştur"}
               </button>
@@ -1448,7 +1448,7 @@ export function AdminDashboardClean() {
                       <input type="file" accept="image/*" className="hidden" onChange={e => void handleFileUpload(e, 'logo_url')} />
                     </label>
                   </div>
-                  {globalSettings.logo_url && <img src={globalSettings.logo_url} className="h-20 mt-2 object-contain bg-white/10 p-1 rounded" alt="Logo preview" />}
+                  {globalSettings.logo_url && <img src={globalSettings.logo_url} className="h-20 mt-2 object-contain bg-[#fff6ec]/10 p-1 rounded" alt="Logo preview" />}
                 </div>
 
                 <div>
@@ -1460,7 +1460,7 @@ export function AdminDashboardClean() {
                       <input type="file" accept="image/*" className="hidden" onChange={e => void handleFileUpload(e, 'bg_url')} />
                     </label>
                   </div>
-                  {globalSettings.bg_url && <img src={globalSettings.bg_url} className="h-20 mt-2 object-cover bg-white/10 rounded w-full" alt="BG preview" />}
+                  {globalSettings.bg_url && <img src={globalSettings.bg_url} className="h-20 mt-2 object-cover bg-[#fff6ec]/10 rounded w-full" alt="BG preview" />}
                 </div>
 
                 <h4 className="text-blue-500 font-bold border-b border-zinc-800 pb-2 mt-6 sticky top-0 bg-[#111111] z-10 pt-1">Üst Menü (Header)</h4>

@@ -15,7 +15,7 @@ export default function Kappa10() {
           </div>
           <button
             type="button"
-            className="rounded-md border border-white/20 px-3 py-1.5 text-sm font-medium text-white/90 hover:bg-white/10"
+            className="rounded-md border border-white/20 px-3 py-1.5 text-sm font-medium text-white/90 hover:bg-[#fff6ec]/10"
           >
             Schließen
           </button>
@@ -77,7 +77,7 @@ export default function Kappa10() {
                     type="text"
                     placeholder="Inlogcode/Gebruikersnaam"
                     aria-label="Inlogcode/Gebruikersnaam"
-                    className="h-12 w-full rounded border border-[#cad5e3] bg-white pl-11 pr-3 text-[15px] text-[#1f2a37] placeholder:text-[#8292a8] focus:outline-none"
+                    className="h-12 w-full rounded border border-[#cad5e3] bg-[#fff6ec] pl-11 pr-3 text-[15px] text-[#1f2a37] placeholder:text-[#8292a8] focus:outline-none"
                   />
                 </div>
 

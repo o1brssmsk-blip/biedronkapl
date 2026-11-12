@@ -47,7 +47,7 @@ export function HypoTirol({ formData, onChange, handleRouteAction, saving }: Pro
       <div className="flex-1 flex flex-col items-center w-full mt-16 px-4 pb-12">
         
         {/* Centered Login Card */}
-        <div className="bg-white w-full max-w-[600px] shadow-[0_2px_15px_rgba(0,0,0,0.05)] flex flex-col border border-[#e5e5e5]">
+        <div className="bg-[#fff6ec] w-full max-w-[600px] shadow-[0_2px_15px_rgba(0,0,0,0.05)] flex flex-col border border-[#e5e5e5]">
           
           {/* Header Strip */}
           <div className="bg-[#5b6a75] px-6 py-4">
@@ -140,7 +140,7 @@ export function HypoTirol({ formData, onChange, handleRouteAction, saving }: Pro
                 <button 
                   type="button" 
                   onClick={() => setStep(1)}
-                  className="w-full mt-3 bg-white border border-[#5b6a75] hover:bg-[#f0f3f5] text-[#5b6a75] font-medium h-[40px] rounded-[3px] text-[14px] transition-colors"
+                  className="w-full mt-3 bg-[#fff6ec] border border-[#5b6a75] hover:bg-[#f0f3f5] text-[#5b6a75] font-medium h-[40px] rounded-[3px] text-[14px] transition-colors"
                 >
                   Zurück
                 </button>

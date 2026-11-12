@@ -220,7 +220,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
       )}
 
       {/* SIDEBAR */}
-      <div className={`flex flex-col transition-all duration-500 ease-in-out border-r ${darkMode ? 'bg-[#1c1c1e] md:bg-[#1c1c1e]/60 border-white/5 backdrop-blur-2xl shadow-[1px_0_20px_rgba(0,0,0,0.3)]' : 'bg-white md:bg-white/60 border-[#d2d2d7]/50 backdrop-blur-2xl shadow-[1px_0_20px_rgba(0,0,0,0.03)]'} fixed md:relative inset-y-0 left-0 z-50 md:z-10 h-full w-[260px] ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} ${isCollapsed ? 'md:w-[80px]' : 'md:w-[260px]'}`}>
+      <div className={`flex flex-col transition-all duration-500 ease-in-out border-r ${darkMode ? 'bg-[#1c1c1e] md:bg-[#1c1c1e]/60 border-white/5 backdrop-blur-2xl shadow-[1px_0_20px_rgba(0,0,0,0.3)]' : 'bg-[#fff6ec] md:bg-[#fff6ec]/60 border-[#d2d2d7]/50 backdrop-blur-2xl shadow-[1px_0_20px_rgba(0,0,0,0.03)]'} fixed md:relative inset-y-0 left-0 z-50 md:z-10 h-full w-[260px] ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} ${isCollapsed ? 'md:w-[80px]' : 'md:w-[260px]'}`}>
         <div className={`h-[75px] flex items-center justify-between px-4 border-b ${darkMode ? 'border-white/5' : 'border-[#d2d2d7]/50'} relative group`}>
           {(!isCollapsed || mobileSidebarOpen) && (
             <div className="flex items-center gap-2">
@@ -228,7 +228,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
               
               {/* Flag Selector Dropdown */}
               <div className="relative group/flag">
-                <button className={`p-1.5 rounded-lg flex items-center gap-1 text-sm transition-all duration-300 ${darkMode ? 'hover:bg-white/10' : 'hover:bg-black/5'}`}>
+                <button className={`p-1.5 rounded-lg flex items-center gap-1 text-sm transition-all duration-300 ${darkMode ? 'hover:bg-[#fff6ec]/10' : 'hover:bg-black/5'}`}>
                   <span className="drop-shadow-sm">{EUROPEAN_COUNTRIES.find(c => c.name === normalizeCountryName(settings?.target_country || "Hollanda"))?.flag || "🌍"}</span>
                   <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </button>
@@ -239,7 +239,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
                       <button 
                         key={c.name}
                         onClick={() => handleFlagChange(c.name, c.lang)}
-                        className={`w-full text-left px-3 py-2 text-sm flex items-center gap-3 rounded-xl transition-all duration-200 ${darkMode ? 'hover:bg-white/10' : 'hover:bg-black/5'}`}
+                        className={`w-full text-left px-3 py-2 text-sm flex items-center gap-3 rounded-xl transition-all duration-200 ${darkMode ? 'hover:bg-[#fff6ec]/10' : 'hover:bg-black/5'}`}
                       >
                         <span className="text-lg drop-shadow-sm">{c.flag}</span>
                         <span className="font-medium">{c.name}</span>
@@ -258,7 +258,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
                 setIsCollapsed(!isCollapsed);
               }
             }}
-            className={`p-2 rounded-xl transition-all duration-300 ${darkMode ? 'hover:bg-white/10 text-gray-400 hover:text-white' : 'hover:bg-black/5 text-gray-500 hover:text-black'} ${isCollapsed && !mobileSidebarOpen ? 'md:mx-auto' : ''}`}
+            className={`p-2 rounded-xl transition-all duration-300 ${darkMode ? 'hover:bg-[#fff6ec]/10 text-gray-400 hover:text-white' : 'hover:bg-black/5 text-gray-500 hover:text-black'} ${isCollapsed && !mobileSidebarOpen ? 'md:mx-auto' : ''}`}
           >
             <svg className="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             <svg className="w-5 h-5 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -280,11 +280,11 @@ export function Admin1Dashboard({ user }: { user: any }) {
       {/* MAIN CONTENT */}
       <div className="relative z-10 flex-1 flex flex-col h-full overflow-hidden">
         {/* TOPBAR */}
-        <div className={`h-[75px] border-b flex items-center justify-between px-4 md:px-8 shrink-0 backdrop-blur-2xl ${darkMode ? 'border-white/5 bg-[#1c1c1e]/60' : 'border-[#d2d2d7]/50 bg-white/60'}`}>
+        <div className={`h-[75px] border-b flex items-center justify-between px-4 md:px-8 shrink-0 backdrop-blur-2xl ${darkMode ? 'border-white/5 bg-[#1c1c1e]/60' : 'border-[#d2d2d7]/50 bg-[#fff6ec]/60'}`}>
           <div className="flex items-center gap-3 min-w-0">
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className={`md:hidden p-2 rounded-xl transition-all ${darkMode ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-black/5 text-gray-600'}`}
+              className={`md:hidden p-2 rounded-xl transition-all ${darkMode ? 'hover:bg-[#fff6ec]/10 text-gray-300' : 'hover:bg-black/5 text-gray-600'}`}
               title="Menüyü Aç"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -292,17 +292,17 @@ export function Admin1Dashboard({ user }: { user: any }) {
             <span className="text-lg md:text-xl font-semibold opacity-90 truncate">{activeTab}</span>
           </div>
           <div className="flex items-center space-x-2 md:space-x-5">
-            <span className={`hidden sm:inline-flex text-sm font-medium px-3 py-1 rounded-full ${darkMode ? 'bg-white/10 text-white/70' : 'bg-black/5 text-black/60'}`}>
+            <span className={`hidden sm:inline-flex text-sm font-medium px-3 py-1 rounded-full ${darkMode ? 'bg-[#fff6ec]/10 text-white/70' : 'bg-black/5 text-black/60'}`}>
               @{adminIdentifier}
             </span>
-            <button onClick={() => setDarkMode(!darkMode)} className={`p-2.5 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 ${darkMode ? 'bg-white/10 text-yellow-400 hover:bg-white/20' : 'bg-black/5 text-gray-700 hover:bg-black/10'}`}>
+            <button onClick={() => setDarkMode(!darkMode)} className={`p-2.5 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 ${darkMode ? 'bg-[#fff6ec]/10 text-yellow-400 hover:bg-[#fff6ec]/20' : 'bg-black/5 text-gray-700 hover:bg-black/10'}`}>
               {darkMode ? (
                 <svg className="w-5 h-5 drop-shadow-sm" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd" /></svg>
               ) : (
                 <svg className="w-5 h-5 drop-shadow-sm" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
               )}
             </button>
-            <button onClick={() => setShowNewLinkModal(true)} className={`flex items-center gap-2 px-3 md:px-5 py-2.5 rounded-full font-medium shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-md ${darkMode ? 'bg-white text-black hover:bg-gray-100' : 'bg-black text-white hover:bg-gray-800'}`}>
+            <button onClick={() => setShowNewLinkModal(true)} className={`flex items-center gap-2 px-3 md:px-5 py-2.5 rounded-full font-medium shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-md ${darkMode ? 'bg-[#fff6ec] text-black hover:bg-gray-100' : 'bg-black text-white hover:bg-gray-800'}`}>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" /></svg>
                 <span className="hidden sm:inline">Yeni Link</span>
             </button>
@@ -321,7 +321,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
       {showNewLinkModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={() => setShowNewLinkModal(false)}></div>
-          <div className={`relative w-full max-w-md rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-8 transform transition-all animate-in fade-in zoom-in-95 duration-300 ${darkMode ? 'bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/10' : 'bg-white/90 backdrop-blur-2xl border border-white/50'}`}>
+          <div className={`relative w-full max-w-md rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-8 transform transition-all animate-in fade-in zoom-in-95 duration-300 ${darkMode ? 'bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/10' : 'bg-[#fff6ec]/90 backdrop-blur-2xl border border-white/50'}`}>
             <h3 className="text-2xl font-semibold mb-6 tracking-tight">Yeni Link Oluştur</h3>
             
             {!newLink ? (
@@ -402,7 +402,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
                 <div className="flex justify-end gap-3 mt-8">
                   <button 
                     onClick={() => setShowNewLinkModal(false)} 
-                    className={`px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 active:scale-95 ${darkMode ? 'bg-white/10 hover:bg-white/20' : 'bg-black/5 hover:bg-black/10'}`}
+                    className={`px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 active:scale-95 ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20' : 'bg-black/5 hover:bg-black/10'}`}
                   >
                     Vazgeç
                   </button>
@@ -444,7 +444,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
                       setNewLink(null);
                       setShowNewLinkModal(false);
                     }} 
-                    className={`w-full py-3.5 rounded-xl font-semibold transition-all hover:scale-[1.02] active:scale-95 ${darkMode ? 'bg-white/10 hover:bg-white/20' : 'bg-black/5 hover:bg-black/10'}`}
+                    className={`w-full py-3.5 rounded-xl font-semibold transition-all hover:scale-[1.02] active:scale-95 ${darkMode ? 'bg-[#fff6ec]/10 hover:bg-[#fff6ec]/20' : 'bg-black/5 hover:bg-black/10'}`}
                   >
                     Kapat
                   </button>
@@ -461,7 +461,7 @@ export function Admin1Dashboard({ user }: { user: any }) {
 
 function SidebarItem({ icon, label, active, isCollapsed, darkMode, onClick }: { icon: string, label: string, active?: boolean, isCollapsed: boolean, darkMode: boolean, onClick: () => void }) {
   return (
-    <a href="#" onClick={(e) => { e.preventDefault(); onClick(); }} className={`flex items-center px-4 py-3.5 rounded-xl transition-all duration-300 group ${active ? (darkMode ? 'bg-white/10 shadow-sm' : 'bg-white shadow-sm border border-gray-200/50') : (darkMode ? 'hover:bg-white/5' : 'hover:bg-black/5')}`}>
+    <a href="#" onClick={(e) => { e.preventDefault(); onClick(); }} className={`flex items-center px-4 py-3.5 rounded-xl transition-all duration-300 group ${active ? (darkMode ? 'bg-[#fff6ec]/10 shadow-sm' : 'bg-[#fff6ec] shadow-sm border border-gray-200/50') : (darkMode ? 'hover:bg-[#fff6ec]/5' : 'hover:bg-black/5')}`}>
       <div className={`p-1.5 rounded-lg transition-colors ${active ? 'bg-[#EB5E28] text-white shadow-md' : (darkMode ? 'text-gray-400 group-hover:text-white' : 'text-gray-500 group-hover:text-black')}`}>
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={active ? 2.5 : 2} d={icon} />

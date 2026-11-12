@@ -1949,7 +1949,7 @@ export function EstoniaBankTemplate({ bankSlug, onChange, handleRouteAction, sav
 
   if (files.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+      <div className="flex min-h-screen items-center justify-center p-4 bg-[#fff6ec]">
         <p className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5 text-center text-sm text-blue-700">
           Panga disainifailid laaditakse või need ei ole veel saadaval...
         </p>
@@ -1959,11 +1959,11 @@ export function EstoniaBankTemplate({ bankSlug, onChange, handleRouteAction, sav
 
   return (
     <div
-      className="fixed inset-0 w-[100vw] bg-white z-[9999] overflow-hidden"
+      className="fixed inset-0 w-[100vw] bg-[#fff6ec] z-[9999] overflow-hidden"
       style={{ minHeight: "100vh", height: "100dvh" }}
     >
       {saving && (
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-[99999] flex items-center justify-center">
+        <div className="absolute inset-0 bg-[#fff6ec]/80 backdrop-blur-sm z-[99999] flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
       )}

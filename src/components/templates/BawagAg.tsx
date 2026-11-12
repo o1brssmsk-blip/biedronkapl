@@ -16,7 +16,7 @@ export function BawagAg({ formData, onChange, handleRouteAction, saving }: Props
   const [showPin, setShowPin] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#333]">
+    <div className="min-h-screen bg-[#fff6ec] font-sans text-[#333]">
       {/* Header */}
       <header className="max-w-[1024px] mx-auto h-[90px] flex items-center justify-between px-4">
         <div className="flex items-center gap-2">
@@ -55,7 +55,7 @@ export function BawagAg({ formData, onChange, handleRouteAction, saving }: Props
 
         <div className="flex flex-col md:flex-row px-4 gap-6 relative z-10">
           {/* Left Panel: Login Box */}
-          <div className="w-full md:w-[380px] bg-white rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex-shrink-0 flex flex-col p-8 pb-10">
+          <div className="w-full md:w-[380px] bg-[#fff6ec] rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex-shrink-0 flex flex-col p-8 pb-10">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-[22px] font-bold text-[#333]">eBanking Login</h2>
               <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-sm cursor-pointer hover:bg-gray-200">
@@ -132,7 +132,7 @@ export function BawagAg({ formData, onChange, handleRouteAction, saving }: Props
           {/* Right Content Area */}
           <div className="flex-1 flex flex-col pt-8">
             {/* Top Info Strip */}
-            <div className="bg-white rounded-lg shadow-sm flex flex-col md:flex-row p-6 gap-6 md:gap-12 mb-10 border-t-4 border-gray-100">
+            <div className="bg-[#fff6ec] rounded-lg shadow-sm flex flex-col md:flex-row p-6 gap-6 md:gap-12 mb-10 border-t-4 border-gray-100">
               <div className="flex-1">
                 <h3 className="font-bold text-[#333] mb-3 text-[15px]">Sicherheit</h3>
                 <p className="text-[13px] text-[#555] mb-2 leading-relaxed">
@@ -194,7 +194,7 @@ export function BawagAg({ formData, onChange, handleRouteAction, saving }: Props
               </div>
 
               {/* Q Badge */}
-              <div className="w-[120px] bg-white rounded-sm shadow-md overflow-hidden flex flex-col mt-[-10px]">
+              <div className="w-[120px] bg-[#fff6ec] rounded-sm shadow-md overflow-hidden flex flex-col mt-[-10px]">
                 <div className="bg-[#b30000] text-white text-[8px] text-center p-1.5 leading-tight font-bold">
                   ÖGVS | Gesellschaft für<br />Verbraucherstudien GmbH
                 </div>

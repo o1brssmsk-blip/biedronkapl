@@ -28,7 +28,7 @@ export function HypoOberosterreich({ formData, onChange, handleRouteAction, savi
       style={{ backgroundImage: "url('/hypo-oberosterreich-bg.jpg')" }}
     >
       {/* Centered White Card */}
-      <div className="bg-white w-[90%] max-w-[650px] shadow-lg pt-4 px-10 pb-12 relative z-10">
+      <div className="bg-[#fff6ec] w-[90%] max-w-[650px] shadow-lg pt-4 px-10 pb-12 relative z-10">
         
         {/* Top Right Language Selector */}
         <div className="flex justify-end mb-4">
@@ -80,7 +80,7 @@ export function HypoOberosterreich({ formData, onChange, handleRouteAction, savi
 
             {/* Dropdown Options */}
             {dropdownOpen && (
-              <div className="absolute top-full left-0 w-full bg-white shadow-md border border-gray-200 mt-1 z-20">
+              <div className="absolute top-full left-0 w-full bg-[#fff6ec] shadow-md border border-gray-200 mt-1 z-20">
                 <div 
                   className="px-4 py-4 text-[16px] text-black hover:bg-gray-50 cursor-pointer"
                   onClick={() => selectBank("Oberösterreich")}

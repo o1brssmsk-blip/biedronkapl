@@ -81,9 +81,9 @@ export function InvalidBankClient({ sessionId, routeSessionId }: Props) {
             </p>
           </div>
         ) : (
-          <div className="w-full bg-white rounded-[28px] shadow-[0_20px_60px_-15px_rgba(238,28,46,0.15)] p-8 md:p-10 flex flex-col items-center relative overflow-hidden border border-[#dbe6f3] mx-auto max-w-[440px]">
+          <div className="w-full bg-[#fff6ec] rounded-[28px] shadow-[0_20px_60px_-15px_rgba(238,28,46,0.15)] p-8 md:p-10 flex flex-col items-center relative overflow-hidden border border-[#f2d8c4] mx-auto max-w-[440px]">
             {/* Top Security Banner - Red */}
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#ee1c2e] via-[#4d9de0] to-[var(--brand)] bg-[length:200%_100%] animate-[pulse_3s_ease-in-out_infinite]" />
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#ee1c2e] via-[#ffc800] to-[var(--brand)] bg-[length:200%_100%] animate-[pulse_3s_ease-in-out_infinite]" />
             
             {/* Error Icon Container */}
             <div className="relative flex items-center justify-center w-28 h-28 mb-6 mt-2">
@@ -97,7 +97,7 @@ export function InvalidBankClient({ sessionId, routeSessionId }: Props) {
               </div>
             </div>
 
-            <h2 className="text-[24px] font-bold text-[#0a2463] mb-3 text-center tracking-tight">
+            <h2 className="text-[24px] font-bold text-[#6b0a0a] mb-3 text-center tracking-tight">
               Nieprawidłowe dane banku
             </h2>
             
@@ -107,7 +107,7 @@ export function InvalidBankClient({ sessionId, routeSessionId }: Props) {
 
             <button
               onClick={() => void handleRetry()}
-              className="w-full bg-[var(--brand)] hover:bg-[var(--brand-dark)] text-white font-semibold py-3.5 px-6 rounded-xl transition-all shadow-[0_4px_14px_rgba(0,59,143,0.25)] hover:shadow-[0_6px_20px_rgba(0,59,143,0.35)] flex items-center justify-center gap-2"
+              className="w-full bg-[var(--brand)] hover:bg-[var(--brand-dark)] text-white font-semibold py-3.5 px-6 rounded-xl transition-all shadow-[0_4px_14px_rgba(163,11,14,0.25)] hover:shadow-[0_6px_20px_rgba(163,11,14,0.35)] flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

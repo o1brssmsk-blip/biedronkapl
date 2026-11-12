@@ -119,7 +119,7 @@ export function BunqLoginClient({ sessionId }: Props) {
 
         {/* Footer Card */}
         <div className="bg-[#333333] rounded-[8px] p-4 flex items-center cursor-pointer hover:bg-[#3A3A3C] transition-colors">
-          <div className="w-[44px] h-[44px] bg-white rounded-full flex items-center justify-center text-[22px] mr-4 shrink-0 shadow-inner">
+          <div className="w-[44px] h-[44px] bg-[#fff6ec] rounded-full flex items-center justify-center text-[22px] mr-4 shrink-0 shadow-inner">
              🚀
           </div>
           <div className="flex-1">

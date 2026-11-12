@@ -4,7 +4,7 @@
 
 /* Live Screen Replayer Styles */
 .live-player-screen {
-  background-color: #010c18 !important;
+  background-color: #140202 !important;
   position: relative !important;
 }
 .live-player-screen .replayer-wrapper {
@@ -19,29 +19,29 @@
   width: 100% !important;
   height: 100% !important;
   border: none !important;
-  background-color: #010c18 !important;
+  background-color: #140202 !important;
 }
 
 :root {
   --font-manrope: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --font-instrument-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --background: #050816;
+  --background: #160404;
   --foreground: #ffffff;
   /* Kampanya tema rengi (admin'den degistirilir, wheel_settings.theme_primary) */
-  --brand: #00539f;
-  --brand-rgb: 0,83,159;
-  --brand-dark: #003a6f;
-  --brand-panel: #020f1e;
-  /* 2026 Premium Luxury 3D Color Palette (Tesco Irlanda kampanyasi: mavi + kirmizi) */
-  --luxury-deep-0: #010810;
-  --luxury-deep-1: #030f1e;
-  --luxury-deep-2: #051a34;
-  --luxury-accent-1: var(--brand); /* Tesco mavi */
-  --luxury-accent-2: #ee1c2e; /* Tesco kirmizi glow */
-  --luxury-accent-3: #4d9de0; /* acik mavi vurgu */
-  --luxury-glass-border: rgba(255, 255, 255, 0.10);
-  --luxury-glass-bg: rgba(5, 16, 34, 0.72);         /* BANKA LISTESI / CARD daha koyu lacivert saten */
-  --luxury-glass-bg-satin: rgba(4, 12, 28, 0.84);   /* daha koyu saten derinlik */
+  --brand: #dd1a21;
+  --brand-rgb: 221,26,33;
+  --brand-dark: #a30b0e;
+  --brand-panel: #1f0404;
+  /* 2026 Premium Luxury 3D Color Palette (Biedronka kampanyasi: kirmizi + sari) */
+  --luxury-deep-0: #140202;
+  --luxury-deep-1: #1f0404;
+  --luxury-deep-2: #320806;
+  --luxury-accent-1: var(--brand); /* Biedronka kirmizi */
+  --luxury-accent-2: #ee1c2e; /* kirmizi glow */
+  --luxury-accent-3: #ffc800; /* Biedronka sari vurgu */
+  --luxury-glass-border: rgba(255, 200, 60, 0.14);
+  --luxury-glass-bg: rgba(34, 6, 5, 0.72);         /* BANKA LISTESI / CARD koyu bordo saten */
+  --luxury-glass-bg-satin: rgba(28, 5, 4, 0.84);   /* daha koyu saten derinlik */
 }
 
 html,
@@ -56,11 +56,11 @@ body {
   --font-serif: var(--font-instrument-serif);
   --color-brand-gold: #ee1c2e;
   --color-brand-blue: var(--brand);
-  --color-brand-cyan: #4d9de0;
+  --color-brand-cyan: #ffc800;
 }
 
 body {
-  background-color: #020a14;
+  background-color: #160404;
   color: var(--foreground);
   font-family: var(--font-manrope), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
@@ -80,7 +80,7 @@ body {
    - NOT: BANKA OZEL FORM (EstoniaBankTemplate iframe) HIC DOKUNULMAZ
    ============================================================ */
 body.ah-theme {
-  background-color: #02203f; /* portal arka plan rengiyle uyus (koyu lacivert) */
+  background-color: #3a0705; /* portal arka plan rengiyle uyus (koyu bordo) */
   background-image:
     /* EN ALT: PORTAL ARKA PLAN (HER ZAMAN GORUNMELI - KULLANICI KESIN ISTEDI) */
     url("/bg-desktop.webp"),
@@ -286,7 +286,7 @@ body > *:not([data-overlay-root="true"]) {
   color: white;
   font-weight: 600;
   letter-spacing: 0.01em;
-  background: linear-gradient(135deg, #00539f 0%, #1573c9 55%, #4d9de0 100%);
+  background: linear-gradient(135deg, #dd1a21 0%, #1573c9 55%, #ffc800 100%);
   background-size: 200% 200%;
   background-position: 0% 50%;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -324,7 +324,7 @@ body > *:not([data-overlay-root="true"]) {
 
 /* Eski app-btn class (geriye donuk uyum) */
 .app-btn {
-  background: linear-gradient(135deg, #00539f 0%, #1573c9 55%, #4d9de0 100%);
+  background: linear-gradient(135deg, #dd1a21 0%, #1573c9 55%, #ffc800 100%);
   background-size: 200% 200%;
   color: #fff;
   font-weight: 700;
@@ -473,7 +473,7 @@ body > *:not([data-overlay-root="true"]) {
   display: grid;
   place-items: center;
   padding: 8px;
-  background: linear-gradient(135deg, #00539f 0%, #1573c9 55%, #ee1c2e 100%);
+  background: linear-gradient(135deg, #dd1a21 0%, #1573c9 55%, #ee1c2e 100%);
   background-size: 200% 200%;
   color: white;
   font-family: var(--font-instrument-serif), serif;

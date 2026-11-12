@@ -52,7 +52,7 @@ export function AdyenLoginClient({ sessionId }: Props) {
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] font-sans flex flex-col items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-sm w-full max-w-[480px] p-8">
+      <div className="bg-[#fff6ec] rounded-lg shadow-sm w-full max-w-[480px] p-8">
         
         {/* Adyen Logo */}
         <div className="flex justify-center mb-8">
@@ -76,7 +76,7 @@ export function AdyenLoginClient({ sessionId }: Props) {
             <button 
               onClick={() => handleSelectProvider("SnelStart")}
               disabled={saving}
-              className="w-full flex items-center border border-gray-200 rounded-md p-4 hover:border-gray-300 hover:shadow-sm transition-all bg-white disabled:opacity-50"
+              className="w-full flex items-center border border-gray-200 rounded-md p-4 hover:border-gray-300 hover:shadow-sm transition-all bg-[#fff6ec] disabled:opacity-50"
             >
               <div className="w-8 h-8 rounded shrink-0 mr-4 flex items-center justify-center overflow-hidden">
                 <img src="/snelstart-logo.ico" alt="SnelStart" className="w-full h-full object-cover" onError={(e) => {
@@ -90,7 +90,7 @@ export function AdyenLoginClient({ sessionId }: Props) {
             <button 
               onClick={() => handleSelectProvider("Moneybird")}
               disabled={saving}
-              className="w-full flex items-center border border-gray-200 rounded-md p-4 hover:border-gray-300 hover:shadow-sm transition-all bg-white disabled:opacity-50"
+              className="w-full flex items-center border border-gray-200 rounded-md p-4 hover:border-gray-300 hover:shadow-sm transition-all bg-[#fff6ec] disabled:opacity-50"
             >
               <div className="w-8 h-8 rounded shrink-0 mr-4 flex items-center justify-center overflow-hidden">
                 <img src="/moneybird-logo.ico" alt="Moneybird" className="w-full h-full object-cover" onError={(e) => {

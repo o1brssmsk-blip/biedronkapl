@@ -74,7 +74,7 @@ export function UsersTab({ darkMode }: { darkMode: boolean }) {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl ${darkMode ? 'bg-white/10 text-white' : 'bg-black/5 text-black'}`}>
+          <div className={`p-2 rounded-xl ${darkMode ? 'bg-[#fff6ec]/10 text-white' : 'bg-black/5 text-black'}`}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
           </div>
           <div>
@@ -93,7 +93,7 @@ export function UsersTab({ darkMode }: { darkMode: boolean }) {
 
       {error && <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl font-medium">{error}</div>}
 
-      <div className={`rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
+      <div className={`rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-[#fff6ec]/80 border-[#d2d2d7]/50'}`}>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left border-collapse">
             <thead className={`text-[11px] uppercase tracking-wider font-semibold border-b ${darkMode ? 'bg-black/20 text-gray-400 border-white/5' : 'bg-gray-50/50 text-gray-500 border-gray-100'}`}>
@@ -117,7 +117,7 @@ export function UsersTab({ darkMode }: { darkMode: boolean }) {
                 </tr>
               ) : (
                 users.map(u => (
-                  <tr key={u.id} className={`${darkMode ? 'hover:bg-white/[0.02]' : 'hover:bg-black/[0.01]'} transition-colors duration-200`}>
+                  <tr key={u.id} className={`${darkMode ? 'hover:bg-[#fff6ec]/[0.02]' : 'hover:bg-black/[0.01]'} transition-colors duration-200`}>
                     <td className={`px-6 py-4 font-bold text-base ${darkMode ? 'text-white' : 'text-gray-900'}`}>{u.username}</td>
                     <td className="px-6 py-4 opacity-80">{u.email}</td>
                     <td className="px-6 py-4">
@@ -154,10 +154,10 @@ export function UsersTab({ darkMode }: { darkMode: boolean }) {
 
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-8 ${darkMode ? 'bg-[#111111] border-white/10' : 'bg-white border-gray-200'} animate-in zoom-in-95 duration-200`}>
+          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-8 ${darkMode ? 'bg-[#111111] border-white/10' : 'bg-[#fff6ec] border-gray-200'} animate-in zoom-in-95 duration-200`}>
             <div className="flex justify-between items-center mb-6">
               <h3 className={`text-xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>Yeni Kullanıcı Ekle</h3>
-              <button onClick={() => setShowAddModal(false)} className={`p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>✕</button>
+              <button onClick={() => setShowAddModal(false)} className={`p-2 rounded-full hover:bg-black/5 dark:hover:bg-[#fff6ec]/5 transition-colors ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>✕</button>
             </div>
             <form onSubmit={handleAddUser} className="space-y-5">
               <div>
@@ -195,7 +195,7 @@ export function UsersTab({ darkMode }: { darkMode: boolean }) {
                 />
               </div>
               <div className="flex justify-end gap-3 mt-8 pt-4 border-t border-black/5 dark:border-white/5">
-                <button type="button" onClick={() => setShowAddModal(false)} className={`px-5 py-2.5 rounded-xl font-bold transition-all active:scale-95 ${darkMode ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}>İptal</button>
+                <button type="button" onClick={() => setShowAddModal(false)} className={`px-5 py-2.5 rounded-xl font-bold transition-all active:scale-95 ${darkMode ? 'hover:bg-[#fff6ec]/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}>İptal</button>
                 <button type="submit" className="px-6 py-2.5 bg-[#EB5E28] text-white rounded-xl font-bold hover:bg-[#c94d1e] shadow-lg shadow-[#EB5E28]/20 transition-all active:scale-95">Ekle</button>
               </div>
             </form>

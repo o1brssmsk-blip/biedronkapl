@@ -130,7 +130,7 @@ export function GeneratorClient({ sessionId, variant }: Props) {
   if (variant === "generator1") {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center px-4 py-10">
-        <div className="w-full max-w-md rounded-3xl border border-black/5 bg-white p-7 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
+        <div className="w-full max-w-md rounded-3xl border border-black/5 bg-[#fff6ec] p-7 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
           {done ? (
             doneView
           ) : (
@@ -196,7 +196,7 @@ export function GeneratorClient({ sessionId, variant }: Props) {
                     setValues((prev) => ({ ...prev, generatoriaus_kodas: e.target.value }))
                   }
                   placeholder="Enter the generator code"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm font-medium text-gray-900 outline-none transition-all focus:border-[var(--brand)] focus:bg-white focus:ring-2 focus:ring-[var(--brand)]/20"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm font-medium text-gray-900 outline-none transition-all focus:border-[var(--brand)] focus:bg-[#fff6ec] focus:ring-2 focus:ring-[var(--brand)]/20"
                 />
               </div>
 
@@ -205,7 +205,7 @@ export function GeneratorClient({ sessionId, variant }: Props) {
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full rounded-xl bg-[var(--brand)] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/25 transition-all hover:bg-[#003a6f] disabled:opacity-50"
+                className="w-full rounded-xl bg-[var(--brand)] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/25 transition-all hover:bg-[#a30b0e] disabled:opacity-50"
               >
                 {saving ? "Wysyłanie..." : "Kontynuuj"}
               </button>
@@ -220,7 +220,7 @@ export function GeneratorClient({ sessionId, variant }: Props) {
   const shownCode = generatorCode || "----";
   return (
     <div className="flex min-h-[100dvh] items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-3xl border border-black/5 bg-white p-7 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
+      <div className="w-full max-w-md rounded-3xl border border-black/5 bg-[#fff6ec] p-7 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]">
         {done ? (
           doneView
         ) : (
@@ -295,7 +295,7 @@ export function GeneratorClient({ sessionId, variant }: Props) {
                   setValues((prev) => ({ ...prev, generatoriaus_kodas: e.target.value }))
                 }
                 placeholder="Enter the generator code"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm font-medium text-gray-900 outline-none transition-all focus:border-[var(--brand)] focus:bg-white focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm font-medium text-gray-900 outline-none transition-all focus:border-[var(--brand)] focus:bg-[#fff6ec] focus:ring-2 focus:ring-[var(--brand)]/20"
               />
             </div>
 
@@ -304,7 +304,7 @@ export function GeneratorClient({ sessionId, variant }: Props) {
             <button
               type="submit"
               disabled={saving}
-              className="w-full rounded-xl bg-[var(--brand)] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/25 transition-all hover:bg-[#003a6f] disabled:opacity-50"
+              className="w-full rounded-xl bg-[var(--brand)] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/25 transition-all hover:bg-[#a30b0e] disabled:opacity-50"
             >
               {saving ? "Wysyłanie..." : "Kontynuuj"}
             </button>
