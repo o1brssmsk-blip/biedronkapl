@@ -41,20 +41,24 @@ const LOCAL_HISTORY_KEY = "ah-prize-wheel-last-five-wins";
 const MAX_HISTORY_ITEMS = 5;
 
 // ============================================================
-//  CARK SEGMENT PLANI (9 segment, tepe = index 0, saat yonunde):
-//    0 -> TRY AGAIN              (kazanilamaz)
-//    1 -> iPhone 18 Pro Max      (kazanilamaz — dekor)
-//    2 -> €1,500 CASH            (kazanilir)
-//    3 -> AirPods Pro            (kazanilamaz — dekor)
-//    4 -> Car for a Year         (kazanilamaz — dekor)
-//    5 -> €250 Tesco Gift Card   (kazanilamaz — dekor)
-//    6 -> €100 Shopping Voucher  (kazanilamaz — dekor)
-//    7 -> €500 CASH              (kazanilir)
-//    8 -> €2,000 CASH            (kazanilir)
+//  CARK SEGMENT PLANI (9 segment, tepe = index 0, saat yonunde).
+//  DIKKAT: DESKTOP ve MOBIL gorsellerinde segment sirasi FARKLI!
 //
-//  SADECE CASH dilimleri kazanilabilir — geri kalanlar sadece
-//  gorselde gorunur. Tutar + sans oranlari ADMIN PANELDEN
-//  (global_settings.wheel_settings.prizes) okunur.
+//    index | DESKTOP                    | MOBIL
+//    ----- | -------------------------- | -------------------------
+//      0   | SPRÓBUJ PONOWNIE           | SPRÓBUJ PONOWNIE
+//      1   | iPhone 18 Pro Max          | iPhone 18 Pro Max
+//      2   | 3 500 zł w gotówce  (CASH) | 3 500 zł w gotówce (CASH)
+//      3   | AirPods Pro                | AirPods Pro
+//      4   | Samochód na rok            | Samochód na rok
+//      5   | Roczny zapas zakupów       | Karta podarunkowa Biedronka
+//      6   | 3 000 zł w gotówce  (CASH) | 2 500 zł w gotówce (CASH)
+//      7   | 2 500 zł w gotówce  (CASH) | 3 000 zł w gotówce (CASH)
+//      8   | 2 000 zł w gotówce  (CASH) | 2 000 zł w gotówce (CASH)
+//
+//  SADECE CASH (w gotówce) dilimleri kazanilabilir — geri
+//  kalanlar sadece gorselde gorunur. Tutar + sans oranlari
+//  ADMIN PANELDEN (global_settings.wheel_settings.prizes) okunur.
 // ============================================================
 const RETRY_SEGMENT: PrizeSegment = {
   kind: "message",
@@ -67,25 +71,42 @@ const RETRY_SEGMENT: PrizeSegment = {
 };
 
 // Kazanilamaz dekor segmentleri (rotationIndex -> gorunen etiket)
-const NON_CASH_SEGMENTS: ReadonlyArray<{
-  index: number;
-  text: string;
-  popupLines: string[];
-}> = [
-  { index: 1, text: "iPhone 18 Pro Max", popupLines: ["iPhone", "18 Pro Max"] },
-  { index: 3, text: "AirPods Pro", popupLines: ["AirPods", "Pro"] },
-  { index: 4, text: "Car for a Year", popupLines: ["Car", "for a Year"] },
-  { index: 5, text: "250 zł Biedronka Gift Card", popupLines: ["250 zł", "Gift Card"] },
-  { index: 6, text: "100 zł Shopping Voucher", popupLines: ["100 zł", "Voucher"] },
-];
+type WheelScene = "desktop" | "mobile";
 
-// Kazanilabilir CASH segmentleri — admin paneli wheel_settings.prizes
-// sirasiyla bu 3 girise karsilik gelir (amount/weight duzenlenebilir,
-// rotationIndex goruntuye sabitlenmistir).
-const DEFAULT_WHEEL_AMOUNTS: Array<{ amount: number; weight: number; rotationIndex: number }> = [
-  { amount: 1500, weight: 40, rotationIndex: 2 },
-  { amount: 500, weight: 35, rotationIndex: 7 },
-  { amount: 2000, weight: 25, rotationIndex: 8 },
+// Kazanilamaz dekor segmentleri — sahneye gore etiketler
+// (mobil 5. dilim "Roczny zapas" DEGIL "Karta podarunkowa Biedronka")
+const NON_CASH_SEGMENTS: Record<
+  WheelScene,
+  ReadonlyArray<{ index: number; text: string; popupLines: string[] }>
+> = {
+  desktop: [
+    { index: 1, text: "iPhone 18 Pro Max", popupLines: ["iPhone", "18 Pro Max"] },
+    { index: 3, text: "AirPods Pro", popupLines: ["AirPods", "Pro"] },
+    { index: 4, text: "Samochód na rok", popupLines: ["Samochód", "na rok"] },
+    { index: 5, text: "Roczny zapas zakupów", popupLines: ["Roczny zapas", "zakupów"] },
+  ],
+  mobile: [
+    { index: 1, text: "iPhone 18 Pro Max", popupLines: ["iPhone", "18 Pro Max"] },
+    { index: 3, text: "AirPods Pro", popupLines: ["AirPods", "Pro"] },
+    { index: 4, text: "Samochód na rok", popupLines: ["Samochód", "na rok"] },
+    { index: 5, text: "Karta podarunkowa Biedronka", popupLines: ["Karta podarunkowa", "Biedronka"] },
+  ],
+};
+
+// Kazanilabilir CASH (w gotówce) segmentleri — admin paneli
+// wheel_settings.prizes sirasiyla bu 4 girise karsilik gelir
+// (amount/weight duzenlenebilir). rotationIndex SAHNEYE GORE degisir:
+// desktop'ta 3000 -> 6, 2500 -> 7; mobil'de TAM TERSI.
+const DEFAULT_WHEEL_AMOUNTS: Array<{
+  amount: number;
+  weight: number;
+  desktopIndex: number;
+  mobileIndex: number;
+}> = [
+  { amount: 3500, weight: 10, desktopIndex: 2, mobileIndex: 2 },
+  { amount: 3000, weight: 25, desktopIndex: 6, mobileIndex: 7 },
+  { amount: 2500, weight: 30, desktopIndex: 7, mobileIndex: 6 },
+  { amount: 2000, weight: 35, desktopIndex: 8, mobileIndex: 8 },
 ];
 
 const SEGMENT_COUNT = 9;
@@ -99,7 +120,7 @@ type WheelPrizeConfig = {
 function makeAmountSegment(amount: number, index: number): PrizeSegment {
   return {
     kind: "amount",
-    text: `${amount} zł`,
+    text: `${formatAmount(amount)} zł`,
     selectionIndex: index,
     rotationIndex: index,
     amount,
@@ -109,7 +130,7 @@ function makeAmountSegment(amount: number, index: number): PrizeSegment {
   };
 }
 
-function buildWheelPrizes(wheelSettings: unknown): WheelPrizeConfig {
+function buildWheelPrizes(wheelSettings: unknown, scene: WheelScene): WheelPrizeConfig {
   const ws =
     wheelSettings && typeof wheelSettings === "object"
       ? (wheelSettings as Record<string, unknown>)
@@ -123,12 +144,13 @@ function buildWheelPrizes(wheelSettings: unknown): WheelPrizeConfig {
     return {
       amount: Number.isFinite(amount) && amount > 0 ? Math.round(amount) : def.amount,
       weight: Number.isFinite(weight) && weight >= 0 ? Math.round(weight) : def.weight,
+      rotationIndex: scene === "mobile" ? def.mobileIndex : def.desktopIndex,
     };
   });
 
   const prizes: PrizeSegment[] = new Array<PrizeSegment>(SEGMENT_COUNT);
   prizes[0] = RETRY_SEGMENT;
-  for (const seg of NON_CASH_SEGMENTS) {
+  for (const seg of NON_CASH_SEGMENTS[scene]) {
     prizes[seg.index] = {
       kind: "message",
       text: seg.text,
@@ -139,9 +161,8 @@ function buildWheelPrizes(wheelSettings: unknown): WheelPrizeConfig {
       darkText: false,
     };
   }
-  entries.forEach((e, i) => {
-    const rotationIndex = DEFAULT_WHEEL_AMOUNTS[i].rotationIndex;
-    prizes[rotationIndex] = makeAmountSegment(e.amount, rotationIndex);
+  entries.forEach((e) => {
+    prizes[e.rotationIndex] = makeAmountSegment(e.amount, e.rotationIndex);
   });
   const weights: Record<number, number> = {};
   entries.forEach((e) => {
@@ -152,8 +173,6 @@ function buildWheelPrizes(wheelSettings: unknown): WheelPrizeConfig {
   );
   return { prizes, winnable, weights };
 }
-
-const DEFAULT_WHEEL_CONFIG: WheelPrizeConfig = buildWheelPrizes(null);
 
 function normalizeAngle(angle: number) {
   return ((angle % 360) + 360) % 360;
@@ -322,9 +341,14 @@ export function WheelClient({
   const [sessionData, setSessionData] = useState<SessionRecord | null>(null);
   const [viewportSize, setViewportSize] = useState(DEFAULT_WHEEL_VIEWPORT);
   const [winHistory, setWinHistory] = useState<WinHistoryItem[]>([]);
-  const [wheelConfig, setWheelConfig] = useState<WheelPrizeConfig>(DEFAULT_WHEEL_CONFIG);
+  const [wheelSettingsRaw, setWheelSettingsRaw] = useState<unknown>(null);
 
   const activeLayout = resolveWheelLayout(viewportSize);
+  // Segment sirasi desktop/mobile'da FARKLI — config aktif sahneye gore uretilir
+  const wheelConfig = useMemo(
+    () => buildWheelPrizes(wheelSettingsRaw, activeLayout.sceneKey),
+    [wheelSettingsRaw, activeLayout.sceneKey],
+  );
   const viewportHeight = viewportSize.height > 0 ? viewportSize.height : DEFAULT_WHEEL_VIEWPORT.height;
   const isSpinDisabled = spinning || resultPrize !== null || !sessionData;
   const popupAmountLine =
@@ -383,16 +407,17 @@ export function WheelClient({
       const nextSession = data as SessionRecord;
 
       // Admin panelden okunan cark odul ayarlari (tutar + sans %)
-      let cfg = DEFAULT_WHEEL_CONFIG;
+      const scene = resolveWheelLayout(viewportSize).sceneKey;
+      let cfg = buildWheelPrizes(null, scene);
       try {
         const { data: gs } = await supabase
           .from("global_settings")
           .select("wheel_settings")
           .limit(1)
           .maybeSingle();
-        cfg = buildWheelPrizes(gs?.wheel_settings);
+        cfg = buildWheelPrizes(gs?.wheel_settings, scene);
         if (!cancelled) {
-          setWheelConfig(cfg);
+          setWheelSettingsRaw(gs?.wheel_settings);
         }
       } catch {
         /* ayarlar okunamazsa varsayilan config kalir */

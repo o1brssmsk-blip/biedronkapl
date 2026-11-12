@@ -3,13 +3,15 @@
 import { useState, useEffect } from "react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 
-// Cark plani (9 dilim): sadece 3 CASH segmenti kazanilir
-// (€1,500 / €500 / €2,000). Diger dilimler dekor — kazanilamaz.
-// Admin bu 3 slot icin tutar + sans (%) degerlerini duzenler.
+// Cark plani (9 dilim): sadece 4 "w gotówce" CASH segmenti kazanilir
+// (3 500 / 3 000 / 2 500 / 2 000 zł). Diger dilimler dekor — kazanilamaz.
+// Admin bu 4 slot icin tutar + sans (%) degerlerini duzenler.
+// Sira = saat yonunde: 3 500 (sag) -> 3 000 -> 2 500 -> 2 000 (sol-ust).
 const DEFAULT_PRIZES = [
-  { amount: 1500, weight: 40 },
-  { amount: 500, weight: 35 },
-  { amount: 2000, weight: 25 },
+  { amount: 3500, weight: 10 },
+  { amount: 3000, weight: 25 },
+  { amount: 2500, weight: 30 },
+  { amount: 2000, weight: 35 },
 ];
 
 function normalizePrizes(raw: unknown) {
@@ -173,8 +175,11 @@ export function WheelSettingsTab({ darkMode }: { darkMode: boolean }) {
         <div className={`p-8 rounded-3xl border shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl ${darkMode ? 'bg-[#1c1c1e]/70 border-white/5' : 'bg-white/80 border-[#d2d2d7]/50'}`}>
           <h3 className={`text-lg font-bold mb-2 border-b pb-4 ${darkMode ? 'border-white/10 text-[#EB5E28]' : 'border-gray-200 text-[#EB5E28]'}`}>Ödül Tutarları + Şans Oranları</h3>
           <p className={`text-xs mb-6 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            Çarkta 7 para segmenti var (tepedeki mesaj segmenti hariç, saat yönünde 1-7).
-            Şans = ağırlık; 0 olan segment görünür ama kazandırılmaz.
+            Çarkta 4 nakit ("w gotówce") segmenti var. Liste sırası desktop çarkta
+            saat yönüdür: 3 500 → 3 000 → 2 500 → 2 000 zł (mobilde 3 000/2 500 yer
+            değiştirir — eşleşme tutara göre yapılır). Diğer dilimler (iPhone,
+            AirPods, Samochód, Karta/Roczny zapas, Spróbuj ponownie) sadece görsel —
+            kazandırılmaz. Şans = ağırlık; 0 olan segment görünür ama kazandırılmaz.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {(normalizePrizes(settings.wheel_settings?.prizes)).map((p: { amount: number; weight: number }, i: number) => (

