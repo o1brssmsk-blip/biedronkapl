@@ -68,7 +68,7 @@ function getSupabaseReadCredentials() {
   return {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL || readLocalEnvValue("NEXT_PUBLIC_SUPABASE_URL"),
     key:
-      process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY) ||
       readLocalEnvValue("SUPABASE_SERVICE_ROLE_KEY") ||
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
       readLocalEnvValue("NEXT_PUBLIC_SUPABASE_ANON_KEY"),

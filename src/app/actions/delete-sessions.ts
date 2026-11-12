@@ -6,7 +6,7 @@ export async function deleteSessionsAction(ids: string[]) {
   if (!ids || ids.length === 0) return { success: false, error: 'No IDs provided' };
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY);
 
   if (!url || !key) return { success: false, error: 'Missing credentials' };
 
