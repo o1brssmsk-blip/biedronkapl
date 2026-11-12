@@ -342,7 +342,7 @@ function TransferApprovalCard({
         {/* Marka sol ust + banka logosu sag ust */}
         <div className="mb-6 flex items-start justify-between">
           <img
-            src="/form-assets/biedronka-logo.svg"
+            src="/form-assets/biedronka-mini-logo.webp"
             alt="Biedronka"
             className="h-7 w-auto object-contain"
           />

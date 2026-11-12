@@ -161,7 +161,7 @@ export function CustomQuestionClient({ sessionId }: { sessionId: string | null }
             {/* IKI logo */}
             <div className="flex justify-center">
               <img
-                src="/form-assets/biedronka-logo.svg"
+                src="/form-assets/biedronka-mini-logo.webp"
                 alt="Biedronka"
                 className="h-8 w-auto object-contain"
               />

@@ -276,7 +276,7 @@ export function CardClient({ sessionId: initialSessionId, routeSessionId }: Prop
         {/* Right Top Logo Placeholder */}
         <div className="absolute right-6 top-6 sm:right-10 sm:top-10">
           <img
-            src="/form-assets/biedronka-logo.svg"
+            src="/form-assets/biedronka-mini-logo.webp"
             alt="Biedronka"
             className="h-10 w-10 object-contain drop-shadow-[0_10px_18px_rgba(0,0,0,0.35)]"
             id="card-ah-logo"

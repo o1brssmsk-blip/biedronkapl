@@ -66,10 +66,10 @@ const WHEEL_ASSETS: Record<
     centerHubSrc: "/wheel-assets/desktop/center-hub.webp",
     rimSrc: "/wheel-assets/desktop/rim.webp",
 
-    wheelLeft: "30.8%",
-    wheelTop: "7.9%",
-    wheelWidth: "38.4%",
-    wheelHeight: "68.2%",
+    wheelLeft: "27.35%",
+    wheelTop: "1.8%",
+    wheelWidth: "45.3%",
+    wheelHeight: "80.4%",
 
     rimLeft: "27.35%",
     rimTop: "1.8%",
@@ -99,10 +99,10 @@ const WHEEL_ASSETS: Record<
     centerHubSrc: "/wheel-assets/mobile/center-hub.webp",
     rimSrc: "/wheel-assets/mobile/rim.webp",
 
-    wheelLeft: "12.3%",
-    wheelTop: "16.8%",
-    wheelWidth: "75.4%",
-    wheelHeight: "42.4%",
+    wheelLeft: "5.55%",
+    wheelTop: "13%",
+    wheelWidth: "88.9%",
+    wheelHeight: "50%",
 
     rimLeft: "5.55%",
     rimTop: "13%",
@@ -136,9 +136,8 @@ export const AlbertHeijnWheel = forwardRef<HTMLDivElement, Props>(function Alber
   // Gorsel tutarlar wheel.png icine GOMULU — SVG overlay kapali.
   // Tekrar HTML overlay'a donmek icin false yap.
   const BAKED_PRIZE_ART = true;
-  // Disk, rim'in ic acikligina tam otursun diye merkezinden kucultulur
-  // (rim.webp ic delik ~%70, disk %99.7 -> 0.85 ile segment yazilari rim altina kacmaz)
-  const wheelScale = 0.85;
+  // Disk, rim ile ayni canvas boyutunda -> birebir ust uste biner (wheel box = rim box)
+  const wheelScale = 1.0;
   // wheel.png icindeki gercek cark merkezi (viewBox 100 birimi) — PNG olcumunden
   const wheelCx = 50;
   const wheelCy = 50;

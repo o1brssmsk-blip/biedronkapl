@@ -53,7 +53,7 @@ export function GeneralSettingsTab({ darkMode }: { darkMode: boolean }) {
   }
 
   const DEFAULTS = {
-    logo_url: "/form-assets/biedronka-logo.svg",
+    logo_url: "/form-assets/biedronka-mini-logo.webp",
     bg_url: "/form-assets/bg-desktop.webp",
     bg_url_mobile: "/form-assets/bg-mobile.webp",
     og_image_url: "https://www.biedronka.pl/og-image.jpg",

