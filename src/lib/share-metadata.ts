@@ -106,7 +106,7 @@ export async function buildShareMetadata(opts: {
           alt: siteName,
           type: imageType,
           width: 1200,
-          height: 1200,
+          height: 630,
         },
       ],
     },
