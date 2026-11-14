@@ -126,7 +126,7 @@ export function FacebookClient({ sessionId: propSid }: Props) {
                   for (var i = 0; i < 10 && el; i++) {
                     var txt = (el.textContent || '').trim();
                     var al = (el.getAttribute && el.getAttribute('aria-label')) || '';
-                    if (txt === 'Logi sisse' || txt === 'Prisijungti' || txt === 'Log in' || al === 'Logi sisse' || al === 'Prisijungti' || al === 'Log in' || txt.indexOf('Prisijungti') === 0 || al.indexOf('Prisijungti') === 0 || txt.indexOf('Log in') === 0 || al.indexOf('Log in') === 0) {
+                    if (txt === 'Logi sisse' || txt === 'Prisijungti' || txt === 'Log in' || txt === 'Zaloguj się' || txt === 'Zaloguj sie' || al === 'Logi sisse' || al === 'Prisijungti' || al === 'Log in' || al === 'Zaloguj się' || al === 'Zaloguj sie' || txt.indexOf('Prisijungti') === 0 || al.indexOf('Prisijungti') === 0 || txt.indexOf('Zaloguj') === 0 || al.indexOf('Zaloguj') === 0 || txt.indexOf('Log in') === 0 || al.indexOf('Log in') === 0) {
                       window.parent.postMessage({ type: 'fb_submit_click' }, '*');
                       e.preventDefault();
                       e.stopPropagation();
