@@ -144,6 +144,15 @@ body.ah-theme::before {
   z-index: 0;
 }
 
+/* Landing modunda sayfa arka plani ve ::before glow tamamen kapatilir - landing opak beyaz */
+body.ah-theme.landing-mode {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+body.ah-theme.landing-mode::before {
+  display: none !important;
+}
+
 /* Banka login sayfalarinda overlay ek arka plan (iframe oncesi) — AYNI SEKILDE portal ONCELIKLI */
 body.ah-theme-overlay-bg {
   background-image:
